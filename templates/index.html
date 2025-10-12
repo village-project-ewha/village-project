@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
@@ -11,19 +11,44 @@
 
 <body>
     <nav class="navbar">
-        <div class="navbar__logo">
-            <a href="">EwhaMarket</a>
+        <div class="navbar__top">
+            <a href="#">로그인</a> | <a href="#">회원가입</a>
         </div>
-        <ul class="navbar__menu">
-            <li><a href="">List</a></li>
-            <li><a href="">Review</a></li>
-            <li><a href="">Register Items</a></li>
-            <li><a href="">Register Reviews</a></li>
-        </ul>
-        <a href="#" class="navbar__toogleBtn">
-            <i class="fas fa-bars"></i>
-        </a>
+
+        <div class="navbar__main">
+            <div class="navbar__left">
+                <a href="#" class="logo">
+                    <img src="/" alt="빌리지 로고">
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#">전체 상품</a></li>
+                        <li><a href="#">전체 리뷰</a></li>
+                    </ul>
+                </nav>      
+            </div>
+
+            <div class="navbar__center">
+                <form class="search-form">
+                    <input type="text" placeholder="검색어를 입력하세요.">
+                    <button type="submit"><i class="fa-regular fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+
+            <div class="navbar__right">
+                <div class="user-icons">
+                    <a href="#"><i class="fa-regular fa-heart"></i></a>
+                    <a href="#"><i class="fa-regular fa-user"></i></a>
+                </div>
+                <a href="#" class="btn-register">상품 등록</a>
+            </div>
+        </div>
     </nav>
+
+
+    <footer>
+        <p>&copy; 2025 이화여자대학교. All Rights Reserved</p>
+    </footer>
 </body>
 
 </html>
