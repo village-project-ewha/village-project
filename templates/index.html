@@ -12,39 +12,44 @@
 <body>
     <nav class="navbar">
         <div class="navbar__top">
-            <a href="#">로그인</a> | <a href="#">회원가입</a>
+            <a href="#">로그인</a>|<a href="#">회원가입</a>
         </div>
 
         <div class="navbar__main">
             <div class="navbar__left">
                 <a href="#" class="logo">
-                    <img src="/" alt="빌리지 로고">
+                    <img src="{{ url_for('static', filename='images/logo_village.svg') }}" alt="빌리지 로고">
                 </a>
                 <nav class="main-nav">
                     <ul>
-                        <li><a href="#">전체 상품</a></li>
-                        <li><a href="#">전체 리뷰</a></li>
+                        <li><a href="list.html">전체 상품</a></li>
+                        <li><a href="review.html">전체 리뷰</a></li>
                     </ul>
-                </nav>      
+                </nav>
             </div>
 
             <div class="navbar__center">
                 <form class="search-form">
                     <input type="text" placeholder="검색어를 입력하세요.">
-                    <button type="submit"><i class="fa-regular fa-magnifying-glass"></i></button>
+                    <button type="submit"><img src="{{ url_for('static', filename='images/magnifying-glass.svg') }}"
+                            alt="돋보기 버튼"></button>
                 </form>
             </div>
 
             <div class="navbar__right">
                 <div class="user-icons">
-                    <a href="#"><i class="fa-regular fa-heart"></i></a>
-                    <a href="#"><i class="fa-regular fa-user"></i></a>
+                    <a href="#"><img src="{{ url_for('static', filename='images/heart_button.svg') }}" alt="찜 버튼"></a>
+                    <a href="#"><img src="{{ url_for('static', filename='images/user_button.svg') }}"
+                            alt="유저 프로필 버튼"></a>
                 </div>
-                <a href="#" class="btn-register">상품 등록</a>
+                <a href="/reg_items" class="btn-register">상품 등록</a>
             </div>
         </div>
     </nav>
-
+    <section>
+        {% block section %}
+        {% endblock section %}
+    </section>
 
     <footer>
         <p>&copy; 2025 이화여자대학교. All Rights Reserved</p>

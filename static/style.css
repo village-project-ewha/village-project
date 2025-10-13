@@ -1,0 +1,130 @@
+/* 네비게이션 바 */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 99%;
+    position: center;
+    background-color: #FFFDF1;
+}
+
+/* 로그인/회원가입 */
+.navbar__top {
+    text-align: right;
+    padding: 5px 20px;
+    font-size: 0.9rem;
+}
+
+.navbar__top a {
+    color: #333;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* 네비게이션 영역 */
+.navbar__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/* 빌리지 로고, 메뉴 */
+.navbar__left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar__left .logo img {
+    width: 103px;
+    height: auto;
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.main-nav ul li {
+    margin-left: 40px;
+}
+
+.main-nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+}
+
+/* 중앙 검색창 */
+.search-form {
+    position: relative;
+    width: 500px;
+    align-items: center;
+}
+
+.search-form input {
+    font-weight: 300;
+    width: 100%;
+    height: 40px;
+    padding: 5px 40px 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.search-form ::placeholder {
+    color: #ccc;
+    font-weight: 300;
+}
+
+
+.search-form button {
+    position: absolute;
+    top: 25%;
+    right: 5px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.search-form button img {
+    width: 16px;
+    height: 16px;
+}
+
+/* 찜, 사용자 프로필, 상품 등록 버튼 */
+.navbar__right {
+    display: flex;
+    align-items: center;
+}
+
+.user-icons a {
+    margin-right: 20px;
+}
+
+.btn-register {
+    padding: 6px 12px;
+    background-color: #00462A;
+    color: #F5F5F5;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* 푸터 */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 120px;
+    font-size: medium;
+    font-weight: 500;
+    background: none;
+}
+
+/* body 패딩으로 헤더 공간 확보 */
+body {
+    padding-top: 100px;
+    /* navbar__top + navbar__main 높이 합 */
+}
