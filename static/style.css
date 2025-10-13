@@ -3,6 +3,8 @@
 
 body {
     margin: 0;
+    padding-top: 116px;
+    min-width: 1236px;
 }
 
 a {
@@ -16,38 +18,55 @@ ul {
     padding: 0;
 }
 
+.navbar-wrapper {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    min-width: 1236px;
+}
+
+#page-wrapper {
+    width: 1236px;
+    margin: 0 auto;
+}
+
 
 /*네비게이션 바*/
 .navbar {
-    width: 100%;
-    border-top: 5px solid #fa4503;
-    border-bottom: 5px solid #8A2BE2;
-    padding: 0 20px;
+    max-width: 1236px;
+    margin: 0 auto;
+    background-color: #fffdf1;
+    padding: 12px 35px;
     box-sizing: border-box;
 }
 
 .navbar__top {
-    text-align: right;
-    padding: 8px 0;
-    font-size: 16px;
+    height: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 14px;
     color: #333333;
+    padding-bottom: 28px;
 }
 
 .navbar__main {
+    height: 44px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px),
-                      linear-gradient(to bottom, #f2f2f2 1px, transparent 1px);
-    background-size: 20px 20px;
-    background-color: #FFF0F5;
+    background-image: none;
+    background-color: transparent;
 }
 
 /* 왼쪽 그룹: 로고+메뉴 */
 .navbar__left {
-    display: felx;
+    display: flex;
     align-items: center;
+    gap: 32px;
 }
 
 .logo img {
@@ -57,10 +76,14 @@ ul {
 
 .main-nav ul{
     display: flex;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
 }
 
 .main-nav li{
-    margin-left: 32px;
+    margin-left: 0;
+    padding: 0;
     font-size: 16px;
 }
 
@@ -69,7 +92,9 @@ ul {
 .navbar__center {
     flex-grow: 1;
     max-width: 400px;
-    margin: 0 20px;
+    margin: 0 40px;
+    display: flex;
+    justify-content: center;
 }
 
 .search-form {
@@ -89,7 +114,7 @@ ul {
     position: absolute;
     right: 15px;
     top: 50%;
-    transform: translate(-50%);
+    transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
@@ -102,12 +127,18 @@ ul {
 .navbar__right {
     display: flex;
     align-items: center;
+    gap: 20px;
+}
+
+.user-icons {
+    display: flex;
+    gap: 20px;
 }
 
 .user-icons a {
     font-size: 24px;
-    margin: 0 8px;
-    color: #555;
+    margin: 0;
+    color: #888888;
 }
 
 .btn-register {
@@ -117,7 +148,7 @@ ul {
     border: none;
     border-radius: 8px;
     font-weight: bolder;
-    margin-left: 20px;
+    margin-left: 0;
     cursor: pointer;
 }
 
