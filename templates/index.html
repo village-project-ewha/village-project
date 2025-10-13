@@ -5,50 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>  
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="navbar__top">
-            <a href="#">로그인</a> | <a href="#">회원가입</a>
-        </div>
-
-        <div class="navbar__main">
-            <div class="navbar__left">
-                <a href="#" class="logo">
-                    <img src="/" alt="빌리지 로고">
-                </a>
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="#">전체 상품</a></li>
-                        <li><a href="#">전체 리뷰</a></li>
-                    </ul>
-                </nav>      
+    <div class="navbar-wrapper">
+        <nav class="navbar">
+            <div class="navbar__top">
+                <a href="/login">로그인</a>&nbsp;|&nbsp;<a href="/signup">회원가입</a>
             </div>
 
-            <div class="navbar__center">
-                <form class="search-form">
-                    <input type="text" placeholder="검색어를 입력하세요.">
-                    <button type="submit"><i class="fa-regular fa-magnifying-glass"></i></button>
-                </form>
-            </div>
-
-            <div class="navbar__right">
-                <div class="user-icons">
-                    <a href="#"><i class="fa-regular fa-heart"></i></a>
-                    <a href="#"><i class="fa-regular fa-user"></i></a>
+            <div class="navbar__main">
+                <div class="navbar__left">
+                    <a href="/" class="logo">
+                        <img src="{{ url_for('static', filename='resource/Logo/006-1.png') }}" alt="빌리지 로고">
+                    </a>
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="/">전체 상품</a></li>
+                            <li><a href="/review">전체 리뷰</a></li>
+                        </ul>
+                    </nav>      
                 </div>
-                <a href="#" class="btn-register">상품 등록</a>
+
+                <div class="navbar__center">
+                    <form class="search-form">
+                        <input type="text" placeholder="검색어를 입력하세요.">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+
+                <div class="navbar__right">
+                    <div class="user-icons">
+                        <a href="#"><i class="fa-regular fa-heart"></i></a>
+                        <a href="#"><i class="fa-regular fa-circle-user"></i></a>
+                    </div>
+                    <a href="/reg_items" class="btn-register">상품 등록</a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
+
+    <div id="page-wrapper">
+        <main>
+            
+        </main>
+
+        <footer>
+            <p>&copy; 2025 이화여자대학교. All Rights Reserved</p>
+        </footer>
+    </div>
 
 
-    <footer>
-        <p>&copy; 2025 이화여자대학교. All Rights Reserved</p>
-    </footer>
 </body>
 
 </html>

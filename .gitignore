@@ -57,3 +57,5 @@ Desktop.ini
 uploads/
 temp/
 tmp/
+
+get-pip.py
