@@ -43,7 +43,7 @@ def reg_review():
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
     image_file=request.files["file"]
-    image_file.save("static/images/{}".format(image_file.filename))
+    image_file.save("static/resource/{}".format(image_file.filename))
     data=request.form
 
     name=data.get("name")
@@ -56,7 +56,7 @@ def reg_item_submit_post():
     phone=data.get("phone")
     print(name, seller, addr, email, category, card, status, phone)
 
-    return render_template("templates\result.html", data=data, img_path="static/images/{}".format(image_file.filename))
+    return render_template("result.html", data=data, img_path="static/resource/{}".format(image_file.filename))
 
 @application.route("/submit_item")
 def reg_item_submit():
