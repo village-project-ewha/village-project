@@ -1,0 +1,125 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+body {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/*네비게이션 바*/
+.navbar {
+    width: 100%;
+    border-top: 5px solid #fa4503;
+    border-bottom: 5px solid #8A2BE2;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.navbar__top {
+    text-align: right;
+    padding: 8px 0;
+    font-size: 16px;
+    color: #333333;
+}
+
+.navbar__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px),
+                      linear-gradient(to bottom, #f2f2f2 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-color: #FFF0F5;
+}
+
+/* 왼쪽 그룹: 로고+메뉴 */
+.navbar__left {
+    display: felx;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    display: block;
+}
+
+.main-nav ul{
+    display: flex;
+}
+
+.main-nav li{
+    margin-left: 32px;
+    font-size: 16px;
+}
+
+
+/* 중앙 그룹: 검색창 */
+.navbar__center {
+    flex-grow: 1;
+    max-width: 400px;
+    margin: 0 20px;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+}
+
+.search-form input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.search-form button{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translate(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+}
+
+
+/* 오른쪽 그룹: 아이콘 + 버튼 */
+.navbar__right {
+    display: flex;
+    align-items: center;
+}
+
+.user-icons a {
+    font-size: 24px;
+    margin: 0 8px;
+    color: #555;
+}
+
+.btn-register {
+    background-color: #00462A;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bolder;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+
+
