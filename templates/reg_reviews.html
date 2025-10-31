@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "index.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
-</head>
-
-<body>
-    <h1>여기는 리뷰 등록 페이지입니다!</h1>
-</body>
+{% block section %}
+등록된 상품 리스트 조회 화면 입니다.
+{% endblock section %}
