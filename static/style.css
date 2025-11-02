@@ -51,6 +51,16 @@ ul {
     padding-bottom: 28px;
 }
 
+.navbar__top ul {
+    display: flex;
+}
+
+.navbar__top li + li::before {
+  content: "|"; 
+  margin: 0 10px; 
+  color: #333333; 
+}
+
 .navbar__main {
     height: 44px;
     display: flex;
@@ -161,6 +171,60 @@ footer {
 }
 
 
+/* --- 드롭다운 메뉴 --- */
+.dropdown-container {
+    position: relative; 
+}
+
+.dropdown-menu {
+    display: none; 
+    position: absolute; 
+    top: 35px; 
+    right: 0; 
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 2000; 
+    padding: 8px 0; 
+    margin: 0; 
+}
+
+
+.dropdown-menu.show {
+    display: block;
+}
+
+
+.dropdown-menu li {
+    list-style: none; 
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap; 
+    text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
+
+.dropdown-menu li.divider {
+    height: 1px;
+    margin: 8px 0;
+    padding: 0; 
+    background-color: #eee;
+}
+
+
+
+
+/* ---------------- index.html --------------*/
 /* 메인 배너 */
 .mySwiper {
     position: relative;
@@ -427,4 +491,28 @@ footer {
     color: #aaa;
     pointer-events: none; 
     background-color: #f9f9f9;
+}
+
+
+
+/* ---------------- reg_reviews.html --------------*/
+
+.section-title {
+    font-weight: bold; 
+    margin-bottom: 10px;
+}
+
+.reg_reviews_button {
+    padding: 20px; 
+    text-align: center;
+}
+
+.submit-review-button {
+    background-color: #0B6434; 
+    color: white; 
+    padding: 12px 30px; 
+    border: none; 
+    border-radius: 8px; 
+    font-size: 16px; 
+    cursor: pointer;
 }

@@ -1,5 +1,67 @@
 {% extends "index.html" %}
 
 {% block section %}
-리뷰 등록 화면입니다.
+<div class="review-container">
+    <form action="/submit_review_post" method="POST">
+        <header class="review-header">
+            리뷰 작성하기
+        </header>
+        <!-- 1. <section>: 리뷰할 상품 정보 구역(DB에서 가져올 정보) -->
+        <section class="review-section product-section">
+            <div class="product-info-box">
+                <!--TODO: /reg_reviews 라우트가 DB에서 'transaction' 객체 (거래내역)를 가져와야 함 -->
+                <img src="{{ url_for('static', filename=transaction.product.image_url) }}" alt="{{ transaction.product.name }}" class="product-image">
+                
+                <div class="product-details">
+                    <p class="product-name">{{ transaction.product.name }}</p>
+                    <p>판매자: {{ transaction.product.seller }}</p>
+                    <p>거래 방식: {{ transaction.product.trade_type }}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. <section>: "별점" 구역 -->
+        <section class="review-section rating-section">
+            <h2 class="section-title">이 상품은 어떠셨나요?</h2>
+            
+            <div class="rating-box">
+                <div class="star-rating">
+                    <i class="far fa-star" data-value="1"></i>
+                    <i class="far fa-star" data-value="2"></i>
+                    <i class="far fa-star" data-value="3"></i>
+                    <i class="far fa-star" data-value="4"></i>
+                    <i class="far fa-star" data-value="5"></i>
+                </div>
+                <span class="rating-text">(0.0 / 5.0)</span>
+            </div>
+            <input type="hidden" name="rating" value="0">
+        </section>
+
+
+
+        <!-- 3. <section>: "구매자" 정보 구역(로그인 시 가져올 정보 or 비회원)-->
+        <section class="review-section buyer-section">
+            <h2 class="section-title">구매자 정보</h2>
+            <!-- TODO: 로그인된 사용자 정보 (current_user) -->
+            <p>구매자: {{ current_user.username }} ({{ current_user.email }})</p>
+        </section>
+
+
+                <!-- 
+          TODO: (...리뷰 제목, 내용, 사진 첨부 <section>들...)
+        -->
+
+        <!-- 
+          'div': 버튼 스타일링을 위한 
+          '스타일링용' 상자
+        -->
+        <div class="reg_reviews_button">
+            <button type="submit" class="submit-review-button">
+                리뷰 등록하기
+            </button>
+        </div>
+    </form>
+</div>
+
+
 {% endblock section %}

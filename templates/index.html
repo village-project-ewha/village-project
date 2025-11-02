@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <!-- 1. 라이브러리 (Swiper, Font Awesome) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>  
+    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
+    <!-- 2. 커스텀 스타일시트 & 자바스크립트 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
 </head>
@@ -16,24 +18,30 @@
     <div class="navbar-wrapper">
         <nav class="navbar">
             <div class="navbar__top">
-                <a href="/login">로그인</a>&nbsp;|&nbsp;<a href="/signup">회원가입</a>
+                <ul>
+                    <!-- TODO: 로그인 상태에 따라 '로그아웃'으로 변경 필요 -->
+                    <li><a href="{{ url_for('login') }}">로그인</a></li>
+                    <li><a href="{{ url_for('signup') }}">회원가입</a></li>
+                </ul>
             </div>
 
             <div class="navbar__main">
                 <div class="navbar__left">
-                    <a href="/" class="logo">
+                    <!-- 로고 링크를 app.py의 'hello' 라우트로 연결 -->
+                    <a href="{{ url_for('hello') }}" class="logo">
                         <img src="{{ url_for('static', filename='resource/Logo/006-1.png') }}" alt="빌리지 로고">
                     </a>
                     <nav class="main-nav">
                         <ul>
-                            <li><a href="/">전체 상품</a></li>
-                            <li><a href="/review">전체 리뷰</a></li>
+                            <!-- 링크를 app.py의 라우트 이름으로 연결 -->
+                            <li><a href="{{ url_for('hello') }}">전체 상품</a></li>
+                            <li><a href="{{ url_for('view_review') }}">전체 리뷰</a></li>
                         </ul>
                     </nav>      
                 </div>
 
                 <div class="navbar__center">
-                    <form class="search-form">
+                    <form class="search-form" action="/search" method="get">
                         <input type="text" placeholder="검색어를 입력하세요.">
                         <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
@@ -42,9 +50,27 @@
                 <div class="navbar__right">
                     <div class="user-icons">
                         <a href="#"><i class="fa-regular fa-heart"></i></a>
-                        <a href="#"><i class="fa-regular fa-circle-user"></i></a>
+                        
+                        <!-- 드롭다운 컨테이너로 -->
+                        <div class="dropdown-container">
+                            <!-- 1. 클릭할 버튼 (사람 아이콘) -->
+                            <a href="#" id="profile-menu-button">
+                                <i class="fa-regular fa-circle-user"></i>
+                            </a>
+                            
+                            <!-- 2. 나타날 드롭다운 메뉴 (ul) -->
+                            <ul class="dropdown-menu" id="profile-dropdown">
+                                <li><a href="{{ url_for('reg_items') }}">상품 등록하기</a></li>
+                                <li><a href="#">내 거래 내역</a></li>
+                                <li><a href="{{ url_for('reg_review') }}">리뷰 등록하기</a></li>
+                                <li><a href="#">마이페이지</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </div>
+                        <!-- 드롭다운 끝 -->
                     </div>
-                    <a href="/reg_items" class="btn-register">상품 등록</a>
+                    <a href="{{ url_for('reg_items') }}" class="btn-register">상품 등록</a>
                 </div>
             </div>
         </nav>
@@ -60,7 +86,6 @@
             <p>&copy; 2025 이화여자대학교. All Rights Reserved</p>
         </footer>
     </div>
-
 
 </body>
 
