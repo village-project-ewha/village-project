@@ -484,6 +484,57 @@ footer {
   background-color: #f9f9f9;
 }
 
+/* static/style.scss 에 추가 */
+/* ---------------- select_review.html --------------*/
+.review-selection-list {
+  margin-top: 1.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9375rem;
+}
+
+.transaction-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem;
+  padding: 0.9375rem;
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.transaction-card:hover {
+  background-color: #f9f9f9;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+.transaction-card img {
+  width: 4.375rem;
+  height: 4.375rem;
+  border-radius: 0.25rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.transaction-card .transaction-details {
+  flex-grow: 1;
+}
+.transaction-card .transaction-details .product-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+.transaction-card .transaction-details .transaction-date {
+  font-size: 0.875rem;
+  color: #888;
+  margin: 0.25rem 0 0 0;
+}
+.transaction-card .select-arrow {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ccc;
+}
+
 /* ---------------- reg_reviews.html --------------*/
 .review-header {
   font-weight: bold;

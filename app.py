@@ -106,14 +106,48 @@ def reg_items():
     return render_template("reg_items.html")
 
 
+@application.route('/select_review')
+def select_review_target():
+    # TODO (백엔드):
+    # 1. DB에서 '현재 로그인한 유저'의 '거래 완료' 내역들을 조회해야 함.
+    # 2. 지금은 가짜(Mock) 거래 내역 3개를 만듦.
+    
+    # 템플릿에서 쓸 가짜(Mock) 클래스 정의
+    class MockProduct:
+        def __init__(self, name, image_url):
+            self.name = name
+            self.image_url = image_url
+
+    class MockTransaction:
+        def __init__(self, id, product_name, image_url):
+            self.id = id
+            self.product = MockProduct(product_name, image_url)
+
+    # 가짜 거래 내역 리스트 (transactions, 복수형)
+    mock_transactions = [
+        MockTransaction(1, "테스트 상품 1 (거래 ID: 1)", "resource/sample.jpg"),
+        MockTransaction(5, "테스트 상품 5 (거래 ID: 5)", "resource/sample.jpg"),
+        MockTransaction(9, "테스트 상품 9 (거래 ID: 9)", "resource/sample.jpg")
+    ]
+    
+    # 3. 새 HTML 파일('select_review.html')로 가짜 리스트를 전달
+    return render_template(
+        'select_review.html', 
+        transactions=mock_transactions # 'transactions' (복수형)로 전달
+    )
+
+
+
 @application.route('/reg_review/<int:transaction_id>') 
 def reg_review(transaction_id):
     
-    
+    # ----------------------------------------------------
+    # 🚨 [임시 코드]
+    # 프론트엔드 화면 확인을 위해 가짜(Mock) 데이터를 만듦
+
     # TODO (백엔드): 
-    # 1. DB 모델 정의 부분에 'Transaction' 모델을 추가해야 함.
-    #    (Transaction 모델은 거래내역과 관련된 정보를 담아야 함)
-    # 2. 이 함수에서 transaction_id를 사용해 실제 DB에서 데이터를 조회해야 함.
+    # 1. DB 모델 정의 부분에 'Transaction' 모델을 추가해야 함
+    # 2. 이 함수에서 transaction_id를 사용해 실제 DB에서 데이터를 조회해야 함
 
     class MockProduct: # 가짜 상품
         name = "테스트 상품명입니다"
@@ -121,15 +155,15 @@ def reg_review(transaction_id):
         brand = "나이키"
         category = "패션/잡화"
         price = 35000                
-        seller = "임시판매자_이름"     
-        trade_type = "택배거래"
+        seller = "임시판매자_이름"
+        trade_type = "택배거래" 
 
     class MockTransaction: # 가짜 거래내역
         id = transaction_id
         product = MockProduct() 
 
     transaction_data = MockTransaction()
-
+    # ----------------------------------------------------
 
     # 2. 템플릿으로 'transaction'이라는 이름으로 데이터를 전달
     return render_template(

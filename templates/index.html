@@ -62,7 +62,7 @@
                             <ul class="dropdown-menu" id="profile-dropdown">
                                 <li><a href="{{ url_for('reg_items') }}">상품 등록하기</a></li>
                                 <li><a href="#">내 거래 내역</a></li>
-                                <li><a href="{{ url_for('reg_review', transaction_id=transaction.id) }}">리뷰 등록하기</a></li>
+                                <li><a href="{{ url_for('select_review_target') }}">리뷰 등록하기</a></li>
                                 <li><a href="#">마이페이지</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/logout">로그아웃</a></li>
