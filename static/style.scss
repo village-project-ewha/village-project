@@ -1,0 +1,603 @@
+
+@use 'sass:math';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+// --- rem 변환 함수 및 기본 설정 ---
+
+$base-font-size: 16;
+
+@function rem($pixels) {
+  @return math.div($pixels, $base-font-size) * 1rem;
+}
+
+html {
+    font-size: 100%; // 브라우저 기본값(16px)을 사용
+}
+
+// --- ------------------------------------ ---
+
+
+body {
+    margin: 0;
+    min-width: rem(1236);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-wrapper {
+    margin-bottom: rem(20);
+    background-color: white;
+    position: sticky; 
+    top: 0;
+    z-index: 1000;
+}
+
+
+#page-wrapper {
+    width: rem(1236);
+    margin: 0 auto;
+}
+
+
+/*네비게이션 바*/
+.navbar {
+    max-width: rem(1236);
+    margin: 0 auto;
+    background-color: #fffdf1;
+    padding: rem(12) rem(35);
+    box-sizing: border-box;
+}
+
+.navbar__top {
+    height: rem(20);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: rem(14);
+    color: #333333;
+    padding-bottom: rem(28);
+}
+
+.navbar__top ul {
+    display: flex;
+}
+
+.navbar__top li + li::before {
+    content: "|"; 
+    margin: 0 rem(10); 
+    color: #333333; 
+}
+
+.navbar__main {
+    height: rem(44);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: none;
+    background-color: transparent;
+}
+
+/* 왼쪽 그룹: 로고+메뉴 */
+.navbar__left {
+    display: flex;
+    align-items: center;
+    gap: rem(32);
+}
+
+.logo img {
+    height: rem(40);
+    display: block;
+}
+
+.main-nav ul{
+    display: flex;
+    gap: rem(32);
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav li{
+    margin-left: 0;
+    padding: 0;
+    font-size: rem(16);
+}
+
+
+/* 중앙 그룹: 검색창 */
+.navbar__center {
+    flex-grow: 1;
+    max-width: rem(400);
+    margin: 0 rem(40);
+    display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+}
+
+.search-form input {
+    width: 100%;
+    padding: rem(10) rem(40) rem(10) rem(15);
+    border: 1px solid #ccc;
+    border-radius: rem(20);
+    box-sizing: border-box;
+}
+
+.search-form button{
+    position: absolute;
+    right: rem(15);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    font-size: rem(16);
+}
+
+
+/* 오른쪽 그룹: 아이콘 + 버튼 */
+.navbar__right {
+    display: flex;
+    align-items: center;
+    gap: rem(20);
+}
+
+.user-icons {
+    display: flex;
+    gap: rem(20);
+}
+
+.user-icons a {
+    font-size: rem(24);
+    margin: 0;
+    color: #888888;
+}
+
+.btn-register {
+    background-color: #00462A;
+    color: white;
+    padding: rem(12) rem(20);
+    border: none;
+    border-radius: rem(8);
+    font-weight: bolder;
+    margin-left: 0;
+    cursor: pointer;
+}
+
+
+footer {
+    padding: rem(20) 0; 
+    text-align: center;
+    font-size: rem(14);
+    color: #777777;
+    background-color: #f8f8f8; 
+    margin-top: rem(40); 
+}
+
+
+/* --- 드롭다운 메뉴 --- */
+.dropdown-container {
+    position: relative; 
+}
+
+.dropdown-menu {
+    display: none; 
+    position: absolute; 
+    top: rem(35); 
+    right: 0; 
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: rem(8);
+    box-shadow: 0 rem(4) rem(12) rgba(0, 0, 0, 0.1);
+    min-width: rem(160);
+    z-index: 2000; 
+    padding: rem(8) 0; 
+    margin: 0; 
+}
+
+
+.dropdown-menu.show {
+    display: block;
+}
+
+
+.dropdown-menu li {
+    list-style: none; 
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: rem(10) rem(15);
+    font-size: rem(14);
+    color: #333;
+    white-space: nowrap; 
+    text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
+
+.dropdown-menu li.divider {
+    height: 1px;
+    margin: rem(8) 0;
+    padding: 0; 
+    background-color: #eee;
+}
+
+
+
+
+/* ---------------- index.html --------------*/
+/* 메인 배너 */
+.mySwiper {
+    position: relative;
+    overflow: hidden;
+    width: rem(1200); 
+    height: rem(400); 
+    margin-bottom: rem(80);
+    margin: 0 auto; 
+    border: none;
+}
+
+/* 슬라이드들을 감싸는 래퍼 (실제 움직이는 부분) */
+.swiper-wrapper {
+    display: flex; 
+    width: 100%; 
+    height: 100%;
+    transition: transform 0.5s ease-in-out; 
+}
+
+/* 각 개별 슬라이드 */
+.swiper-slide {
+    min-width: 100%; 
+    height: 100%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; 
+}
+
+/* 슬라이드 내부 이미지 */
+.swiper-slide img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; 
+    display: block; 
+} 
+
+.swiper-button-next {
+    right: rem(10); 
+}
+
+.swiper-button-prev {
+    left: rem(10); 
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: #ffffff; 
+    opacity: 0.7; 
+    transition: opacity 0.3s; 
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    opacity: 1.0; 
+}
+
+/* 페이지네이션 점들 */
+.swiper-pagination-bullet {
+    background: #ffffff; 
+    opacity: 0.6; 
+}
+
+.swiper-pagination-bullet-active {
+    background: #00462A; 
+    opacity: 1; 
+}
+
+
+
+.product-list-section {
+    max-width: rem(1236);
+    margin: rem(40) auto;
+    padding: 0 rem(20);
+}
+
+.product-list-section h2 {
+    font-size: rem(24);
+    margin-bottom: rem(20);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(rem(250), 1fr));
+    gap: rem(20);
+}
+
+/* 개별 상품 카드 */
+.product-card {
+    border: 1px solid #eee;
+    border-radius: rem(8);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    background-color: #fff;
+}
+
+.product-card:hover {
+    box-shadow: 0 rem(4) rem(12) rgba(0, 0, 0, 0.1);
+}
+
+.product-card a {
+    text-decoration: none;
+    color: #333;
+    display: block; 
+}
+
+/* 이미지 래퍼: 정사각형 비율 유지 */
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; 
+    overflow: hidden;
+    border-radius: rem(8) rem(8) 0 0; 
+}
+
+.product-image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+
+/* 상품 정보 영역 */
+.product-info {
+    padding: rem(15);
+}
+
+.product-info h3 {
+    font-size: rem(18);
+    margin-top: 0;
+    margin-bottom: rem(10);
+    line-height: 1.4;
+    height: 2.8em; /* font-size(rem(18))의 2.8배 (2줄) */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}
+
+/* 가격 및 보증금*/
+.price-group {
+    display: flex; 
+    align-items: flex-end; 
+    margin-bottom: rem(10);
+    flex-wrap: wrap; 
+}
+
+.price-group .price {
+    font-size: rem(22); 
+    font-weight: bold;
+    color: #333; 
+    line-height: 1; 
+}
+
+.price-group .per-day {
+    font-size: rem(14);
+    color: #777;
+    margin-left: rem(3);
+    margin-right: rem(10); 
+    white-space: nowrap; 
+    line-height: 1;
+    padding-bottom: 1px; 
+}
+
+.price-group .deposit {
+    font-size: rem(14);
+    color: #555;
+    white-space: nowrap; 
+    line-height: 1;
+    padding-bottom: 1px; // 미세 조정
+}
+
+/* 하단 메타 정보 */
+.meta-info {
+    font-size: rem(13);
+    color: #888;
+    margin-top: rem(15);
+    padding-top: rem(10);
+    border-top: 1px solid #f0f0f0; 
+    display: flex;
+    flex-wrap: wrap; 
+    gap: rem(8) rem(12);
+    align-items: center;
+}
+
+.meta-info span {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; 
+}
+
+.meta-info i {
+    margin-right: rem(4); 
+    color: #999;
+}
+
+/* 데이터가 없을 때의 메시지 */
+.empty-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: rem(50);
+    color: #888;
+    border: 2px dashed #ddd;
+    border-radius: rem(8);
+}
+
+
+/* 페이지네이션 컨테이너 */
+.pagination-container {
+    display: flex;
+    justify-content: center; 
+    margin-top: rem(40); 
+}
+
+/* 페이지네이션 리스트 */
+.pagination {
+    display: flex;
+    list-style: none; 
+    padding-left: 0;
+    border-radius: rem(4);
+}
+
+/* 각 페이지 아이템 (li) */
+.page-item {
+    margin: 0 rem(3); 
+}
+
+/* 페이지 링크 (a) */
+.page-link {
+    display: block;
+    padding: rem(8) rem(14);
+    text-decoration: none;
+    color: #00462A; 
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: rem(4);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.page-link:hover {
+    background-color: #f4f4f4;
+}
+
+/* 현재 활성화된 페이지 (li.active) */
+.page-item.active .page-link {
+    background-color: #00462A; 
+    color: #fff; 
+    border-color: #00462A;
+    font-weight: bold;
+}
+
+/* 비활성화된 버튼 (이전/다음이 없을 때) (li.disabled) */
+.page-item.disabled .page-link {
+    color: #aaa;
+    pointer-events: none; 
+    background-color: #f9f9f9;
+}
+
+
+
+/* ---------------- reg_reviews.html --------------*/
+
+.review-header {
+    font-weight: bold; 
+    font-size: rem(24);
+    color: #fffdf1;
+    background-color: #00462A;
+    padding: rem(24) rem(32);
+}
+
+.product-section {
+    padding: rem(32) rem(24);
+}
+
+.product-info-box {
+    display: flex;
+    gap: rem(20);
+}
+
+.product-info-box img {
+    width: rem(88);
+    height: rem(88);
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column; 
+    gap: rem(8); 
+}
+
+
+.product-details p {
+    margin: 0; 
+    font-size: rem(16);
+}
+
+
+.product-title-group {
+    display: flex;
+    flex-direction: row; 
+    align-items: baseline; 
+    gap: rem(8); 
+}
+
+/* (1) 상품명 */
+.product-name {
+    font-size: rem(20);
+    font-weight: bold;
+    color: #333;
+}
+
+/* (2) 카테고리 / 브랜드 */
+.product-meta {
+    font-size: rem(14);
+    color: #888; 
+}
+
+/* (3) 가격 */
+.product-price {
+    font-size: rem(14);
+    font-weight: 600; 
+    color: #000;
+    margin-top: rem(10); 
+}
+
+/* (4) 판매자 */
+.seller-info {
+    font-size: rem(15);
+    color: #555;
+    margin-top: rem(10); 
+}
+
+
+
+
+.reg_reviews_button {
+    padding: rem(20); 
+    text-align: center;
+}
+
+.submit-review-button {
+    background-color: #00462A; 
+    color: white; 
+    padding: rem(12) rem(30); 
+    border: none; 
+    border-radius: rem(8); 
+    font-size: rem(16); 
+    cursor: pointer;
+}

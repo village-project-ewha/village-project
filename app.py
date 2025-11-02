@@ -14,6 +14,24 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(application) 
 
+
+# -----------------------------------------------------------------
+# 🚨 [임시 코드] 여기에 추가!
+# 모든 템플릿에서 'current_user' 변수를 사용할 수 있도록
+# 가짜(Mock) 사용자 객체를 주입
+@application.context_processor
+def inject_mock_user():
+    
+    # 템플릿이 {{ current_user.username }} 등 다른 속성도 사용한다면
+    # 여기에 (예: username = "임시사용자")를 추가하세요.
+    class MockUser:
+        is_authenticated = False # (기본값: 로그인 안 된 상태)
+        # is_authenticated = True # (로그인 된 상태를 테스트하려면 이걸로) 
+        # username = "테스트유저" 
+
+    return dict(current_user=MockUser())
+# -----------------------------------------------------------------
+
 # --- 2. DB 모델 정의 ---
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True) # 고유 ID
@@ -87,9 +105,38 @@ def view_review():
 def reg_items():
     return render_template("reg_items.html")
 
-@application.route("/reg_reviews")
-def reg_review():
-    return render_template("reg_reviews.html")
+
+@application.route('/reg_review/<int:transaction_id>') 
+def reg_review(transaction_id):
+    
+    
+    # TODO (백엔드): 
+    # 1. DB 모델 정의 부분에 'Transaction' 모델을 추가해야 함.
+    #    (Transaction 모델은 거래내역과 관련된 정보를 담아야 함)
+    # 2. 이 함수에서 transaction_id를 사용해 실제 DB에서 데이터를 조회해야 함.
+
+    class MockProduct: # 가짜 상품
+        name = "테스트 상품명입니다"
+        image_url = "resource/sample.jpg"
+        brand = "나이키"
+        category = "패션/잡화"
+        price = 35000                
+        seller = "임시판매자_이름"     
+        trade_type = "택배거래"
+
+    class MockTransaction: # 가짜 거래내역
+        id = transaction_id
+        product = MockProduct() 
+
+    transaction_data = MockTransaction()
+
+
+    # 2. 템플릿으로 'transaction'이라는 이름으로 데이터를 전달
+    return render_template(
+        'reg_reviews.html', 
+        transaction=transaction_data  # 가짜 데이터를 전달
+    )
+
 
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():

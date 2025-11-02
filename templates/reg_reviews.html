@@ -13,10 +13,22 @@
                 <img src="{{ url_for('static', filename=transaction.product.image_url) }}" alt="{{ transaction.product.name }}" class="product-image">
                 
                 <div class="product-details">
+            
+                <div class="product-title-group">
                     <p class="product-name">{{ transaction.product.name }}</p>
-                    <p>판매자: {{ transaction.product.seller }}</p>
-                    <p>거래 방식: {{ transaction.product.trade_type }}</p>
+                    <p class="product-meta">
+                        [{{ transaction.product.category }}] [{{ transaction.product.brand }}]
+                    </p>
                 </div>
+                
+                <p class="product-price">
+                    {{ "{:,d}".format(transaction.product.price) }}원
+                </p>
+                
+                <p class="seller-info">
+                    판매자: {{ transaction.product.seller }}
+                </p>
+
             </div>
         </section>
 
