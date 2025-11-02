@@ -106,6 +106,8 @@ def reg_items():
     return render_template("reg_items.html")
 
 
+
+
 @application.route('/select_review')
 def select_review_target():
     # TODO (백엔드):

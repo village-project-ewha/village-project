@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. 드롭다운 메뉴 로직 (index.html) ---
+    // --- 드롭다운 메뉴 로직 (index.html) ---
     const profileButton = document.getElementById('profile-menu-button');
     const profileDropdown = document.getElementById('profile-dropdown');
 
@@ -48,53 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. 별점 로직 (reg_reviews.html) ---
-    const starRatingBox = document.querySelector('.star-rating-box');
     
-    if (starRatingBox) {
-        const stars = starRatingBox.querySelectorAll('.star');
-        const ratingInput = document.getElementById('star-rating');
-        const ratingLabel = document.querySelector('label[for="star-rating"]');
 
-        // 별 클릭 이벤트
-        stars.forEach(star => {
-            star.addEventListener('click', () => {
-                const value = star.dataset.value;
-                ratingInput.value = value; // 숨겨진 input에 값 설정
-                updateStars(value);
-                updateRatingLabel(value);
-            });
-
-            // 별 호버(mouseover) 이벤트
-            star.addEventListener('mouseover', () => {
-                const value = star.dataset.value;
-                updateStars(value);
-            });
-        });
-
-        // 호버가 끝났을 때(mouseleave) 선택된 값으로 복원
-        starRatingBox.addEventListener('mouseleave', () => {
-            const selectedValue = ratingInput.value || 0;
-            updateStars(selectedValue);
-        });
-
-        // 별점 상태 업데이트 함수
-        function updateStars(value) {
-            stars.forEach(star => {
-                if (star.dataset.value <= value) {
-                    star.classList.add('selected');
-                } else {
-                    star.classList.remove('selected');
-                }
-            });
-        }
-
-        // 레이블 텍스트 업데이트 함수
-        function updateRatingLabel(value) {
-            ratingLabel.textContent = `별점 (${value} / 5)`;
-        }
-    }
-    
     
     // --- 4. 상품 선택 시뮬레이션 로직 (reg_reviews.html) ---
     const selectProductBtn = document.getElementById('select-product-btn');

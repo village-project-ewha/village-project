@@ -21,11 +21,12 @@ ul {
 }
 
 .navbar-wrapper {
-  margin-bottom: 1.25rem;
+  margin-bottom: 2rem;
   background-color: white;
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.05);
 }
 
 #page-wrapper {
@@ -38,7 +39,7 @@ ul {
   max-width: 77.25rem;
   margin: 0 auto;
   background-color: #fffdf1;
-  padding: 0.75rem 2.1875rem;
+  padding: 1rem 2.5rem;
   box-sizing: border-box;
 }
 
@@ -159,6 +160,7 @@ ul {
   cursor: pointer;
 }
 
+/* 푸터 */
 footer {
   padding: 1.25rem 0;
   text-align: center;
@@ -250,8 +252,7 @@ footer {
 .swiper-slide img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
 }
 
@@ -342,8 +343,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
 }
 
@@ -512,8 +512,7 @@ footer {
   width: 4.375rem;
   height: 4.375rem;
   border-radius: 0.25rem;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .transaction-card .transaction-details {
   flex-grow: 1;
@@ -536,16 +535,31 @@ footer {
 }
 
 /* ---------------- reg_reviews.html --------------*/
+.review-container {
+  margin-bottom: 1.5rem;
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-group {
+  border: 1px solid #ddd;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
 .review-header {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #fffdf1;
   background-color: #00462A;
   padding: 1.5rem 2rem;
+  margin: 0;
 }
 
 .product-section {
   padding: 2rem 1.5rem;
+  background-color: #fff;
 }
 
 .product-info-box {
@@ -604,17 +618,261 @@ footer {
   margin-top: 0.625rem;
 }
 
+/* 별점 및 텍스트 스타일 */
+.rating-section {
+  padding: 1.5rem 2rem 1.5rem 2rem;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3.375rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section-title {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.rating-box {
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.star-rating {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.star-rating i {
+  cursor: pointer;
+  font-size: 32px;
+  color: #b9b9b9;
+  font-weight: 900;
+  transition: transform 0.1s;
+}
+
+.star-rating i:hover {
+  transform: scale(1.1);
+}
+
+.star-rating i.selected {
+  color: #00462A;
+}
+
+.rating-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #b9b9b9;
+}
+
 .reg_reviews_button {
-  padding: 1.25rem;
+  padding: 0;
   text-align: center;
+  margin-bottom: 3.25rem;
 }
 
 .submit-review-button {
   background-color: #00462A;
   color: white;
-  padding: 0.75rem 1.875rem;
   border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
   cursor: pointer;
-}/*# sourceMappingURL=style.css.map */
+  width: 100%;
+  padding: 1rem 1.875rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.submit-review-button:hover {
+  background-color: #003a22;
+}
+
+/* "리뷰 제목", "상세 리뷰" 등 패딩이 필요한 섹션 */
+.content-section {
+  margin-bottom: 2.5rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.content-section .section-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* 1. 리뷰 제목 인풋 */
+.review-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  margin-bottom: 1.5rem;
+}
+.review-input:focus {
+  border-color: #00462A;
+  outline: none;
+}
+
+/* 2. 상세 리뷰 텍스트 영역 */
+.textarea-wrapper {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.review-textarea {
+  width: 100%;
+  min-height: 9.375rem;
+  max-height: 18.75rem;
+  padding: 1rem;
+  padding-bottom: 2.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  resize: vertical;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+.review-textarea::placeholder {
+  color: #aaa;
+  white-space: pre-line;
+}
+.review-textarea:focus {
+  border-color: #00462A;
+  outline: none;
+}
+
+.char-count {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.75rem;
+  font-size: 0.8125rem;
+  color: #999;
+  pointer-events: none;
+}
+.char-count .current-count {
+  color: #00462A;
+  font-weight: 600;
+}
+.char-count .current-count.error {
+  color: #e74c3c;
+}
+
+.error-message {
+  position: absolute;
+  left: 0;
+  bottom: -1.375rem;
+  color: #e74c3c;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: none;
+  white-space: nowrap;
+  top: 100%;
+  margin-top: 0.5rem;
+}
+.error-message.show {
+  display: block;
+}
+
+/* 3. 사진/동영상 첨부 */
+.photo-section {
+  margin-bottom: 2.5rem;
+  padding: 0 1.5rem;
+}
+.photo-section .section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+.photo-section .optional {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #888;
+  margin-left: 0.25rem;
+}
+
+.photo-uploader {
+  display: flex;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+.photo-upload-box {
+  width: 9.375rem;
+  height: 9.375rem;
+  border-radius: 0.25rem;
+  background-color: #f9f9f9;
+  /* 메인 업로드 버튼 (label) */
+}
+.photo-upload-box.main-upload {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  border: 1px dashed #ddd;
+  transition: background-color 0.2s;
+}
+.photo-upload-box.main-upload:hover {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+}
+.photo-upload-box.main-upload .photo-input {
+  display: none;
+}
+.photo-upload-box.main-upload i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.photo-upload-box.main-upload span {
+  font-size: 0.875rem;
+  word-break: break-all;
+  text-align: center;
+  line-height: 1.3;
+  padding: 0 0.25rem;
+}
+.photo-upload-box {
+  /* .placeholder (회색 빈 칸) */
+}
+.photo-upload-box.placeholder {
+  border: 1px solid #f0f0f0;
+}
+
+/* 4. 유의사항 */
+.guidelines-section {
+  padding: 0 1.5rem;
+  background-color: #fdfdfd;
+  margin-bottom: 2.5rem;
+}
+.guidelines-section .section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: #555;
+}
+.guidelines-section ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style-type: disc;
+}
+.guidelines-section li {
+  font-size: 0.875rem;
+  color: #777;
+  line-height: 1.7;
+}
+.guidelines-section li + li {
+  margin-top: 0.5rem;
+}
+
+/*# sourceMappingURL=style.css.map */

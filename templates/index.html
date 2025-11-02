@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <!-- 1. 라이브러리 (Swiper, Font Awesome) -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
@@ -27,13 +28,11 @@
 
             <div class="navbar__main">
                 <div class="navbar__left">
-                    <!-- 로고 링크를 app.py의 'hello' 라우트로 연결 -->
                     <a href="{{ url_for('hello') }}" class="logo">
                         <img src="{{ url_for('static', filename='resource/Logo/006-1.png') }}" alt="빌리지 로고">
                     </a>
                     <nav class="main-nav">
                         <ul>
-                            <!-- 링크를 app.py의 라우트 이름으로 연결 -->
                             <li><a href="{{ url_for('hello') }}">전체 상품</a></li>
                             <li><a href="{{ url_for('view_review') }}">전체 리뷰</a></li>
                         </ul>
@@ -51,7 +50,7 @@
                     <div class="user-icons">
                         <a href="#"><i class="fa-regular fa-heart"></i></a>
                         
-                        <!-- 드롭다운 컨테이너로 -->
+                        <!-- 드롭다운 컨테이너 -->
                         <div class="dropdown-container">
                             <!-- 1. 클릭할 버튼 (사람 아이콘) -->
                             <a href="#" id="profile-menu-button">
@@ -78,8 +77,8 @@
 
     <div id="page-wrapper">
         <main>
-            {% block section %}
-            {% endblock section %}
+            {% block section %}{% endblock section %}
+            {% block scripts %}{% endblock %}
         </main>
 
         <footer>

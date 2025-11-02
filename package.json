@@ -1,0 +1,24 @@
+{
+  "name": "village-project",
+  "version": "1.0.0",
+  "description": "2025 오픈소프트웨어플랫폼 13조 빌리지(village)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/village-project-ewha/village-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/village-project-ewha/village-project/issues"
+  },
+  "homepage": "https://github.com/village-project-ewha/village-project#readme",
+  "dependencies": {
+    "sass": "^1.93.3"
+  }
+}
