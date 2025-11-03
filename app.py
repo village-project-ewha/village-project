@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 from flask_sqlalchemy import SQLAlchemy
 import sys
 import os
@@ -93,8 +93,8 @@ class MockPagination:
         last = 0
         for num in range(1, self.pages + 1):
             if num <= left_edge or \
-               (self.page - left_current - 1 < num < self.page + right_current + 1) or \
-               num > self.pages - right_edge:
+                (self.page - left_current - 1 < num < self.page + right_current + 1) or \
+                num > self.pages - right_edge:
                 if last + 1 != num:
                     yield None  # ... 표시를 위해 None 반환
                 yield num
@@ -114,10 +114,10 @@ class MockProduct:
         self.like_count = like_count
         self.trade_type = trade_type
         for key, value in kwargs.items():
-             setattr(self, key, value)
+            setattr(self, key, value)
 
 # -----------------------------------------------------------------
-# 🎯 Mock 데이터 생성 (총 25개로 페이지네이션 테스트 용이)
+# 🎯 Mock 데이터 생성 (총 25개...)
 # -----------------------------------------------------------------
 mock_products = [
     MockProduct(
@@ -128,10 +128,43 @@ mock_products = [
         deposit=5000 + i * 500,
         comment_count=i % 5,
         like_count=i % 7,
-        trade_type="대여" if i % 2 == 0 else "판매"
+        trade_type="대여" if i % 2 == 0 else "판매",
+        seller=f"임시판매자_{i}" 
     ) for i in range(1, 26) 
 ]
-# -----------------------------------------------------------------
+
+# ------------------------------
+# Mock 클래스 정의
+# ------------------------------
+class MockReview:
+    def __init__(self, id, product_id, title, content, author, image_url, date, rating, created_at):
+        self.id = id
+        self.product_id = product_id 
+        self.title = title
+        self.content = content
+        self.author = author
+        self.image_url = image_url
+        self.date = date
+        self.rating = rating
+        self.created_at = created_at
+
+# ------------------------------
+# Mock 데이터
+# ------------------------------
+mock_reviews = [
+    MockReview(1, 1, "첫치피티 공유팟", "...", "송한결", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
+    MockReview(2, 1, "빌리지에서 기타 피크까지 빌리지", "...", "김민지", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
+    MockReview(3, 1, "샴푸", "...", "박서연", "resource/sample.jpg", "2025.10.08", 4, "2025.10.08"),
+    MockReview(4, 1, "애플펜슬 공유팟", "...", "이하늘", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
+    MockReview(5, 1, "애플펜슬", "...", "정수빈", "resource/sample.jpg", "2025.10.08", 4, "2025.10.08"),
+    MockReview(6, 1, "후드집업 빌렸어요~", "...", "전다은", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
+    MockReview(7, 2, "첫치피티 공유팟", "...", "송한결", "resource/sample.jpg", "2025.10.08", 6, "2025.10.08"),
+    MockReview(8, 2, "빌리지에서 기타 피크까지 빌리지", "...", "김민지", "resource/sample.jpg", "2025.10.08", 7, "2025.10.08"),
+    MockReview(9, 2, "샴푸", "...", "박서연", "resource/sample.jpg", "2025.10.08", 8, "2025.10.08"),
+    MockReview(10, 2, "애플펜슬 공유팟", "...", "이하늘", "resource/sample.jpg", "2025.10.08", 9, "2025.10.08"),
+    MockReview(11, 2, "애플펜슬", "...", "정수빈", "resource/sample.jpg", "2025.10.08", 10, "2025.10.08"),
+    MockReview(12, 2, "후드집업 빌렸어요~", "...", "전다은", "resource/sample.jpg", "2025.10.08", 11, "2025.10.08")
+]
 
 
 # --- 4. 라우트 정의 ---
@@ -175,34 +208,41 @@ def login():
 def signup():
     return render_template("signup.html")
 
-@application.route("/review")
-def view_review():
-    # ------------------------------
-    # Mock 클래스 정의
-    # ------------------------------
-    class MockReview:
-        def __init__(self, id, title, content, author, image_url, date, rating):
-            self.id = id
-            self.title = title
-            self.content = content
-            self.author = author
-            self.image_url = image_url
-            self.date = date
-            self.rating = rating
+@application.route('/review/<int:review_id>') 
+def review_detail(review_id):
 
-    # ------------------------------
-    # Mock 데이터 (6개)
-    # ------------------------------
-    mock_reviews = [
-        MockReview(1, "첫치피티 공유팟", "첫치피티 공유팟 했어요~! 대학원 덕분에...", "송한결", "resource/sample.jpg", "2025.10.08", 5),
-        MockReview(2, "빌리지에서 기타 피크까지 빌리지", "오히려 좋았다 ㅋㅋ 피크 빌려서 연습 완!", "김민지", "resource/sample.jpg", "2025.10.08", 5),
-        MockReview(3, "샴푸", "린스랑 같이 써봤는데 향도 좋고 괜찮아요", "박서연", "resource/sample.jpg", "2025.10.08", 4),
-        MockReview(4, "애플펜슬 공유팟", "필요할 때 잠깐 빌리니까 너무 편해요!", "이하늘", "resource/sample.jpg", "2025.10.08", 5),
-        MockReview(5, "애플펜슬", "잃어버릴 줄 알았는데... 잘 쓰고 반납함!", "정수빈", "resource/sample.jpg", "2025.10.08", 4),
-        MockReview(6, "후드집업 빌렸어요~", "사이즈도 딱 맞고 향도 좋았어요 ☺", "전다은", "resource/sample.jpg", "2025.10.08", 5)
-    ]
+    # 1. ID로 '리뷰' 찾기
+    review_to_show = None
+    for review in mock_reviews:
+        if review.id == review_id:
+            review_to_show = review
+            break
+            
+    if review_to_show is None:
+        abort(404) # 404 오류 발생시킴
 
-    return render_template("review.html", reviews=mock_reviews)
+    # ----------------------------------------------------
+    # 2. 찾은 리뷰의 'product_id'를 이용해 '상품' 찾기
+    
+    target_product_id = review_to_show.product_id
+    product_to_show = None
+    
+    for product in mock_products:
+        if product.id == target_product_id:
+            product_to_show = product
+            break
+            
+    # (예외 처리) 만약 product_id로 상품을 못 찾으면 404
+    if product_to_show is None:
+        abort(404)
+    # ----------------------------------------------------
+
+    # 3. 'review'와 'product'를 둘 다 전달
+    return render_template(
+        'review_detail.html', 
+        review=review_to_show,
+        product=product_to_show 
+    )
 
 
 @application.route("/list")
@@ -220,11 +260,6 @@ def view_products():
 '''
 
 
-@application.route("/review/<int:review_id>")  
-def review_detail(review_id):
-    review = Review.query.get_or_404(review_id)
-    product = review.product
-    return render_template("review_detail.html", review=review, product=product)
 
 @application.route("/reg_items")
 def reg_items():
@@ -281,7 +316,7 @@ def reg_review(transaction_id):
         image_url = "resource/sample.jpg"
         brand = "나이키"
         category = "패션/잡화"
-        price = 35000                
+        price = 35000           
         seller = "임시판매자_이름"
         trade_type = "택배거래" 
 
@@ -332,7 +367,7 @@ def reg_item_submit_post():
             status=data.get("status"),
             phone=data.get("phone"),
             trade_type=data.get("trade_type"), 
-            image_url=img_path_for_db # DB에 저장할 이미지 경로
+            image_url=img_path_for_db 
         )
         
         db.session.add(new_product)

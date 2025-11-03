@@ -1,4 +1,3 @@
-
 @use 'sass:math';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
@@ -7,7 +6,7 @@
 $base-font-size: 16;
 
 @function rem($pixels) {
-  @return math.div($pixels, $base-font-size) * 1rem;
+    @return math.div($pixels, $base-font-size) * 1rem;
 }
 
 html {
@@ -36,7 +35,7 @@ ul {
 .navbar-wrapper {
     margin-bottom: rem(32);
     background-color: white;
-    position: sticky; 
+    position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 rem(2) rem(6) rgba(0, 0, 0, 0.05);
@@ -72,10 +71,10 @@ ul {
     display: flex;
 }
 
-.navbar__top li + li::before {
-    content: "|"; 
-    margin: 0 rem(10); 
-    color: #333333; 
+.navbar__top li+li::before {
+    content: "|";
+    margin: 0 rem(10);
+    color: #333333;
 }
 
 .navbar__main {
@@ -99,14 +98,14 @@ ul {
     display: block;
 }
 
-.main-nav ul{
+.main-nav ul {
     display: flex;
     gap: rem(32);
     margin: 0;
     padding: 0;
 }
 
-.main-nav li{
+.main-nav li {
     margin-left: 0;
     padding: 0;
     font-size: rem(16);
@@ -135,7 +134,7 @@ ul {
     box-sizing: border-box;
 }
 
-.search-form button{
+.search-form button {
     position: absolute;
     right: rem(15);
     top: 50%;
@@ -179,33 +178,33 @@ ul {
 
 /* 푸터 */
 footer {
-    padding: rem(20) 0; 
+    padding: rem(20) 0;
     text-align: center;
     font-size: rem(14);
     color: #777777;
-    background-color: #f8f8f8; 
-    margin-top: rem(40); 
+    background-color: #f8f8f8;
+    margin-top: rem(40);
 }
 
 
 /* --- 드롭다운 메뉴 --- */
 .dropdown-container {
-    position: relative; 
+    position: relative;
 }
 
 .dropdown-menu {
-    display: none; 
-    position: absolute; 
-    top: rem(35); 
-    right: 0; 
+    display: none;
+    position: absolute;
+    top: rem(35);
+    right: 0;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: rem(8);
     box-shadow: 0 rem(4) rem(12) rgba(0, 0, 0, 0.1);
     min-width: rem(160);
-    z-index: 2000; 
-    padding: rem(8) 0; 
-    margin: 0; 
+    z-index: 2000;
+    padding: rem(8) 0;
+    margin: 0;
 }
 
 
@@ -215,7 +214,7 @@ footer {
 
 
 .dropdown-menu li {
-    list-style: none; 
+    list-style: none;
 }
 
 .dropdown-menu li a {
@@ -223,7 +222,7 @@ footer {
     padding: rem(10) rem(15);
     font-size: rem(14);
     color: #333;
-    white-space: nowrap; 
+    white-space: nowrap;
     text-decoration: none;
 }
 
@@ -234,7 +233,7 @@ footer {
 .dropdown-menu li.divider {
     height: 1px;
     margin: rem(8) 0;
-    padding: 0; 
+    padding: 0;
     background-color: #eee;
 }
 
@@ -246,52 +245,52 @@ footer {
 .mySwiper {
     position: relative;
     overflow: hidden;
-    width: rem(1200); 
-    height: rem(400); 
+    width: rem(1200);
+    height: rem(400);
     margin-bottom: rem(80);
-    margin: 0 auto; 
+    margin: 0 auto;
     border: none;
 }
 
 /* 슬라이드들을 감싸는 래퍼 (실제 움직이는 부분) */
 .swiper-wrapper {
-    display: flex; 
-    width: 100%; 
+    display: flex;
+    width: 100%;
     height: 100%;
-    transition: transform 0.5s ease-in-out; 
+    transition: transform 0.5s ease-in-out;
 }
 
 /* 각 개별 슬라이드 */
 .swiper-slide {
-    min-width: 100%; 
+    min-width: 100%;
     height: 100%;
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 /* 슬라이드 내부 이미지 */
 .swiper-slide img {
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    object-fit: cover; 
-    display: block; 
-} 
+    object-fit: cover;
+    display: block;
+}
 
 .swiper-button-next {
-    right: rem(10); 
+    right: rem(10);
 }
 
 .swiper-button-prev {
-    left: rem(10); 
+    left: rem(10);
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-    color: #ffffff; 
-    opacity: 0.7; 
-    transition: opacity 0.3s; 
+    color: #ffffff;
+    opacity: 0.7;
+    transition: opacity 0.3s;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -301,18 +300,18 @@ footer {
 
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
-    opacity: 1.0; 
+    opacity: 1.0;
 }
 
 /* 페이지네이션 점들 */
 .swiper-pagination-bullet {
-    background: #ffffff; 
-    opacity: 0.6; 
+    background: #ffffff;
+    opacity: 0.6;
 }
 
 .swiper-pagination-bullet-active {
-    background: #00462A; 
-    opacity: 1; 
+    background: #00462A;
+    opacity: 1;
 }
 
 
@@ -350,16 +349,16 @@ footer {
 .product-card a {
     text-decoration: none;
     color: #333;
-    display: block; 
+    display: block;
 }
 
 /* 이미지 래퍼: 정사각형 비율 유지 */
 .product-image-wrapper {
     position: relative;
     width: 100%;
-    padding-top: 100%; 
+    padding-top: 100%;
     overflow: hidden;
-    border-radius: rem(8) rem(8) 0 0; 
+    border-radius: rem(8) rem(8) 0 0;
 }
 
 .product-image-wrapper img {
@@ -368,7 +367,7 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
 }
 
@@ -383,44 +382,45 @@ footer {
     margin-top: 0;
     margin-bottom: rem(10);
     line-height: 1.4;
-    height: 2.8em; /* font-size(rem(18))의 2.8배 (2줄) */
+    height: 2.8em;
+    /* font-size(rem(18))의 2.8배 (2줄) */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    line-clamp: 2; 
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 
 /* 가격 및 보증금*/
 .price-group {
-    display: flex; 
-    align-items: flex-end; 
+    display: flex;
+    align-items: flex-end;
     margin-bottom: rem(10);
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .price-group .price {
-    font-size: rem(22); 
+    font-size: rem(22);
     font-weight: bold;
-    color: #333; 
-    line-height: 1; 
+    color: #333;
+    line-height: 1;
 }
 
 .price-group .per-day {
     font-size: rem(14);
     color: #777;
     margin-left: rem(3);
-    margin-right: rem(10); 
-    white-space: nowrap; 
+    margin-right: rem(10);
+    white-space: nowrap;
     line-height: 1;
-    padding-bottom: 1px; 
+    padding-bottom: 1px;
 }
 
 .price-group .deposit {
     font-size: rem(14);
     color: #555;
-    white-space: nowrap; 
+    white-space: nowrap;
     line-height: 1;
     padding-bottom: 1px; // 미세 조정
 }
@@ -431,9 +431,9 @@ footer {
     color: #888;
     margin-top: rem(15);
     padding-top: rem(10);
-    border-top: 1px solid #f0f0f0; 
+    border-top: 1px solid #f0f0f0;
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     gap: rem(8) rem(12);
     align-items: center;
 }
@@ -441,11 +441,11 @@ footer {
 .meta-info span {
     display: flex;
     align-items: center;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 .meta-info i {
-    margin-right: rem(4); 
+    margin-right: rem(4);
     color: #999;
 }
 
@@ -463,21 +463,21 @@ footer {
 /* 페이지네이션 컨테이너 */
 .pagination-container {
     display: flex;
-    justify-content: center; 
-    margin-top: rem(40); 
+    justify-content: center;
+    margin-top: rem(40);
 }
 
 /* 페이지네이션 리스트 */
 .pagination {
     display: flex;
-    list-style: none; 
+    list-style: none;
     padding-left: 0;
     border-radius: rem(4);
 }
 
 /* 각 페이지 아이템 (li) */
 .page-item {
-    margin: 0 rem(3); 
+    margin: 0 rem(3);
 }
 
 /* 페이지 링크 (a) */
@@ -485,7 +485,7 @@ footer {
     display: block;
     padding: rem(8) rem(14);
     text-decoration: none;
-    color: #00462A; 
+    color: #00462A;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: rem(4);
@@ -498,8 +498,8 @@ footer {
 
 /* 현재 활성화된 페이지 (li.active) */
 .page-item.active .page-link {
-    background-color: #00462A; 
-    color: #fff; 
+    background-color: #00462A;
+    color: #fff;
     border-color: #00462A;
     font-weight: bold;
 }
@@ -507,7 +507,7 @@ footer {
 /* 비활성화된 버튼 (이전/다음이 없을 때) (li.disabled) */
 .page-item.disabled .page-link {
     color: #aaa;
-    pointer-events: none; 
+    pointer-events: none;
     background-color: #f9f9f9;
 }
 
@@ -535,7 +535,7 @@ footer {
 
     &:hover {
         background-color: #f9f9f9;
-        box-shadow: 0 rem(2) rem(8) rgba(0,0,0,0.05);
+        box-shadow: 0 rem(2) rem(8) rgba(0, 0, 0, 0.05);
     }
 
     img {
@@ -554,6 +554,7 @@ footer {
             margin: 0;
             color: #333; // 글자색 명시
         }
+
         .transaction-date {
             font-size: rem(14);
             color: #888;
@@ -586,7 +587,7 @@ footer {
 }
 
 .review-header {
-    font-weight: bold; 
+    font-weight: bold;
     font-size: rem(20);
     color: #fffdf1;
     background-color: #00462A;
@@ -611,22 +612,22 @@ footer {
 
 .product-details {
     display: flex;
-    flex-direction: column; 
-    gap: rem(8); 
+    flex-direction: column;
+    gap: rem(8);
 }
 
 
 .product-details p {
-    margin: 0; 
+    margin: 0;
     font-size: rem(16);
 }
 
 
 .product-title-group {
     display: flex;
-    flex-direction: row; 
-    align-items: baseline; 
-    gap: rem(8); 
+    flex-direction: row;
+    align-items: baseline;
+    gap: rem(8);
 }
 
 /* (1) 상품명 */
@@ -639,22 +640,22 @@ footer {
 /* (2) 카테고리 / 브랜드 */
 .product-meta {
     font-size: rem(14);
-    color: #888; 
+    color: #888;
 }
 
 /* (3) 가격 */
 .product-price {
     font-size: rem(14);
-    font-weight: 600; 
+    font-weight: 600;
     color: #000;
-    margin-top: rem(10); 
+    margin-top: rem(10);
 }
 
 /* (4) 판매자 */
 .seller-info {
     font-size: rem(15);
     color: #555;
-    margin-top: rem(10); 
+    margin-top: rem(10);
 }
 
 
@@ -663,15 +664,15 @@ footer {
     padding: rem(24) rem(32) rem(24) rem(32);
     border: 1px solid #ddd;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     margin-bottom: rem(54);
     margin-left: 0;
     margin-right: 0;
 }
 
 .section-title {
-    margin-top: 0; 
-    margin-bottom: rem(20); 
+    margin-top: 0;
+    margin-bottom: rem(20);
     font-size: rem(18);
     font-weight: bold;
 }
@@ -680,7 +681,7 @@ footer {
     margin-top: 0;
     margin-bottom: 0;
     display: flex;
-    align-items: center; 
+    align-items: center;
     gap: rem(12);
 }
 
@@ -714,27 +715,27 @@ footer {
 
 
 .reg_reviews_button {
-    padding: 0; 
+    padding: 0;
     text-align: center;
     margin-bottom: rem(52);
 }
 
 .submit-review-button {
-    background-color: #00462A; 
-    color: white; 
-    border: none; 
+    background-color: #00462A;
+    color: white;
+    border: none;
     cursor: pointer;
-    
-    width: 100%;                 
-    padding: rem(16) rem(30);     
-    border-radius: rem(8);    
-    font-size: rem(18);           
+
+    width: 100%;
+    padding: rem(16) rem(30);
+    border-radius: rem(8);
+    font-size: rem(18);
     font-weight: bold;
-    
+
     transition: background-color 0.2s;
 
     &:hover {
-        background-color: #003a22; 
+        background-color: #003a22;
     }
 }
 
@@ -743,7 +744,7 @@ footer {
 /* "리뷰 제목", "상세 리뷰" 등 패딩이 필요한 섹션 */
 .content-section {
     margin-bottom: rem(40);
-    padding:0 rem(24);
+    padding: 0 rem(24);
     display: flex;
     flex-direction: column;
     gap: rem(16);
@@ -762,7 +763,7 @@ footer {
     font-size: rem(16);
     border: 1px solid #ddd;
     border-radius: rem(4);
-    box-sizing: border-box; 
+    box-sizing: border-box;
     margin-bottom: rem(24);
 
     &:focus {
@@ -774,7 +775,7 @@ footer {
 /* 2. 상세 리뷰 텍스트 영역 */
 .textarea-wrapper {
     position: relative;
-    margin-bottom: rem(40); 
+    margin-bottom: rem(40);
 }
 
 .review-textarea {
@@ -784,17 +785,17 @@ footer {
     padding: rem(16);
     padding-bottom: rem(40);
     font-size: rem(16);
-    font-family: inherit; 
+    font-family: inherit;
     border: 1px solid #ddd;
     border-radius: rem(4);
     box-sizing: border-box;
-    resize: vertical; 
+    resize: vertical;
     line-height: 1.6;
     margin-bottom: 0;
 
     &::placeholder {
         color: #aaa;
-        white-space: pre-line; 
+        white-space: pre-line;
     }
 
     &:focus {
@@ -810,11 +811,11 @@ footer {
     font-size: rem(13);
     color: #999;
     pointer-events: none;
-    
+
     .current-count {
         color: #00462A;
         font-weight: 600;
-        
+
         &.error {
             color: #e74c3c;
         }
@@ -822,17 +823,17 @@ footer {
 }
 
 .error-message {
-    position: absolute; 
+    position: absolute;
     left: 0;
-    bottom: rem(-22); 
+    bottom: rem(-22);
     color: #e74c3c;
     font-size: rem(13);
     font-weight: 500;
     display: none;
-    white-space: nowrap; 
+    white-space: nowrap;
     top: 100%;
     margin-top: rem(8);
-    
+
     &.show {
         display: block;
     }
@@ -842,14 +843,14 @@ footer {
 /* 3. 사진/동영상 첨부 */
 .photo-section {
     margin-bottom: rem(40);
-    padding:0 rem(24);
-    
+    padding: 0 rem(24);
+
     .section-title {
         font-size: rem(16);
         font-weight: 600;
         margin: 0 0 rem(16) 0;
     }
-    
+
     .optional {
         font-size: rem(14);
         font-weight: 400;
@@ -861,7 +862,7 @@ footer {
 .photo-uploader {
     display: flex;
     gap: rem(10);
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .photo-upload-box {
@@ -869,7 +870,7 @@ footer {
     height: rem(150);
     border-radius: rem(4);
     background-color: #f9f9f9;
-    
+
     /* 메인 업로드 버튼 (label) */
     &.main-upload {
         cursor: pointer;
@@ -890,20 +891,20 @@ footer {
             display: none;
         }
 
-        i { 
+        i {
             font-size: rem(24);
             margin-bottom: rem(8);
         }
 
         span {
             font-size: rem(14);
-            word-break: break-all; 
-            text-align: center; 
-            line-height: 1.3; 
-            padding: 0 rem(4); 
+            word-break: break-all;
+            text-align: center;
+            line-height: 1.3;
+            padding: 0 rem(4);
         }
     }
-    
+
     /* .placeholder (회색 빈 칸) */
     &.placeholder {
         border: 1px solid #f0f0f0;
@@ -913,100 +914,268 @@ footer {
 
 /* 4. 유의사항 */
 .guidelines-section {
-    padding:0 rem(24);
+    padding: 0 rem(24);
     background-color: #fdfdfd;
     margin-bottom: rem(40);
-    
+
     .section-title {
         font-size: rem(16);
         font-weight: 600;
         margin: 0 0 rem(12) 0;
         color: #555;
     }
-    
+
     ul {
         margin: 0;
-        padding-left: rem(20); 
+        padding-left: rem(20);
         list-style-type: disc;
     }
-    
+
     li {
         font-size: rem(14);
         color: #777;
         line-height: 1.7;
-        
-        & + li {
+
+        &+li {
             margin-top: rem(8);
         }
     }
 }
 
 
-/*------------------ review.html --------------*/
+/*------------------ review.scss --------------*/
+
+/* 페이지 기본 설정 */
 .review-page {
-  width: 90%;
-  max-width: rem(1200);
-  margin: 0 auto;
-  padding: 0;
-  font-family: 'Pretendard', sans-serif;
+    width: 90%;
+    max-width: rem(1200);
+    margin: 0 auto;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
 }
 
 /* 상단 배너 */
 .review-banner {
-  text-align: center;
-  background-color: #fffdf1;
-  padding: rem(32);
-  margin-bottom: rem(80);
-  justify-content: center; 
-  align-items: center;
+    text-align: center;
+    background-color: #fffdf1;
+    padding: rem(32) 0;
+    margin-bottom: rem(80);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
 }
+
 .review-banner h2 {
-  font-size: rem(24);
-  margin-bottom: rem(24);
-  color: #333333;
+    font-size: rem(24);
+    margin-bottom: rem(8);
+    color: #333333;
+    font-weight: 700;
 }
+
 .review-banner p {
-  color: #333333;
-  font-size: rem(16);
-  margin-bottom: rem(40);
+    color: #333333;
+    font-size: rem(16);
+    margin-bottom: rem(24);
+    line-height: 1.5;
 }
+
 .review-banner .banner-buttons {
-  display: flex; 
-  width: rem(384);
-  gap: rem(16);  
-  margin: 0 auto;
+    display: flex;
+    width: rem(384);
+    gap: rem(8);
+    margin: 0 auto;
 }
 
 .review-banner .banner-buttons a {
-  flex: 1; 
-  height: rem(48);
-  border-radius: rem(8);
-  background-color: #00462A;
-  color: #fffdf1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
+    flex: 1;
+    height: rem(48);
+    border-radius: rem(8);
+    background-color: #00462A;
+    color: #fffdf1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: rem(16);
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.review-banner .banner-buttons a:hover {
+    background-color: #005a33;
 }
 
 
-
-/* 섹션 제목 */
-.section-title {
-  font-size: rem(32);
-  font-weight: bold;
-  margin-bottom: rem(24);
+/* 리뷰 리스트 그리드 */
+.review-list-section {
+    max-width: rem(1236);
+    margin: rem(40) auto;
+    padding: 0 rem(20);
 }
 
-/* 리뷰 카드 리스트 */
+.review-list-section h2 {
+    font-size: rem(32);
+    font-weight: bold;
+    margin-bottom: rem(24);
+    color: #333333;
+}
+
 .review-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(24);
 }
+
 .review-card {
-  background-color: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rg
+    margin-bottom: rem(24);
+    height: rem(416);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.review-card img {
+    width: 100%;
+    height: rem(220);
+    min-height: rem(220);
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.review-card a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    box-shadow: 0 rem(2) rem(6) #333333 15;
+    border-radius: rem(8);
+    overflow: hidden;
+}
+
+
+.review-card .review-content {
+    padding: rem(16);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.review-card .review-content h3 {
+    font-size: rem(18);
+    font-weight: 700;
+    margin-bottom: rem(8);
+    color: #333;
+    line-height: 1.4;
+    max-height: 2.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+.review-card .review-content p {
+    font-size: rem(14);
+    color: #666;
+    line-height: 1.5em;
+    min-height: 3.0em;
+    margin-bottom: rem(16);
+    flex-grow: 1;
+    max-height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+.review-card .review-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: rem(13);
+    color: #999;
+    margin-top: auto;
+}
+
+.review-card .review-meta .author {
+    font-weight: 500;
+}
+
+
+
+/* 페이지네이션 스타일 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: rem(80);
+    margin-bottom: rem(80);
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: rem(8); 
+}
+
+.pagination .page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(20); 
+    height: rem(24);
+    border-radius: rem(8);
+    background-color: #ffffff;
+    color: #5DAD94;
+    border: 1px solid #5DAD94;
+    text-decoration: none;
+    font-size: rem(16);
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.pagination .page-item:not(.active):not(.disabled):hover .page-link {
+    background-color: #ffffff;
+    color: #00462A;
+    border-color: #00462A;
+}
+
+
+.pagination .page-item.active .page-link {
+    background-color: #00462A;
+    color: #ffffff;
+    border-color: #00462A;
+}
+
+
+.pagination .page-item.disabled .page-link {
+    color: #bbb;
+    background-color: #f7f7f7;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+    background-color: #f7f7f7;
+    color: #bbb;
+    border-color: #eee;
+}
+
+/* '...' 표시 스타일 */
+.pagination .page-item.disabled .page-link[class*="..."] {
+    background-color: transparent;
+    border-color: transparent;
+    color: #888;
+    cursor: default;
 }

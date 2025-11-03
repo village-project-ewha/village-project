@@ -1,29 +1,66 @@
 {% extends "index.html" %}
 {% block section %}
-    <div class="header">
-        <h1>{{ review.title }}</h1>
-        <div class="rating">⭐ {{ '%.1f'|format(review.rating) }}점</div>
-        <div class="meta">{{ review.author }} | {{ review.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
-    </div>
 
-    <p>{{ review.content }}</p>
+<div class="review-detail-page-container">
 
-    {% if review.image_url %}
-        <div class="review-img">
-        <img src="{{ url_for('static', filename=review.image_url) }}">
+    <section class="review-product-info">
+        <div class="product-thumbnail">
+            <img src="{{ url_for('static', filename=product.image_url) if product.image_url else url_for('static', filename='resource/default.jpg') }}" alt="{{ product.name }}">
         </div>
-    {% endif %}
 
-    <div class="product-box">
-        <div class="product-info">
-        <img src="{{ url_for('static', filename=product.image_url) if product.image_url else url_for('static', filename='resource/default.jpg') }}">
-        <div class="product-text">
-            <h3>{{ product.name }}</h3>
-            <p>판매자: {{ product.seller or '정보 없음' }}</p>
-            <p>가격: {{ product.price }}원</p>
+        <div class="product-details">
+            <h2>{{ review.title }}</h2>
+            
+            <p class="product-name-link">상품: {{ product.name }}</p>
+
+            <div class="product-rating">⭐ {{ '%.1f'|format(review.rating) }}</div>
+
+            <div class="product-actions">
+                <a href="#">[ {{ product.seller or '판매자 정보 없음' }} 프로필 > ]</a>
+                <span>|</span>
+                <a href="#" class="report-link">신고</a>
+            </div>
         </div>
+    </section>
+
+    <section class="review-main-content">
+        <div class="reviewer-meta">
+            <span class="reviewer-name">{{ review.author }}</span> <span class="reviewer-rating">⭐ {{ '%.1f'|format(review.rating) }}</span>
+            <span class="review-date">{{ review.created_at }}</span> </div>
+
+        <p class="review-body">
+            {{ review.content }}
+        </p>
+
+        {% if review.image_url %}
+        <div class="review-image-container">
+            <img src="{{ url_for('static', filename=review.image_url) }}" alt="리뷰 이미지">
         </div>
-    </div>
+        {% endif %}
+
+        </section>
+
+    <footer class="review-page-footer">
+        <div class="action-box">
+            <h4>쇼핑 계속하기</h4>
+            <p>새로운 상품을 둘러보세요</p>
+            <a href="{{ url_for('hello') }}">바로가기 ></a>
+        </div>
+        <div class="action-box">
+            <h4>내 리뷰 작성하기</h4>
+            <p>구매한 상품의 리뷰를 남겨보세요</p>
+            <a href="{{ url_for('select_review_target') }}">바로가기 ></a>
+        </div>
+        <div class="action-box helpful-box">
+            <h4>이 리뷰가 도움이 되셨나요?</h4>
+            <div class="helpful-buttons">
+                <button class="btn-like">👍 (123)</button>
+                <button class="btn-dislike">👎 (123)</button>
+            </div>
+        </div>
+    </footer>
 
     <a class="back-btn" href="{{ url_for('view_review') }}">← 리뷰 목록으로</a>
+
+</div> 
 {% endblock %}
