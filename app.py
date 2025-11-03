@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import sys
 import os
 import uuid 
+from datetime import datetime
 from werkzeug.utils import secure_filename 
 
 application = Flask(__name__)
@@ -55,25 +56,116 @@ class Product(db.Model):
     comment_count = db.Column(db.Integer, default=0)
     like_count = db.Column(db.Integer, default=0)
 
-# 3. DB 파일 생성
-with application.app_context():
-    db.create_all()
+class Review(db.Model):  
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    author = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Float, nullable=False)
+    image_url = db.Column(db.String(200))
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    product = db.relationship('Product', backref=db.backref('reviews', lazy=True))
 
+
+# -----------------------------------------------------------------
+# 🎯 Mock Pagination 클래스 (Flask-SQLAlchemy 인터페이스 모방)
+# 이 클래스는 DB 쿼리 없이, 순수 Python 리스트로 페이지네이션을 처리
+# -----------------------------------------------------------------
+class MockPagination:
+    def __init__(self, query, page, per_page, total):
+        self.items = query 
+        self.page = page
+        self.per_page = per_page
+        self.total = total
+        
+        # 총 페이지 수 계산
+        self.pages = (total + per_page - 1) // per_page
+        
+        # 이전/다음 페이지 정보 계산
+        self.has_prev = page > 1
+        self.prev_num = page - 1 if self.has_prev else None
+        self.has_next = page < self.pages
+        self.next_num = page + 1 if self.has_next else None
+
+    # iter_pages 메서드 모방 (템플릿에서 사용하는 핵심 기능)
+    def iter_pages(self, left_edge=1, right_edge=1, left_current=2, right_current=2):
+        last = 0
+        for num in range(1, self.pages + 1):
+            if num <= left_edge or \
+               (self.page - left_current - 1 < num < self.page + right_current + 1) or \
+               num > self.pages - right_edge:
+                if last + 1 != num:
+                    yield None  # ... 표시를 위해 None 반환
+                yield num
+                last = num
+
+# -----------------------------------------------------------------
+# 🎯 Mock 상품 클래스 (Product 모델 대신 사용)
+# -----------------------------------------------------------------
+class MockProduct:
+    def __init__(self, id, name, image_url, price, deposit, comment_count, like_count, trade_type, **kwargs):
+        self.id = id
+        self.name = name
+        self.image_url = image_url
+        self.price = price
+        self.deposit = deposit
+        self.comment_count = comment_count
+        self.like_count = like_count
+        self.trade_type = trade_type
+        for key, value in kwargs.items():
+             setattr(self, key, value)
+
+# -----------------------------------------------------------------
+# 🎯 Mock 데이터 생성 (총 25개로 페이지네이션 테스트 용이)
+# -----------------------------------------------------------------
+mock_products = [
+    MockProduct(
+        id=i, 
+        name=f"Mock 상품 {i}", 
+        image_url="resource/sample.jpg", 
+        price=10000 + i * 1000, 
+        deposit=5000 + i * 500,
+        comment_count=i % 5,
+        like_count=i % 7,
+        trade_type="대여" if i % 2 == 0 else "판매"
+    ) for i in range(1, 26) 
+]
+# -----------------------------------------------------------------
 
 
 # --- 4. 라우트 정의 ---
 
-@application.route("/")
+@application.route('/')
 def hello():
     page = request.args.get('page', 1, type=int)
-    
     ITEMS_PER_PAGE = 12
 
-    pagination = Product.query.order_by(Product.id.desc()).paginate(
-        page=page, per_page=ITEMS_PER_PAGE, error_out=False
+    # ------------------------------
+    # 🎯 Mock 데이터 기반 페이지네이션 로직
+    # ------------------------------
+    total_items = len(mock_products)
+    start = (page - 1) * ITEMS_PER_PAGE
+    end = start + ITEMS_PER_PAGE
+    paginated_items = mock_products[start:end] # 현재 페이지의 Mock 데이터 슬라이싱
+
+    # Flask-SQLAlchemy의 paginate() 인터페이스를 모방하는 MockPagination 객체 생성
+    pagination = MockPagination(
+        query=paginated_items, 
+        page=page, 
+        per_page=ITEMS_PER_PAGE, 
+        total=total_items
     )
-    
-    return render_template("home.html", pagination=pagination)
+
+    # ------------------------------
+    # 템플릿으로 전달
+    # ------------------------------
+    return render_template(
+        "home.html",
+        pagination=pagination 
+    )
+
+
 
 @application.route("/login")
 def login():
@@ -82,6 +174,36 @@ def login():
 @application.route("/signup")
 def signup():
     return render_template("signup.html")
+
+@application.route("/review")
+def view_review():
+    # ------------------------------
+    # Mock 클래스 정의
+    # ------------------------------
+    class MockReview:
+        def __init__(self, id, title, content, author, image_url, date, rating):
+            self.id = id
+            self.title = title
+            self.content = content
+            self.author = author
+            self.image_url = image_url
+            self.date = date
+            self.rating = rating
+
+    # ------------------------------
+    # Mock 데이터 (6개)
+    # ------------------------------
+    mock_reviews = [
+        MockReview(1, "첫치피티 공유팟", "첫치피티 공유팟 했어요~! 대학원 덕분에...", "송한결", "resource/sample.jpg", "2025.10.08", 5),
+        MockReview(2, "빌리지에서 기타 피크까지 빌리지", "오히려 좋았다 ㅋㅋ 피크 빌려서 연습 완!", "김민지", "resource/sample.jpg", "2025.10.08", 5),
+        MockReview(3, "샴푸", "린스랑 같이 써봤는데 향도 좋고 괜찮아요", "박서연", "resource/sample.jpg", "2025.10.08", 4),
+        MockReview(4, "애플펜슬 공유팟", "필요할 때 잠깐 빌리니까 너무 편해요!", "이하늘", "resource/sample.jpg", "2025.10.08", 5),
+        MockReview(5, "애플펜슬", "잃어버릴 줄 알았는데... 잘 쓰고 반납함!", "정수빈", "resource/sample.jpg", "2025.10.08", 4),
+        MockReview(6, "후드집업 빌렸어요~", "사이즈도 딱 맞고 향도 좋았어요 ☺", "전다은", "resource/sample.jpg", "2025.10.08", 5)
+    ]
+
+    return render_template("review.html", reviews=mock_reviews)
+
 
 @application.route("/list")
 def view_list():
@@ -97,9 +219,12 @@ def view_products():
     return render_template("products.html")
 '''
 
-@application.route("/review")
-def view_review():
-    return render_template("review.html")
+
+@application.route("/review/<int:review_id>")  
+def review_detail(review_id):
+    review = Review.query.get_or_404(review_id)
+    product = review.product
+    return render_template("review_detail.html", review=review, product=product)
 
 @application.route("/reg_items")
 def reg_items():
@@ -178,7 +303,7 @@ def reg_review(transaction_id):
 def reg_item_submit_post():
     data = request.form
     
-    # --- 5. 이미지 파일 처리 ---
+    # --- 이미지 파일 처리 ---
     image_file = request.files.get("file") 
     
     if image_file: 
@@ -193,7 +318,7 @@ def reg_item_submit_post():
     else:
         img_path_for_db = None 
 
-    # --- 6. DB에 상품 저장 ---
+    # --- DB에 상품 저장 ---
     try:
         new_product = Product(
             name=data.get("name"),

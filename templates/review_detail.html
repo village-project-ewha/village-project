@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block section %}
+    <div class="header">
+        <h1>{{ review.title }}</h1>
+        <div class="rating">⭐ {{ '%.1f'|format(review.rating) }}점</div>
+        <div class="meta">{{ review.author }} | {{ review.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+    </div>
+
+    <p>{{ review.content }}</p>
+
+    {% if review.image_url %}
+        <div class="review-img">
+        <img src="{{ url_for('static', filename=review.image_url) }}">
+        </div>
+    {% endif %}
+
+    <div class="product-box">
+        <div class="product-info">
+        <img src="{{ url_for('static', filename=product.image_url) if product.image_url else url_for('static', filename='resource/default.jpg') }}">
+        <div class="product-text">
+            <h3>{{ product.name }}</h3>
+            <p>판매자: {{ product.seller or '정보 없음' }}</p>
+            <p>가격: {{ product.price }}원</p>
+        </div>
+        </div>
+    </div>
+
+    <a class="back-btn" href="{{ url_for('view_review') }}">← 리뷰 목록으로</a>
+{% endblock %}

@@ -1,14 +1,45 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "index.html" %}
+{% block section %}
+<section class="review-page">
+  <!-- 상단 안내 배너 -->
+  <div class="review-banner">
+    <h2>리뷰 작성하고 포인트 받으세요!</h2>
+    <p>당신의 소중한 경험이 다른 사용자에게 큰 도움이 됩니다.</p>
+    <div class="banner-buttons">
+        <a href="/">쇼핑 계속하기</a>
+        <a href="/select_review" class="write-review-btn">내 리뷰 작성하기</a>
+    </div>
+  </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
-</head>
+  <!-- 제목 -->
+  <h2 class="section-title">빌리지 이웃들의 최신 리뷰!</h2>
 
-<body>
-    <h1>여기는 리뷰 페이지입니다!</h1>
-</body>
+  <!-- 리뷰 카드 리스트 -->
+  <div class="review-list">
+    {% for review in reviews %}
+    <div class="review-card">
+      <a href="{{ url_for('review_detail', review_id=review.id) }}">
+        <img src="{{ url_for('static', filename=review.image_url) }}" alt="리뷰 이미지">
+        <div class="review-content">
+          <h3>{{ review.title }}</h3>
+          <p>{{ review.content }}</p>
+          <div class="review-meta">
+            <span class="author">{{ review.author }}</span>
+            <span class="date">{{ review.date }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- 페이지네이션 -->
+  <div class="pagination">
+    <button>&lt;&lt;</button>
+    <button class="active">1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>&gt;&gt;</button>
+  </div>
+</section>
+{% endblock %}

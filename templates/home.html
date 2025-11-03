@@ -26,23 +26,20 @@
     <section class="product-list-section">
         <h2>지금 바로 대여 가능해요!</h2>
         <div class="product-grid">
-
             {% if pagination.items %}
-                
                 {% for product in pagination.items %}
-                <div class="product-card">
+                <div class="review-card">
                     <a href="/product_detail?id={{ product.id }}">
                         <div class="product-image-wrapper">
-                            <img src="{{ url_for('static', filename=product.image_url if product.image_url else 'resource/placeholder.png') }}" alt="{{ product.name }}">
+                            <img src="{{ url_for('static', filename=product.image_url if product.image_url else 'resource/sample.jpg') }}" alt="{{ product.name }}">
                         </div>
                         <div class="product-info">
                             <h3>{{ product.name }}</h3>
                             <div class="price-group">
                                 <span class="price">{{ "{:,.0f}원".format(product.price) }}</span><span class="per-day">/일</span>
                                 <span class="deposit">보증금 {{ "{:,.0f}원".format(product.deposit) }}</span>
-                            </div>
+                            </div>zzz
                             <div class="meta-info">
-                                <span class="time">3분 전</span> 
                                 <span class="comments"><i class="far fa-comment"></i> {{ product.comment_count }}</span>
                                 <span class="likes"><i class="far fa-heart"></i> {{ product.like_count }}</span>
                                 <span class="trade-type">{{ product.trade_type }}</span>
@@ -50,15 +47,15 @@
                         </div>
                     </a>
                 </div>
-                {% endfor %}
+            {% endfor %}
 
 
-                {% else %}
-                <div class="empty-message">
-                    <p>아직 등록된 상품이 없습니다. 😥</p>
-                    <p>첫 번째 상품을 등록해보세요!</p>
-                </div>
-                {% endif %}
+            {% else %}
+            <div class="empty-message">
+                <p>아직 등록된 상품이 없습니다. 😥</p>
+                <p>첫 번째 상품을 등록해보세요!</p>
+            </div>
+            {% endif %}
         </div>
 
         <nav class="pagination-container" aria-label="Page navigation">
