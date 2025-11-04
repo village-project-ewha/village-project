@@ -1,0 +1,220 @@
+#prod_reg_title {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-top: 24px;
+}
+
+.image_box {
+    width: 1200px;
+    height: 200px;
+    border: 1px dashed #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+}
+
+.product_image input[type="file"] {
+    display: none;
+}
+
+.image_box img {
+    display: none;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.name_box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    height: 52px;
+    border: 1px solid #000;
+    font-family: "Noto Sans KR";
+    cursor: text;
+}
+
+.name_box input[type="text"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 60px 0 20px;
+    font-size: 14px;
+    color: #000;
+}
+
+.name_box input[type="number"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 60px 0 20px;
+    font-size: 14px;
+    color: #000;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.name_box input::placeholder {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.char_count,
+.char_count_explain {
+    position: absolute;
+    right: 12px;
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    pointer-events: none;
+}
+
+.category_box {
+    padding-left: 20px;
+    display: flex;
+    width: 1180px;
+    height: 52px;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #000;
+}
+
+.category_box select {
+    width: 240px;
+    height: 17px;
+    border: 1px solid rgba(217, 217, 217, 1);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #000;
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 8px;
+    cursor: pointer;
+    padding-left: 8px;
+}
+
+.explain_box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    height: 240px;
+    border: 1px solid #000;
+    font-family: "Noto Sans KR";
+    cursor: text;
+}
+
+.explain_box input[type="text"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 60px 0 20px;
+    font-size: 14px;
+    color: #000;
+}
+
+.way_box,
+.status_box {
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+    width: 1180px;
+    height: 52px;
+    border: 1px solid #000;
+    gap: 24px;
+}
+
+.sell_box,
+.borrow_box,
+.new_box,
+.likely_box,
+.old_box,
+.broken_box {
+    display: flex;
+    gap: 8px;
+}
+
+#sell_text,
+#borrow_text,
+#new_text,
+#likely_text,
+#old_text,
+#broken_text {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+textarea {
+    position: relative;
+    margin: 16px;
+    width: 1110px;
+    height: 208px;
+    border: none;
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    resize: none;
+}
+
+.char_count_explain {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.submit_box {
+    margin: 40px 0px;
+    width: 1200px;
+    height: 52px;
+    background-color: #00462A;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submit_text {
+    color: #fff;
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.submit_box input[type="submit"] {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    padding: 0 60px 0 20px;
+}

@@ -1,0 +1,375 @@
+.main_banner {
+    max-width: 1200px;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    padding: 32px 32px 32px 16px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    gap: 20px;
+    scrollbar-color: white transparent;
+}
+
+.banner {
+    width: 1200px;
+    height: 400px;
+    padding: 32px 32px 32px 0px;
+}
+
+.pre_list {
+    padding: 40px;
+    width: auto;
+    font-family: "Noto Sans KR", "Roboto", system-ui, -apple-system, sans-serif;
+    color: #000;
+}
+
+#pre_list_title {
+    color: #000;
+    font-family: var(--Static-Display-Small-Font, Roboto);
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: var(--Static-Display-Small-Line-Height, 44px);
+    /* 137.5% */
+    letter-spacing: var(--Static-Display-Small-Tracking, 0);
+}
+
+.pre_list_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.product_card {
+    width: 264px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.product_card img {
+    width: 100%;
+    height: 264px;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+}
+
+.product_info {
+    position: relative;
+    padding: 12px 8px;
+}
+
+#product_01 {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+}
+
+.price-left {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+}
+
+#product_02 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 36px;
+    width: 96px;
+    height: 32px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+#product_03 {
+    width: 24px;
+    height: 19px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: var(--Static-Display-Small-Font, Roboto);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: var(--Static-Display-Small-Line-Height, 44px);
+    /* 275% */
+    letter-spacing: var(--Static-Display-Small-Tracking, 0);
+}
+
+#product_04 {
+    color: #000;
+    font-family: var(--Static-Display-Small-Font, Roboto);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: var(--Static-Display-Small-Line-Height, 44px);
+    /* 275% */
+    letter-spacing: var(--Static-Display-Small-Tracking, 0);
+}
+
+.p_attribute {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+}
+
+.p_attribute_left {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+}
+
+#product_05 {
+    color: rgba(0, 70, 42, 0.50);
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    /* 21px */
+}
+
+#product_05::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: rgba(0, 70, 42, 0.50);
+    margin: 0 8px;
+}
+
+.product_info a i.fa-solid {
+    color: rgba(0, 70, 42, 0.50);
+    font-size: 16px;
+    vertical-align: -2px;
+    padding-right: 4px;
+}
+
+#product_06 {
+    color: rgba(0, 70, 42, 0.50);
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    /* 21px */
+}
+
+#product_06::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: rgba(0, 70, 42, 0.50);
+    margin: 0 8px;
+}
+
+#product_07 {
+    color: rgba(0, 70, 42, 0.50);
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    /* 21px */
+}
+
+#product_08 {
+    color: rgba(0, 70, 42, 0.50);
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    /* 21px */
+}
+
+.pagenation {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagenation span {
+    margin: 9px;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    color: rgba(0, 70, 42, 0.50);
+    text-align: center;
+    font-family: var(--Static-Body-Small-Font, Roboto);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--Static-Body-Small-Line-Height, 16px);
+    /* 100% */
+    letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
+}
+
+.find_list {
+    padding: 40px;
+    width: auto;
+    font-family: "Noto Sans KR", "Roboto", system-ui, -apple-system, sans-serif;
+    color: #000;
+}
+
+#list_title {
+    padding-right: 8px;
+    color: #000;
+    font-family: var(--sds-typography-body-font-family);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    /* 33.6px */
+}
+
+a i.fa-regular.fa-square-plus {
+    color: var(--Ewha-Mint, #36AE92);
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
+}
+
+#see_all {
+    color: var(--Ewha-Mint, #36AE92);
+    font-family: "Noto Sans KR";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.find_list_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.find_card {
+    width: 272px;
+    height: 152px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 70, 42, 0.50);
+}
+
+#find_t {
+    padding: 0 16px;
+    width: 240px;
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    /* 27px */
+}
+
+.find_attribute {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 16px;
+}
+
+.f_attr {
+    display: flex;
+    align-items: center;
+    color: rgba(0, 70, 42, 0.50);
+    font-family: "Noto Sans KR";
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.f_attr::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background: rgba(0, 70, 42, 0.50);
+    margin: 0 8px;
+}
+
+.f_attr:last-child::after {
+    content: none;
+}
+
+#f_chat {
+    margin-left: 4px;
+}
+
+.find_text {
+    padding: 0 16px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.5;
+    max-width: 240px;
+}
+
+.review_list {
+    padding: 40px;
+    width: auto;
+    font-family: "Noto Sans KR", "Roboto", system-ui, -apple-system, sans-serif;
+    color: #000;
+}
+
+#review_title {
+    display: inline-flex;
+    align-items: center;
+    padding-right: 8px;
+    color: #000;
+    font-family: var(--sds-typography-body-font-family);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    /* 33.6px */
+}
+
+#r_num {
+    align-items: center;
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.r_img img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+}
+
+.r_img_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin: 16px 0;
+}

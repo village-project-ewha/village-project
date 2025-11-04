@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>  
+    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
+    <title>{% block title %}Village{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -24,10 +25,10 @@
                     </a>
                     <nav class="main-nav">
                         <ul>
-                            <li><a href="/">전체 상품</a></li>
+                            <li><a href="/products">전체 상품</a></li>
                             <li><a href="/review">전체 리뷰</a></li>
                         </ul>
-                    </nav>      
+                    </nav>
                 </div>
 
                 <div class="navbar__center">
@@ -47,6 +48,10 @@
             </div>
         </nav>
     </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
     <div id="page-wrapper">
         <main>

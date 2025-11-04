@@ -1,70 +1,107 @@
 {% extends "index.html" %}
+{% block title %}상품 등록{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='reg_items.css') }}">
+<script src="{{ url_for('static', filename='reg_items.js') }}" defer></script>
+{% endblock head %}
 
 {% block section %}
-    <div class="content-header">
-        <h1>상품 등록 화면입니다.</h1>
+<form action="/submit_item_post" method="post" enctype="multipart/form-data">
+    <div class="product_image">
+        <p id="prod_reg_title">대표 이미지</p>
+        <label for="file" class="image_box" id="image_box">
+            <a href="#"><i class="fa-regular fa-square-plus"></i></a>
+            <p id="upload_text">사진을 추가해 주세요</p>
+            <img id="preview" alt="미리보기" />
+        </label>
+        <input type="file" name="file" id="file">
+    </div>
+    <div class="product_name">
+        <p id="prod_reg_title">상품 이름</p>
+        <label for="name" class="name_box">
+            <input type="text" name="name" id="name" maxlength="40" placeholder="상품 이름을 입력해주세요">
+            <span class="char_count" id="charCount">[0/40]</span>
+        </label>
+    </div>
+    <div class="product_category">
+        <p id="prod_reg_title">카테고리</p>
+        <label for="category" class="category_box">
+            <select id="category" name="category">
+                <option value="Clothes" selected> 의류 </option>
+                <option value="Beauty"> 뷰티 </option>
+                <option value="Books"> 전공서적 </option>
+                <option value="Furniture"> 가구 </option>
+                <option value="Electronics"> 전자기기 </option>
+                <option value="ETC"> 기타 </option>
+            </select>
+            <select id="mid_category" name="mid_category">
+                <option value="" disabled selected>중분류</option>
+            </select>
+            <select id="low_category" name="low_category">
+                <option value="" disabled selected>소분류</option>
+            </select>
+        </label>
+    </div>
+    <div class="product_way">
+        <p id="prod_reg_title">거래 방식</p>
+        <label class="way_box">
+            <label class="sell_box">
+                <input type="checkbox" name="way" id="sell_box">
+                <p id="sell_text">판매</p>
+            </label>
+            <label class="borrow_box">
+                <input type="checkbox" name="way" id="borrow_box">
+                <p id="borrow_text">대여</p>
+            </label>
+        </label>
     </div>
 
-    <form action="/submit_item_post" method="post" enctype="multipart/form-data">
-        <div>
-            <br><br>
-            <label for="name">Item name: </label>
-            <input type="text" name="name" id="name" required>
-            <br><br>
-        </div>
-        <div>
-            <label for="img">Representative Image upload : </label>
-            <input type="file" name="file" /><br><br>
-        </div>
-        <div>
-            <label for="seller"> Seller ID: </label>
-            <input type="text" name="seller" id="seller" required><br><br>
-        </div>
-        <div>
-            <label for="addr"> Address: </label>
-            <input type="text" name="addr" id="addr" required><br><br>
-        </div>
-        <div>
-            <label for="tel">Email: </label>
-            <input type="text" name="email" id="email" required><br><br>
-        </div>
-        <div>
-            <label for="category">Category: </label>
-            <br>
-            <select id="category" name="category">
-                <option value="Clothes" selected> Clothes </option>
-                <option value="Beauty"> Beauty </option>
-                <option value="Books"> Books </option>
+    <div class="product_price">
+        <p id="prod_reg_title">가격(판매가)</p>
+        <label for="price" class="name_box">
+            <input type="number" name="price" id="price" maxlength="40" placeholder="판매 가격을 입력해주세요.">
+        </label>
+    </div>
+    <div class="product_status">
+        <p id="prod_reg_title">상품 상태</p>
+        <label class="status_box">
+            <label class="new_box">
+                <input type="checkbox" name="status" id="new_box">
+                <p id="new_text">새 상품 (미사용)</p>
+            </label>
+            <label class="likely_box">
+                <input type="checkbox" name="status" id="likely_box">
+                <p id="likely_text">사용감 거의 없음</p>
+            </label>
+            <label class="old_box">
+                <input type="checkbox" name="status" id="old_box">
+                <p id="old_text">사용감 많음</p>
+            </label>
+            <label class="broken_box">
+                <input type="checkbox" name="status" id="broken_box">
+                <p id="broken_text">고장/파손 상품</p>
+            </label>
+        </label>
+    </div>
+    <div class="product_place">
+        <p id="prod_reg_title">거래 장소</p>
+        <label for="place" class="name_box">
+            <input type="text" name="place" id="name" maxlength="40" placeholder="예: 이화여자대학교 정문 앞">
+        </label>
+    </div>
+    <div class="product_explain">
+        <p id="prod_reg_title">설명</p>
+        <label for="explain" class="explain_box">
+            <textarea type="text" name="explain" id="explain" maxlength="2000" placeholder="상품에 대한 설명을 자세하게 입력해주세요.
+- 전공책의 경우: 교수명, 출판사, 필기 여부 등 
+- 대여의 경우: 대여 가능 기간, 보증금 여부 등"></textarea>
+            <span class="char_count_explain" id="charCount_explain">[0/2000]</span>
+        </label>
+    </div>
+    <label class="submit_box">
+        <p id="submit_text">등록하기</p>
+        <input type="submit" value="submit">
+    </label>
+</form>
 
-                <option value="Furniture"> Furniture </option>
-                <option value="Electronics"> Electronics </option>
-                <option value="ETC"> ETC </option>
-            </select><br><br>
-        </div>
-        <div>
-            <label for="card">Credit Card? (Y/N): </label>
-            <br>
-            <select id="card" name="card">
-                <option value="Y" selected>Yes</option>
-                <option value="N">No</option>
-            </select><br><br>
-        </div>
-        <div>
-            <label for="status">Status? </label>
-            <br>
-            <select id="status" name="status">
-                <option value="new" selected>New</option>
-                <option value="lnew">Likely New</option>
-                <option value="used">Used</option>
-            </select><br><br>
-        </div>
-        <div>
-            <label for="phone">Phone : </label>
-            <input type="text" name="phone" id="phone"><br><br>
-        </div>
-        <div>
-            <input type="submit" value="Submit!"><br><br>
-        </div>
-    </form>
 {% endblock section %}
-

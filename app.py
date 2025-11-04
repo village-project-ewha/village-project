@@ -4,7 +4,7 @@ application = Flask(__name__)
 
 @application.route("/")
 def hello():
-    return render_template("index.html")
+    return render_template("home.html")
 
 @application.route("/login")
 def login():
@@ -14,9 +14,9 @@ def login():
 def signup():
     return render_template("signup.html")
 
-@application.route("/list")
+@application.route("/products")
 def view_list():
-    return render_template("list.html")
+    return render_template("products.html")
 
 @application.route("/product_detail")
 def product_detail():
@@ -47,28 +47,28 @@ def reg_item_submit_post():
     data=request.form
 
     name=data.get("name")
-    seller=data.get("seller")
-    addr=data.get("addr")
-    email=data.get("email")
     category=data.get("category")
-    card=data.get("card")
+    mid_category=data.get("mid_category")
+    low_category=data.get("low_category")
+    way=data.get("way")
+    price=data.get("price")
     status=data.get("status")
-    phone=data.get("phone")
-    print(name, seller, addr, email, category, card, status, phone)
+    place=data.get("place")
+    print(name, category, mid_category, low_category, status, way, price, place)
 
     return render_template("result.html", data=data, img_path="static/resource/{}".format(image_file.filename))
 
 @application.route("/submit_item")
 def reg_item_submit():
     name=request.args.get("name")
-    seller=request.args.get("seller")
-    addr=request.args.get("addr")
-    email=request.args.get("email")
     category=request.args.get("category")
-    card=request.args.get("card")
+    mid_category=request.args.get("mid_category")
+    low_category=request.args.get("low_category")
+    way=request.args.get("way")
+    price=request.args.get("price")
     status=request.args.get("status")
-    phone=request.args.get("phone")
-    print(name, seller, addr, email, category, card, status, phone)
+    place=request.args.get("place")
+    print(name, category, mid_category, low_category, status, way, price, place)
 
     return render_template("reg_item.html")
 

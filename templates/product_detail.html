@@ -1,10 +1,203 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "index.html" %}
+{% block title %}상품 상세{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='product_detail.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='products.css') }}">
+{% endblock head %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
-</head>
+{% block section %}
+<div class="detail_upper">
+    <div class="detail_img">
+        <img src="../static/resource/products_png/공학용계산기.png" alt="review1">
+    </div>
+    <div class="detail_right">
+        <div class="detail_info_1">
+            <div class="detail_category">
+                <span id="category">카테고리</span>
+                <span id="category">&gt;</span>
+                <span id="category">중분류</span>
+                <span id="category">&gt;</span>
+                <span id="category">소분류</span>
+            </div>
+            <p id="detail_text">공학용 계산기</p>
+            <div id="detail_price">
+                <span id="price">2,000</span>
+                <span id="price">원</span>
+                <span id="detail_text">/일</span>
+            </div>
+        </div>
+        <div class="detail_card">
+            <div class="detail_card_1">
+                <div id="card_1_left">
+                    <a href="#"><i class="fa-solid fa-sack-dollar"></i></a>
+                    <span>보증금</span>
+                    <span>10,000</span>
+                    <span>원</span>
+                    <span id="bar">|</span>
+                    <span>직거래</span>
+                </div>
+                <div id="card_1_right">
+                    <span>이화여자대학교 정문 앞</span>
+                </div>
+            </div>
+            <div class="detail_card_2">
+                <div class="card2_row">
+                    <span class="card2_left">상품 상태</span>
+                    <span class="card2_right">새상품</span>
+                </div>
+                <hr class="line">
+                <div class="card2_row">
+                    <span class="card2_left">대여 단위</span>
+                    <span class="card2_right">개</span>
+                </div>
+                <div class="card2_row">
+                    <span class="card2_left">최소 대여</span>
+                    <span class="card2_right">1</span>
+                </div>
+                <div class="card2_row">
+                    <span class="card2_left">최대 대여</span>
+                    <span class="card2_right">3</span>
+                </div>
+                <hr class="line">
+                <div class="card2_row">
+                    <span class="card2_left">거래 방식</span>
+                    <span class="card2_right">만나서 직거래</span>
+                </div>
+            </div>
+        </div>
+        <div class="detail_card_bottom">
+            <a href="#"><i class="fa-regular fa-heart"></i></a>
+            <div id="detail_chat_button_1">
+                <span id="button_text_1">채팅하기</span>
+            </div>
+            <div id="detail_chat_button_2">
+                <span id="button_text_2">대여 신청하기</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="detail_middle">
+    <div class="product_info_detail">
+        <p id="product_info_detail_text">상품 정보</p>
+        <hr class="line_2">
+        <p id="product_info_detail_content">판매자 기재 설명설명설명</p>
+    </div>
+    <div class="seller_info_detail">
+        <p id="seller_info_detail_text">판매자</p>
+        <hr class="line_3">
+        <div id="seller_info_detail">
+            <p id="seller_info_detail_name">판매자 이름</p>
+            <a href="#"><i class="fa-regular fa-circle-user"></i></a>
+        </div>
+    </div>
+</div>
+<div class="bottom_recommend">
+    <p id="recommend_title">이런 상품 어때요?</p>
+    <div class="list_row">
+        <div class="card13">
+            <div class="product_card">
+                <img src="../static/resource/products_png/마우스.png" alt="product1">
+                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
+                <div class="product_info">
+                    <p id="product_01">마우스</p>
+                    <div class="price">
+                        <div class="price-left">
+                            <span id="product_02">2,000원</span>
+                            <span id="product_03">/일</span>
+                        </div>
+                        <span id="product_04">보증금 10,000원</span>
+                    </div>
+                    <div class="p_attribute">
+                        <div class="p_attribute_left">
+                            <span id="product_05">3분 전</span>
+                            <a href="#"><i class="fa-solid fa-comments"></i></a>
+                            <span id="product_06">5</span>
+                            <a href="#"><i class="fa-solid fa-heart"></i></a>
+                            <span id="product_07">45</span>
+                        </div>
+                        <span id="product_08">만나서 직거래</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card14">
+            <div class="product_card">
+                <img src="../static/resource/products_png/담요.png" alt="product1">
+                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
+                <div class="product_info">
+                    <p id="product_01">담요</p>
+                    <div class="price">
+                        <div class="price-left">
+                            <span id="product_02">2,000원</span>
+                            <span id="product_03">/일</span>
+                        </div>
+                        <span id="product_04">보증금 10,000원</span>
+                    </div>
+                    <div class="p_attribute">
+                        <div class="p_attribute_left">
+                            <span id="product_05">3분 전</span>
+                            <a href="#"><i class="fa-solid fa-comments"></i></a>
+                            <span id="product_06">5</span>
+                            <a href="#"><i class="fa-solid fa-heart"></i></a>
+                            <span id="product_07">45</span>
+                        </div>
+                        <span id="product_08">만나서 직거래</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card15">
+            <div class="product_card">
+                <img src="../static/resource/products_png/맥북충전기.png" alt="product1">
+                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
+                <div class="product_info">
+                    <p id="product_01">맥북 충전기</p>
+                    <div class="price">
+                        <div class="price-left">
+                            <span id="product_02">2,000원</span>
+                            <span id="product_03">/일</span>
+                        </div>
+                        <span id="product_04">보증금 10,000원</span>
+                    </div>
+                    <div class="p_attribute">
+                        <div class="p_attribute_left">
+                            <span id="product_05">3분 전</span>
+                            <a href="#"><i class="fa-solid fa-comments"></i></a>
+                            <span id="product_06">5</span>
+                            <a href="#"><i class="fa-solid fa-heart"></i></a>
+                            <span id="product_07">45</span>
+                        </div>
+                        <span id="product_08">만나서 직거래</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card16">
+            <div class="product_card">
+                <img src="../static/resource/products_png/충전기.png" alt="product1">
+                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
+                <div class="product_info">
+                    <p id="product_01">충전기</p>
+                    <div class="price">
+                        <div class="price-left">
+                            <span id="product_02">2,000원</span>
+                            <span id="product_03">/일</span>
+                        </div>
+                        <span id="product_04">보증금 10,000원</span>
+                    </div>
+                    <div class="p_attribute">
+                        <div class="p_attribute_left">
+                            <span id="product_05">3분 전</span>
+                            <a href="#"><i class="fa-solid fa-comments"></i></a>
+                            <span id="product_06">5</span>
+                            <a href="#"><i class="fa-solid fa-heart"></i></a>
+                            <span id="product_07">45</span>
+                        </div>
+                        <span id="product_08">만나서 직거래</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock section %}

@@ -1,0 +1,283 @@
+.detail_upper {
+    padding: 40px 0px 0px 40px;
+    display: flex;
+}
+
+.detail_img img {
+    width: 552px;
+    height: 552px;
+    object-fit: cover;
+}
+
+.detail_info_1 {
+    padding: 16px 48px;
+    line-height: 0.4;
+}
+
+.detail_category {
+    color: var(--Ewha-Grey, #B9B9B9);
+    font-family: var(--Static-Display-Small-Font, Roboto);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+#detail_text {
+    color: #000;
+    font-family: var(--Static-Display-Small-Font, Roboto);
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+#price {
+    width: 154px;
+    height: 54.756px;
+    flex-direction: column;
+    justify-content: center;
+    color: #000;
+    font-family: var(--Static-Display-Small-Font, Roboto);
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.detail_card {
+    padding: 20px 0px 0px 48px;
+}
+
+.detail_card_1 {
+    width: 536px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 5px 5px 0 0;
+    border: 0.5px solid var(--Ewha-Green, #00462A);
+    background: rgba(0, 70, 42, 0.28);
+    display: flex;
+    align-items: center;
+    line-height: 250%;
+}
+
+#card_1_left {
+    padding-left: 16px;
+}
+
+.fa-solid.fa-sack-dollar {
+    font-size: 16px;
+    color: #00462A;
+}
+
+#card_1_right {
+    padding-right: 16px;
+    margin-left: auto;
+}
+
+.detail_card_1 span {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+#bar {
+    color: #00462A;
+}
+
+
+.detail_card_2 {
+    width: 536px;
+    height: 280px;
+    flex-shrink: 0;
+    border-radius: 0 0 5px 5px;
+    border: 0.5px solid var(--Ewha-Green, #00462A);
+    border-top-color: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.line {
+    width: 488px;
+    border: none;
+    border-top: 0.5px solid rgba(0, 70, 42, 0.40);
+    margin: 0px auto;
+    justify-items: center;
+}
+
+.card2_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+}
+
+.card2_left {
+    color: var(--Ewha-Green, #00462A);
+    font-family: var(--Static-Title-Medium-Font, Roboto);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: var(--Static-Title-Medium-Line-Height, 24px);
+    /* 171.429% */
+    letter-spacing: var(--Static-Title-Medium-Tracking, 0.15px);
+    padding: 16px 24px;
+}
+
+.card2_right {
+    color: #000;
+    text-align: right;
+    font-family: var(--Static-Title-Medium-Font, Roboto);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: var(--Static-Title-Medium-Line-Height, 24px);
+    /* 171.429% */
+    letter-spacing: var(--Static-Title-Medium-Tracking, 0.15px);
+    padding: 16px 24px;
+    text-align: right;
+}
+
+.detail_card_bottom {
+    padding: 20px 40px;
+    display: flex;
+    gap: 9px;
+}
+
+.detail_card_bottom a i.fa-regular.fa-heart {
+    font-size: 48px;
+    color: #888888;
+}
+
+#detail_chat_button_1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 233px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 1px solid var(--Ewha-Green, #00462A);
+    background: #FFF;
+    align-items: center;
+}
+
+#button_text_1 {
+    display: flex;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--Ewha-Green, #00462A);
+    text-align: center;
+}
+
+#detail_chat_button_2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 231px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 1px solid var(--Ewha-Green, #00462A);
+    background: var(--Ewha-Green, #00462A);
+}
+
+#button_text_2 {
+    display: flex;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--Ewha-Green, #ffffff);
+    text-align: center;
+}
+
+.detail_middle {
+    padding: 40px;
+    display: flex;
+    gap: 72px;
+}
+
+.product_info_detail {
+    width: 696px;
+    height: 615px;
+}
+
+#product_info_detail_text {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.line_2 {
+    width: 696px;
+    border: none;
+    border-top: 0.5px solid rgba(0, 70, 42, 0.40);
+    margin: 0px auto;
+    justify-items: center;
+}
+
+#product_info_detail_content {
+    width: 696px;
+    height: 515.806px;
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.seller_info_detail {
+    width: 372px;
+    height: 615px;
+}
+
+#seller_info_detail_text {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.line_3 {
+    width: 372px;
+    border: none;
+    border-top: 0.5px solid rgba(0, 70, 42, 0.40);
+    margin: 0px auto;
+    justify-items: center;
+}
+
+#seller_info_detail {
+    padding-top: 32px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#seller_info_detail_name {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#seller_info_detail a i.fa-regular.fa-circle-user {
+    font-size: 90px;
+    color: #888888;
+}
+
+.bottom_recommend {
+    padding: 40px;
+}
+
+#recommend_title {
+    color: #000;
+    font-family: "Noto Sans KR";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
