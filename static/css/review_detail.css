@@ -1,0 +1,358 @@
+/* =========================================
+   Re-designed Review Detail CSS
+   - 1rem = 16px (기본 폰트 크기 기준)
+   - '카드형'에서 '섹션형' 레이아웃으로 변경
+   - (페이지 배경이 흰색이라고 가정)
+   ========================================= */
+
+.review_detail {
+    max-width: 64rem;
+    margin: 2rem auto;
+    box-sizing: border-box;
+    padding: 0 1rem;
+    overflow: hidden;
+
+
+    font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #111;
+}
+
+
+.container {
+    display: block;
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+    padding: 0;
+}
+
+/* 1. 리뷰 목록으로 돌아가기 */
+.nav-back {
+    display: block;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background-color: #00462A;
+    /* 메인 녹색 */
+    border-radius: 0.5rem;
+}
+
+.nav-back a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+.nav-back a:hover {
+    text-decoration: underline;
+}
+
+.nav-back a i {
+    margin-right: 0.5rem;
+    font-size: 0.9em;
+}
+
+
+
+/* 2. 상품 정보 (첫 번째 카드) */
+.product-info {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    border-bottom: none;
+}
+
+.product-info img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 0.5rem;
+    margin-right: 1.5rem;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.product-info .details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.product-info a {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #00462A;
+    font-weight: 500;
+}
+
+.product-info a:hover {
+    text-decoration: underline;
+}
+
+.star-star {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.average-star {
+    margin-right: 0.5rem;
+    position: relative;
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+.average-star .empty-stars {
+    color: #ddd;
+}
+
+.average-star .full-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #f0ad4e;
+}
+
+.average-star .rating-text {
+    font-size: 0.95em;
+    color: #555;
+}
+
+
+.product-info a i {
+    margin-left: 0.3rem;
+    font-size: 0.8em;
+}
+
+/* 3. 리뷰 본문 (두 번째 카드) */
+.review-main {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.review-main .review-head h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.review-meta {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.review-meta span {
+    margin-right: 1rem;
+}
+
+.review-rating {
+    color: #f0ad4e;
+    font-weight: bold;
+}
+
+.review-content {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    font-size: 1rem;
+    color: #111;
+    white-space: pre-wrap;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    max-height: 5.1em;
+    transition: max-height 0.4s ease;
+}
+
+.review-content.expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    max-height: 1000px;
+}
+
+.show-more-button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #00462A;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0;
+    display: block;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.show-more-button:hover {
+    text-decoration: underline;
+}
+
+/* --- 갤러리 (리뷰 본문 카드 내부에 있음) --- */
+.product-gallery {
+    max-width: 100%;
+    margin: 0 auto 1.5rem auto;
+}
+
+.main-image-viewer {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #f0f0f0;
+}
+
+.main-image-viewer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.thumbnail-carousel-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.thumbnail-list {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex-grow: 1;
+    padding: 0.25rem 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.thumbnail-list::-webkit-scrollbar {
+    display: none;
+}
+
+.thumbnail-item {
+    width: 7.5rem;
+    height: 6.375rem;
+    object-fit: cover;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.thumbnail-item:hover {
+    opacity: 1;
+}
+
+.thumbnail-item.active {
+    border-color: #00462A;
+    opacity: 1;
+}
+
+.carousel-nav {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0 0.5rem;
+    user-select: none;
+}
+
+.carousel-nav:hover {
+    color: #111;
+}
+
+/* 4. 하단 푸터 (카드 그룹) */
+.review-footer {
+    padding: 0;
+    width: 100%;
+    background-color: transparent;
+    border-top: none;
+    box-sizing: border-box;
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+
+.action-card {
+    flex: 1 1 0%;
+    border: 1px solid #e5e5e5;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #ffffff;
+}
+
+.action-card:hover {
+    border-color: #00462A;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 4.5rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.card-icon {
+    font-size: 1.5rem;
+    color: #00462A;
+    margin-bottom: 0.75rem;
+}
+
+.card-link,
+.card-button {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.3s;
+    width: 100%;
+}
+
+.card-link:hover,
+.card-button:hover {
+    color: #00462A;
+}
+
+.card-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+}

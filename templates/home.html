@@ -1,11 +1,11 @@
 {% extends "index.html" %}
 {% block title %}Home{% endblock title %}
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock head %}
 
 {% block section %}
-<div class="main_banner">
+<!-- div class="main_banner">
     <div class="banner">
         <img src="static/resource/Main Banner/Main_Banner_1.png" alt="mainbanner1">
     </div>
@@ -15,6 +15,25 @@
     <div class="banner">
         <img src="static/resource/Main Banner/Main_Banner_3.png" alt="mainbanner3">
     </div>
+</div -->
+
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <img src="static/resource/Main Banner/Main_Banner_1.png" alt="배너 1">
+        </div>
+        <div class="swiper-slide">
+            <img src="static/resource/Main Banner/Main_Banner_2.png" alt="배너 2">
+        </div>
+        <div class="swiper-slide">
+            <img src="static/resource/Main Banner/Main_Banner_3.png" alt="배너 3">
+        </div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
 </div>
 
 <div class="pre_list">

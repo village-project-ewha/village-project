@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from database import DBhandler
+import hashlib
 import sys
+
 application = Flask(__name__)
+application.config["SECRET_KEY"] = "helloosp"
 
 DB = DBhandler()
 
@@ -17,41 +20,28 @@ def login():
 def signup():
     return render_template("signup.html")
 
+@application.route("/signup_post", methods=['POST'])
+def register_user():
+    data=request.form
+    pw=request.form['pw']
+    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()    #id 중복 체크 필요
+    if DB.insert_user(data,pw_hash):
+        return render_template("login.html")
+    else:   # 중복 아이디 존재 시 플래시 메세지 띄움
+        flash("user id already exist!")
+        return render_template("signup.html")
+
 @application.route("/products")
-def view_list():
-    page = int(request.args.get("page", 1))
-    per_page = 16
-
-    all_items = DB.db.child("item").get().val()
-    if not all_items:
-        all_items = {}
-
-    items = list(all_items.values())
-
-    total_items = len(items)
-    total_pages = (total_items + per_page - 1) // per_page
-
-    start = (page - 1) * per_page
-    end = start + per_page
-    paginated_items = items[start:end]
-
-    return render_template(
-        "products.html",
-        items=paginated_items,
-        total_items=total_items,
-        total_pages=total_pages,
-        page=page,
-    )
+def view_products():
+    return render_template("products.html")
 
 @application.route("/product_detail")
 def product_detail():
     return render_template("product_detail.html")
 
-'''
-@application.route("/products")
-def view_products():
-    return render_template("products.html")
-'''
+@application.route("/list")
+def view_list():
+    return render_template("list.html")
 
 @application.route("/review")
 def view_review():

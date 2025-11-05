@@ -4,10 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
     <title>{% block title %}Village{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     {% block head %}{% endblock %}
 </head>
 
@@ -15,7 +20,11 @@
     <div class="navbar-wrapper">
         <nav class="navbar">
             <div class="navbar__top">
-                <a href="/login">로그인</a>&nbsp;|&nbsp;<a href="/signup">회원가입</a>
+                <ul>
+                    <!-- TODO: 로그인 상태에 따라 '로그아웃'으로 변경 필요 -->
+                    <li><a href="/login">로그인</a></li>
+                    <li><a href="/signup">회원가입</a></li>
+                </ul>
             </div>
 
             <div class="navbar__main">
@@ -32,7 +41,7 @@
                 </div>
 
                 <div class="navbar__center">
-                    <form class="search-form">
+                    <form class="search-form" action="/search" method="get">
                         <input type="text" placeholder="검색어를 입력하세요.">
                         <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
@@ -41,7 +50,25 @@
                 <div class="navbar__right">
                     <div class="user-icons">
                         <a href="#"><i class="fa-regular fa-heart"></i></a>
-                        <a href="#"><i class="fa-regular fa-circle-user"></i></a>
+
+                        <!-- 드롭다운 컨테이너 -->
+                        <div class="dropdown-container">
+                            <!-- 1. 클릭할 버튼 (사람 아이콘) -->
+                            <a href="#" id="profile-menu-button">
+                                <i class="fa-regular fa-circle-user"></i>
+                            </a>
+
+                            <!-- 2. 나타날 드롭다운 메뉴 (ul) -->
+                            <ul class="dropdown-menu" id="profile-dropdown">
+                                <li><a href="/reg_items">상품 등록하기</a></li>
+                                <li><a href="#">내 거래 내역</a></li>
+                                <li><a href="/reg_reviews">리뷰 등록하기</a></li>
+                                <li><a href="#">마이페이지</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </div>
+                        <!-- 드롭다운 끝 -->
                     </div>
                     <a href="/reg_items" class="btn-register">상품 등록</a>
                 </div>
