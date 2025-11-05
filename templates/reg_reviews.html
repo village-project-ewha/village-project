@@ -7,118 +7,120 @@
 {% endblock head %}
 
 {% block section %}
-<div class="review-container">
-    <form action="/submit_review_post" method="POST">
-        <div class="product-group">
-            <header class="review-header">
-                리뷰 작성하기
-            </header>
-            <!-- 1. <section>: 리뷰할 상품 정보 구역(DB에서 가져올 정보) -->
-            <section class="review-section product-section">
-                <div class="product-info-box">
-                    <!--TODO: /reg_reviews 라우트가 DB에서 'transaction' 객체 (거래내역)를 가져와야 함 -->
-                    <img src="{{ url_for('static', filename=transaction.product.image_url) }}"
-                        alt="{{ transaction.product.name }}" class="product-image">
 
-                    <div class="product-details">
+<div id="page-wrapper">
+    <div class="review-container">
+        <form action="/submit_review_post" method="POST">
+            <div class="product-group">
+                <header class="review-header">
+                    리뷰 작성하기
+                </header>
+                <!-- 1. <section>: 리뷰할 상품 정보 구역(DB에서 가져올 정보) -->
+                <section class="review-section product-section">
+                    <div class="product-info-box">
+                        <!--TODO: /reg_reviews 라우트가 DB에서 'transaction' 객체 (거래내역)를 가져와야 함 -->
+                        <img src="/static/resource/sample.jpg" alt="테스트 상품명입니다" class="product-image">
 
-                        <div class="product-title-group">
-                            <p class="product-name">{{ transaction.product.name }}</p>
-                            <p class="product-meta">
-                                [{{ transaction.product.category }}] [{{ transaction.product.brand }}]
+                        <div class="product-details">
+
+                            <div class="product-title-group">
+                                <p class="product-name">테스트 상품명입니다</p>
+                                <p class="product-meta">
+                                    [패션/잡화] [나이키]
+                                </p>
+                            </div>
+
+                            <p class="product-price">
+                                35,000원
                             </p>
+
+                            <p class="seller-info">
+                                판매자: 임시판매자_이름
+                            </p>
+
                         </div>
+                </section>
+            </div>
 
-                        <p class="product-price">
-                            {{ "{:,d}".format(transaction.product.price) }}원
-                        </p>
+            <!-- 2. <section>: "별점" 구역 -->
+            <section class="review-section rating-section">
+                <h2 class="section-title">이 상품은 어떠셨나요?</h2>
 
-                        <p class="seller-info">
-                            판매자: {{ transaction.product.seller }}
-                        </p>
-
+                <div class="rating-box">
+                    <div class="star-rating">
+                        <i class="fas fa-star" data-value="1"></i>
+                        <i class="fas fa-star" data-value="2"></i>
+                        <i class="fas fa-star" data-value="3"></i>
+                        <i class="fas fa-star" data-value="4"></i>
+                        <i class="fas fa-star" data-value="5"></i>
                     </div>
+                    <span class="rating-text">(0.0 / 5.0)</span>
+                </div>
+                <input type="hidden" name="rating" value="0">
             </section>
-        </div>
 
-        <!-- 2. <section>: "별점" 구역 -->
-        <section class="review-section rating-section">
-            <h2 class="section-title">이 상품은 어떠셨나요?</h2>
 
-            <div class="rating-box">
-                <div class="star-rating">
-                    <i class="fas fa-star" data-value="1"></i>
-                    <i class="fas fa-star" data-value="2"></i>
-                    <i class="fas fa-star" data-value="3"></i>
-                    <i class="fas fa-star" data-value="4"></i>
-                    <i class="fas fa-star" data-value="5"></i>
+            <!-- 3. <section>: "리뷰 제목" 구역 -->
+            <section class="review-section content-section">
+                <h3 class="section-title">리뷰 제목</h3>
+                <input type="text" name="review_title" class="review-input" placeholder="제목을 입력해 주세요.">
+            </section>
+
+            <!-- 4. <section>: "리뷰 내용" 구역 -->
+            <section class="review-section content-section">
+                <h3 class="section-title">상세한 리뷰를 작성해 주세요.</h3>
+                <div class="textarea-wrapper">
+                    <textarea name="review_content" class="review-textarea"
+                        placeholder="상품 이용 후기를 자세히 입력해 주세요. (20자 이상)&#10;• 상품 상태 / 보증금 여부 / 판매자 응답률 등"
+                        maxlength="1000"></textarea>
+                    <div class="char-count">
+                        <span class="current-count">0</span> / 1000
+                    </div>
+                    <p class="error-message" style="display: none;">* 20자 이상 작성해 주세요.</p>
                 </div>
-                <span class="rating-text">(0.0 / 5.0)</span>
-            </div>
-            <input type="hidden" name="rating" value="0">
-        </section>
+
+            </section>
 
 
-        <!-- 3. <section>: "리뷰 제목" 구역 -->
-        <section class="review-section content-section">
-            <h3 class="section-title">리뷰 제목</h3>
-            <input type="text" name="review_title" class="review-input" placeholder="제목을 입력해 주세요.">
-        </section>
-
-        <!-- 4. <section>: "리뷰 내용" 구역 -->
-        <section class="review-section content-section">
-            <h3 class="section-title">상세한 리뷰를 작성해 주세요.</h3>
-            <div class="textarea-wrapper">
-                <textarea name="review_content" class="review-textarea"
-                    placeholder="상품 이용 후기를 자세히 입력해 주세요. (20자 이상)&#10;• 상품 상태 / 보증금 여부 / 판매자 응답률 등"
-                    maxlength="1000"></textarea>
-                <div class="char-count">
-                    <span class="current-count">0</span> / 1000
+            <!-- 5. <section>: "사진/동영상 첨부" 구역 -->
+            <section class="review-section photo-section">
+                <h3 class="section-title">사진/동영상 첨부 <span class="optional">(선택)</span></h3>
+                <div class="photo-uploader">
+                    <label class="photo-upload-box main-upload">
+                        <input type="file" name="review_photos" class="photo-input" multiple>
+                        <i class="fas fa-plus"></i> <span>사진을 추가해 주세요</span>
+                    </label>
+                    <div class="photo-upload-box placeholder"></div>
+                    <div class="photo-upload-box placeholder"></div>
+                    <div class="photo-upload-box placeholder"></div>
+                    <div class="photo-upload-box placeholder"></div>
                 </div>
-                <p class="error-message" style="display: none;">* 20자 이상 작성해 주세요.</p>
+            </section>
+
+            <!-- 6. <section>: "리뷰 작성 유의사항" 구역 -->
+            <section class="review-section guidelines-section">
+                <h3 class="section-title">리뷰 작성 유의사항</h3>
+                <ul>
+                    <li>포토리뷰 작성 시 100P 지급! (최대 2장까지 가능)</li>
+                    <li>상품과 관련 없는 내용, 욕설, 비방, 명예훼손 등은 관리자 확인 후 노출되지 않습니다.</li>
+                </ul>
+            </section>
+
+
+            <div class="reg_reviews_button">
+                <button type="submit" class="submit-review-button">
+                    리뷰 등록하기
+                </button>
             </div>
 
-        </section>
 
+        </form>
+    </div>
 
-        <!-- 5. <section>: "사진/동영상 첨부" 구역 -->
-        <section class="review-section photo-section">
-            <h3 class="section-title">사진/동영상 첨부 <span class="optional">(선택)</span></h3>
-            <div class="photo-uploader">
-                <label class="photo-upload-box main-upload">
-                    <input type="file" name="review_photos" class="photo-input" multiple>
-                    <i class="fas fa-plus"></i> <span>사진을 추가해 주세요</span>
-                </label>
-                <div class="photo-upload-box placeholder"></div>
-                <div class="photo-upload-box placeholder"></div>
-                <div class="photo-upload-box placeholder"></div>
-                <div class="photo-upload-box placeholder"></div>
-            </div>
-        </section>
+    <script src="/static/reg_reviews.js" defer></script>
 
-        <!-- 6. <section>: "리뷰 작성 유의사항" 구역 -->
-        <section class="review-section guidelines-section">
-            <h3 class="section-title">리뷰 작성 유의사항</h3>
-            <ul>
-                <li>포토리뷰 작성 시 100P 지급! (최대 2장까지 가능)</li>
-                <li>상품과 관련 없는 내용, 욕설, 비방, 명예훼손 등은 관리자 확인 후 노출되지 않습니다.</li>
-            </ul>
-        </section>
-
-
-        <div class="reg_reviews_button">
-            <button type="submit" class="submit-review-button">
-                리뷰 등록하기
-            </button>
-        </div>
-
-
-    </form>
 </div>
 
 
-{% endblock section %}
 
-{% block scripts %}
-<script src="{{ url_for('static', filename='reg_reviews.js') }}" defer></script>
-{% endblock %}
+{% endblock section %}
