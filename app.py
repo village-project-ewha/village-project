@@ -8,6 +8,13 @@ from werkzeug.utils import secure_filename
 
 application = Flask(__name__)
 
+# -----------------------------------------------------------------
+# 🚨  디버그 모드일 때 브라우저가 static 파일을 캐시하지 않도록 함
+# -----------------------------------------------------------------
+if application.debug:
+    application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+# -----------------------------------------------------------------
+
 # --- 1. DB 설정 (SQLAlchemy) ---
 basedir = os.path.abspath(os.path.dirname(__file__))
 application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -149,10 +156,10 @@ class MockReview:
         self.created_at = created_at
 
 # ------------------------------
-# Mock 데이터
+# Mock 리뷰 데이터
 # ------------------------------
 mock_reviews = [
-    MockReview(1, 1, "첫치피티 공유팟", "...", "송한결", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
+    MockReview(1, 1, "챗지피티 공유팟", "내용\n내용\n내용\n내용\n", "송한결", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
     MockReview(2, 1, "빌리지에서 기타 피크까지 빌리지", "...", "김민지", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
     MockReview(3, 1, "샴푸", "...", "박서연", "resource/sample.jpg", "2025.10.08", 4, "2025.10.08"),
     MockReview(4, 1, "애플펜슬 공유팟", "...", "이하늘", "resource/sample.jpg", "2025.10.08", 5, "2025.10.08"),
@@ -207,6 +214,29 @@ def login():
 @application.route("/signup")
 def signup():
     return render_template("signup.html")
+
+@application.route("/review")
+def view_review():
+    page = request.args.get('page', 1, type=int)
+    REVIEWS_PER_PAGE = 6 # 한 페이지당 6개씩
+
+    # ------------------------------
+    # 🚨 Mock 데이터 페이지네이션 처리
+    # ------------------------------
+    total_items = len(mock_reviews)
+    start = (page - 1) * REVIEWS_PER_PAGE
+    end = start + REVIEWS_PER_PAGE
+    paginated_items = mock_reviews[start:end]
+
+    # MockPagination 클래스를 재사용
+    pagination = MockPagination( 
+        query=paginated_items, 
+        total=total_items,
+        page=page, 
+        per_page=REVIEWS_PER_PAGE,
+    )
+
+    return render_template("review.html", pagination=pagination)
 
 @application.route('/review/<int:review_id>') 
 def review_detail(review_id):

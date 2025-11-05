@@ -1,5 +1,11 @@
 {% extends "index.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/reg_reviews.js') }}" defer></script>
+{% endblock head %}
+
 {% block section %}
 <div class="review-container">
     <form action="/submit_review_post" method="POST">

@@ -1,66 +1,269 @@
 {% extends "index.html" %}
+
+
+{% block title %}리뷰 상세보기{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
+{% endblock head %}
+
+
+
 {% block section %}
+<div class="review_detail">
+    <div class="nav-back">
+        <a href="{{ url_for('view_review') }}">
+            <i class="fa-solid fa-chevron-left"></i>리뷰 목록으로 돌아가기
+        </a>
+    </div>
+    <div class="container">
 
-<div class="review-detail-page-container">
+        <div class="product-info">
+            <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}">
+            <div class="details">
+                <h3>{{ product.name }}</h3>
+                <div class="star-star">
+                    <div class="average-star">
+                        <div class="empty-stars">
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <div class="full-stars" style="width: 84%;">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="rating-text">
+                        <strong>4.2</strong> <span>(120)</span>
+                    </div>
+                </div>
 
-    <section class="review-product-info">
-        <div class="product-thumbnail">
-            <img src="{{ url_for('static', filename=product.image_url) if product.image_url else url_for('static', filename='resource/default.jpg') }}" alt="{{ product.name }}">
-        </div>
-
-        <div class="product-details">
-            <h2>{{ review.title }}</h2>
-            
-            <p class="product-name-link">상품: {{ product.name }}</p>
-
-            <div class="product-rating">⭐ {{ '%.1f'|format(review.rating) }}</div>
-
-            <div class="product-actions">
-                <a href="#">[ {{ product.seller or '판매자 정보 없음' }} 프로필 > ]</a>
-                <span>|</span>
-                <a href="#" class="report-link">신고</a>
+                <a href="{{ url_for('product_detail') }}">
+                    상품 정보 보러가기<i class="fa-solid fa-chevron-right"></i> 
+                </a>
             </div>
         </div>
-    </section>
 
-    <section class="review-main-content">
-        <div class="reviewer-meta">
-            <span class="reviewer-name">{{ review.author }}</span> <span class="reviewer-rating">⭐ {{ '%.1f'|format(review.rating) }}</span>
-            <span class="review-date">{{ review.created_at }}</span> </div>
+        <div class="review-main">
 
-        <p class="review-body">
-            {{ review.content }}
-        </p>
+            <div class="review-head">
+                <h2>{{ review.title }}</h2>
+                <div class="review-meta">
+                    <span class="review-rating">★ {{ review.rating }}점</span>
+                    <span><strong>작성자:</strong> {{ review.author }}</span>
+                    <span><strong>작성일:</strong> {{ review.created_at }}</span>
+                </div>
+            </div>
 
-        {% if review.image_url %}
-        <div class="review-image-container">
-            <img src="{{ url_for('static', filename=review.image_url) }}" alt="리뷰 이미지">
-        </div>
-        {% endif %}
+            <div class="review-item">
+                <div class="review-content" id="reviewText_{{ review.id }}">{{ review.content }}</div>
+                <button class="show-more-button" id="toggleButton_{{ review.id }}">더보기</button>
+            </div>
 
-        </section>
+            <div class="product-gallery">
 
-    <footer class="review-page-footer">
-        <div class="action-box">
-            <h4>쇼핑 계속하기</h4>
-            <p>새로운 상품을 둘러보세요</p>
-            <a href="{{ url_for('hello') }}">바로가기 ></a>
-        </div>
-        <div class="action-box">
-            <h4>내 리뷰 작성하기</h4>
-            <p>구매한 상품의 리뷰를 남겨보세요</p>
-            <a href="{{ url_for('select_review_target') }}">바로가기 ></a>
-        </div>
-        <div class="action-box helpful-box">
-            <h4>이 리뷰가 도움이 되셨나요?</h4>
-            <div class="helpful-buttons">
-                <button class="btn-like">👍 (123)</button>
-                <button class="btn-dislike">👎 (123)</button>
+                <div class="main-image-viewer">
+                    <img id="mainImage_{{ review.id }}" src="" alt="메인 리뷰 사진">
+                </div>
+
+                <div class="thumbnail-carousel-container">
+
+                    <button class="carousel-nav prev-btn" data-target-id="thumbnailList_{{ review.id }}">❮</button>
+
+                    <div class="thumbnail-list" id="thumbnailList_{{ review.id }}">
+                    </div>
+
+                    <button class="carousel-nav next-btn" data-target-id="thumbnailList_{{ review.id }}">❯</button>
+
+                </div>
             </div>
         </div>
-    </footer>
 
-    <a class="back-btn" href="{{ url_for('view_review') }}">← 리뷰 목록으로</a>
+    </div>
+    <div class="review-footer">
+        <div class="btn-group">
 
-</div> 
+            <!-- 1. 쇼핑 계속하기 섹션 -->
+            <div class="shopping action-card">
+                <div class="card-header">
+                    <i class="fa-solid fa-bag-shopping card-icon"></i>
+                    <a href="{{ url_for('hello') }}" class="card-link">
+                        쇼핑 계속하기
+                    </a>
+                </div>
+                <p class="card-description">새로운 상품을 둘러보세요</p>
+            </div>
+
+            <!-- 2. 내 리뷰 작성하기 섹션 (로그인 조건 가정) -->
+            <div class="write-review action-card">
+                <div class="card-header">
+                    <i class="fa-regular fa-pen-to-square card-icon"></i>
+                    <a href="{{ url_for('select_review_target') }}" class="card-link">
+                        내 리뷰 작성하기
+                    </a>
+                </div>
+                <p class="card-description">구매 후기를 남겨주세요</p>
+            </div>
+
+            <!-- 3. 리뷰 유용성 섹션 -->
+            <div class="helpful action-card">
+                <div class="card-header">
+                    <i class="fa-regular fa-thumbs-up card-icon"></i>
+                    <button type="button" class="card-button">
+                        이 리뷰가 도움이 되셨나요?
+                    </button>
+                </div>
+                <p class="card-description">다른 사용자에게 도움을 주세요</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock section %}
+
+{% block scripts %}
+<script>
+    // --- 기존 스크립트 (write-review) ---
+    const writeReview = document.querySelector('.write-review');
+    if (writeReview) {
+        writeReview.style.opacity = '1';
+        writeReview.style.pointerEvents = 'auto';
+    }
+
+    // ==========================================================
+    // 갤러리 스크립트 (생성 + 기능)
+    // ==========================================================
+
+    // 1. 임시 Mock 데이터 정의
+    const mockImages = [
+        { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' },
+        { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' },
+        { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' },
+        { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' }
+    ];
+
+    // 2. Jinja2 변수를 JavaScript 변수로 가져오기
+    const reviewId = parseInt('{{ review.id }}');
+
+    // 3. 관련 DOM 요소 찾기
+    const mainImage = document.getElementById(`mainImage_${reviewId}`);
+    const thumbnailList = document.getElementById(`thumbnailList_${reviewId}`);
+
+    // (추가) 버튼 요소 찾기
+    const prevBtn = document.querySelector(`button[data-target-id="thumbnailList_${reviewId}"].prev-btn`);
+    const nextBtn = document.querySelector(`button[data-target-id="thumbnailList_${reviewId}"].next-btn`);
+
+
+    // 4. [1단계] 썸네일 이미지 동적 생성
+    if (mainImage && thumbnailList && mockImages.length > 0) {
+
+        // 메인 이미지 초기화
+        mainImage.src = `/static/${mockImages[0].url}`;
+
+        // 썸네일 목록 비우기
+        thumbnailList.innerHTML = '';
+
+        // 썸네일 생성
+        mockImages.forEach((image, index) => {
+            const imgElement = document.createElement('img');
+            const thumbnailUrl = `/static/${image.thumbnail_url || image.url}`;
+            const fullSrcUrl = `/static/${image.url}`;
+
+            imgElement.className = 'thumbnail-item';
+            if (index === 0) {
+                imgElement.classList.add('active');
+            }
+            imgElement.dataset.mainImgId = `mainImage_${reviewId}`;
+            imgElement.dataset.fullSrc = fullSrcUrl;
+            imgElement.src = thumbnailUrl;
+            imgElement.alt = `미리보기 사진 ${index + 1}`;
+
+            thumbnailList.appendChild(imgElement);
+        });
+
+        // -----------------------------------------------------
+        // 5. [2단계] 기능(이벤트) 로직 실행
+        // -----------------------------------------------------
+
+        // 5-1. 방금 생성한 썸네일 요소들과 상태 변수 선언
+        const thumbnails = thumbnailList.querySelectorAll('.thumbnail-item');
+
+        // ⭐️ [추가됨] 현재 활성화된 이미지의 인덱스 (0부터 시작)
+        let currentIndex = 0;
+        // ⭐️ [추가됨] 전체 이미지 개수
+        const totalImages = thumbnails.length;
+
+        // ⭐️ [추가됨] 이미지를 실제로 변경하고 'active' 클래스를 관리하는 핵심 함수
+        function showSlide(index) {
+
+            // 1. 인덱스 순환 처리 (다음/이전 버튼 클릭 시 범위 체크)
+            if (index >= totalImages) {
+                currentIndex = 0; // 마지막 이미지에서 '다음' 누르면 0번으로
+            } else if (index < 0) {
+                currentIndex = totalImages - 1; // 0번 이미지에서 '이전' 누르면 마지막으로
+            } else {
+                currentIndex = index; // 썸네일 클릭 시 해당 인덱스로
+            }
+
+            // 2. 새로 활성화될 썸네일 요소 가져오기
+            const newActiveThumbnail = thumbnails[currentIndex];
+
+            // 3. 메인 이미지 소스(src) 변경
+            mainImage.src = newActiveThumbnail.dataset.fullSrc;
+
+            // 4. 모든 썸네일에서 'active' 클래스 제거
+            thumbnails.forEach(t => t.classList.remove('active'));
+
+            // 5. 현재 썸네일에 'active' 클래스 추가
+            newActiveThumbnail.classList.add('active');
+
+            // 6. (기존 기능) 활성화된 썸네일이 중앙에 오도록 스크롤
+            scrollToCenter(newActiveThumbnail, thumbnailList);
+        }
+
+        // 5-2. 썸네일 클릭 시 메인 이미지 변경 (⭐️ [수정됨])
+        thumbnails.forEach((thumbnail, index) => { // 'index'를 인자로 받음
+            thumbnail.addEventListener('click', function () {
+                // ⭐️ 기존 로직 대신, showSlide 함수를 호출하여 로직을 한 곳에서 관리
+                showSlide(index);
+            });
+        });
+
+        // 5-3. 캐러셀 스크롤 버튼 기능 (⭐️ [수정됨])
+        if (prevBtn && nextBtn) {
+
+            // ⭐️ 기존 'scrollAmount' 로직은 'showSlide' 함수가 대체하므로 제거
+
+            prevBtn.addEventListener('click', () => {
+                // ⭐️ '이전' 이미지 보여주기
+                showSlide(currentIndex - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                // ⭐️ '다음' 이미지 보여주기
+                showSlide(currentIndex + 1);
+            });
+        }
+    }
+
+    // 6. 헬퍼 함수 (스크롤) 정의
+    function scrollToCenter(element, listContainer) {
+        const listWidth = listContainer.clientWidth;
+        const itemCenter = element.offsetLeft + (element.offsetWidth / 2);
+        const scrollPosition = itemCenter - (listWidth / 2);
+
+        listContainer.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+    }
+
+</script>
 {% endblock %}

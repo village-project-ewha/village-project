@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+    <!-- 1. 라이브러리 (Swiper, Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
+    <!-- 2. 커스텀 스타일시트 & 자바스크립트 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <script src="{{ url_for('static', filename='js/authjs') }}" defer></script>
 </head>
-
 <body>
-    <h1>여기는 로그인 페이지입니다!</h1>
+
+   
+
+    <div class="login-container">
+        <a href="{{ url_for('hello') }}" class="logo">
+            <img src="{{ url_for('static', filename='resource/Logo/005.png') }}" alt="village 로고" class="logo-image">
+        </a>
+        
+        <form class="login-form" action="#">
+            <input type="text" placeholder="아이디">
+            <input type="password" placeholder="비밀번호">
+            <button type="submit">로그인</button>
+        </form>
+
+        <div class="form-links-container">
+            <div class="form-links">
+                <a href="#">비밀번호 재설정</a>
+                <span class="separator">|</span>
+                <a href="#">회원가입</a>
+            </div>
+
+            <div class="extra-links">
+                <a href="#" class="problem">로그인에 문제가 있으신가요?</a>
+                <a href="#" class="nonmember">비회원 거래 조회하기</a>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            @2025 이화여자대학교. All Rights Reserved.
+        </footer>
+    </div>
+
+  
+
 </body>
+</html>
