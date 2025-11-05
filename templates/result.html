@@ -2,15 +2,18 @@
 
 {% block section %}
 <p>
-    Seller {{data.seller}} sells {{data.name}} and its category is {{data.category}}.
-    The item is {% if data['status'] == "lnew" %}
-    likely new!
+    Seller sells {{data.name}} and its category is {{data.category}}.
+    The item is {% if data['status'] == "new_box" %}
+    새 상품 (미사용)
     {% endif %}
-    {% if data['status'] == "new" %}
-    new!
+    {% if data['status'] == "likely_box" %}
+    사용감 거의 없음
     {% endif %}
-    {% if data['status'] == "used" %}
-    used!
+    {% if data['status'] == "old_box" %}
+    사용감 많음
+    {% endif %}
+    {% if data['status'] == "broken_box" %}
+    고장/파손 상품
     {% endif %}
 </p>
 <style>
@@ -20,17 +23,24 @@
 </style>
 <img src="{{img_path}}" class="img" />
 <p>
-    Contact via {{data.email}} or {{data.phone}}
-    if you are interested!
-    The address is {{data.addr}}
+    이 상품은 {{data.price}}원 입니다.
 </p>
 <p>
-    For payment, the credit card is
-    {% if data['card'] == "Y" %}
-    accepted!
+    거래 방식은
+    {% if data['way'] == "sell" %}
+    판매
     {% endif %}
-    {% if data['card'] == "N" %}
-    NOT accepted!
+    {% if data['way'] == "borrow" %}
+    대여
     {% endif %}
+    입니다.
+</p>
+<p>
+    거래 장소는 {{data.place}}입니다.
+</p>
+<p>
+    상품에 대한 상세정보는 다음과 같습니다.<br>
+    -----------------------------------<br>
+    {{data.explain}}
 </p>
 {% endblock section %}
