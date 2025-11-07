@@ -47,13 +47,21 @@ def view_list():
 def view_review():
     return render_template("review.html")
 
+@application.route("/review_detail")
+def review_detail():
+    return render_template("review_detail.html")
+
 @application.route("/reg_items")
 def reg_items():
     return render_template("reg_items.html")
 
 @application.route("/reg_reviews")
-def reg_review():
+def reg_reviews():
     return render_template("reg_reviews.html")
+
+@application.route("/select_review")
+def select_review():
+    return render_template("select_review.html")
 
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():

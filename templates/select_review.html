@@ -5,30 +5,71 @@
 {% endblock head %}
 
 {% block section %}
-<div class="content-container"
-    style="max-width: 800px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 8px;">
 
-    <h2 style="font-size: 24px; margin-bottom: 20px;">리뷰할 거래 선택</h2>
-    <p style="color: #555;">최근 거래한 내역입니다. 리뷰를 작성할 상품을 선택해주세요.</p>
+<div id="page-wrapper">
 
-    <div class="review-selection-list">
 
-        {% for tx in transactions %}
+    <div class="content-container"
+        style="max-width: 800px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 8px;">
 
-        <a href="{{ url_for('reg_review', transaction_id=tx.id) }}" class="transaction-card">
+        <h2 style="font-size: 24px; margin-bottom: 20px;">리뷰할 거래 선택</h2>
+        <p style="color: #555;">최근 거래한 내역입니다. 리뷰를 작성할 상품을 선택해주세요.</p>
 
-            <img src="{{ url_for('static', filename=tx.product.image_url) }}" alt="{{ tx.product.name }}">
+        <div class="review-selection-list">
 
-            <div class="transaction-details">
-                <p class="product-name">{{ tx.product.name }}</p>
-                <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
-            </div>
 
-            <span class="select-arrow">&gt;</span>
-        </a>
 
-        {% endfor %}
+            <a href="/reg_reviews" class="transaction-card">
+
+                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 1 (거래 ID: 1)">
+
+                <div class="transaction-details">
+                    <p class="product-name">테스트 상품 1 (거래 ID: 1)</p>
+                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
+                </div>
+
+                <span class="select-arrow">&gt;</span>
+            </a>
+
+
+
+            <a href="/reg_reviews" class="transaction-card">
+
+                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 5 (거래 ID: 5)">
+
+                <div class="transaction-details">
+                    <p class="product-name">테스트 상품 5 (거래 ID: 5)</p>
+                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
+                </div>
+
+                <span class="select-arrow">&gt;</span>
+            </a>
+
+
+
+            <a href="/reg_reviews" class="transaction-card">
+
+                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 9 (거래 ID: 9)">
+
+                <div class="transaction-details">
+                    <p class="product-name">테스트 상품 9 (거래 ID: 9)</p>
+                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
+                </div>
+
+                <span class="select-arrow">&gt;</span>
+            </a>
+
+
+        </div>
+
     </div>
 
+
+
+
+
+
 </div>
+
+
 {% endblock %}
