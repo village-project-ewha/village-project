@@ -10,11 +10,29 @@ DB = DBhandler()
 
 @application.route("/")
 def hello():
-    return render_template("home.html")
+   # return render_template("home.html")
+   return redirect(url_for('view_list')) # 11주차 수정: index 페이지 호출 대신 list 화면으로 연결
 
 @application.route("/login")
 def login():
     return render_template("login.html")
+
+@application.route("/login_confirm", methods=['POST'])
+def login_user():
+    id_=request.form['id'] 
+    pw=request.form['pw']
+    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() # 입력받은 비밀번호의 해시값 생성
+    if DB.find_user(id_, pw_hash): # 매칭되는 사용자 존재
+        session['user_id'] = id_
+        return redirect(url_for('view_list')) # 11주차 실습 기준 home 화면 이동 아님
+    else:
+        flash("Wrong ID or PW!")
+        return render_template("login.html")    
+
+@application.route("/logout")
+def logout_user():
+    session.clear()
+    return redirect(url_for('view_list'))
 
 @application.route("/signup")
 def signup():
@@ -24,7 +42,7 @@ def signup():
 def register_user():
     data=request.form
     pw=request.form['pw']
-    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()    #id 중복 체크 필요
+    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() #id 중복 체크 필요
     if DB.insert_user(data,pw_hash):
         return render_template("login.html")
     else:   # 중복 아이디 존재 시 플래시 메세지 띄움
@@ -35,13 +53,67 @@ def register_user():
 def view_products():
     return render_template("products.html")
 
-@application.route("/product_detail")
-def product_detail():
-    return render_template("product_detail.html")
+@application.route("/product_detail/<name>/")
+def product_detail(name):
+    print("###name:", name)
+    data = DB.get_item_byname(str(name))
+    print("###data:", data)
+    return render_template("detail.html", name=name, data=data)
+
 
 @application.route("/list")
 def view_list():
-    return render_template("list.html")
+    page = request.args.get("page", 0, type=int)
+    # 현재 설정으로 테스트 진행
+    per_page = 2 
+    per_row = 2 
+    row_count = int(per_page / per_row) # 현재는 1
+
+    start_idx = per_page * page
+    end_idx = per_page * (page + 1)
+
+    data = DB.get_items() 
+    
+    if not data: # 데이터가 아예 없을 때 처리
+        item_counts = 0
+        data_for_page = {}
+    else:
+        item_counts = len(data)
+        # 딕셔너리를 리스트로 변환하여 페이징 인덱스를 사용
+        data_list = list(data.items()) 
+        data_for_page = dict(data_list[start_idx:end_idx])
+        tot_count = len(data_for_page)
+
+    # 템플릿에 전달할 데이터를 담을 딕셔너리
+    rows_to_render = {}
+    row_count = int(per_page / per_row) # 실제 필요한 행의 수 계산
+
+    for i in range(row_count): 
+        start = i * per_row
+        end = (i + 1) * per_row
+
+        # 페이지에 보여줄 데이터가 남아있는 경우에만 row 딕셔너리 생성
+        if start < tot_count:
+            if end > tot_count: # 마지막 줄 처리
+                end = tot_count
+            
+            # data_for_page 딕셔너리에서 현재 행의 데이터를 잘라냄
+            row_data = dict(list(data_for_page.items())[start:end])
+            
+            # row1, row2, row3... 형식으로 저장하고 전달
+            rows_to_render[f'row{i+1}'] = row_data.items()
+        else:
+            break
+
+    # 템플릿 렌더링 시, 딕셔너리 언패킹으로 동적으로 변수 전달
+    return render_template(
+        "list.html",
+        limit = per_page,
+        page = page,
+        page_count = int((item_counts/per_page)+1),
+        total=item_counts,
+        **rows_to_render # 생성된 row만 동적으로 전달
+    )
 
 @application.route("/review")
 def view_review():
