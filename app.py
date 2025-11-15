@@ -17,7 +17,7 @@ def hello():
 def login():
     return render_template("login.html")
 
-@application.route("/login_confirm", methods=['POST'])
+@application.route("/login-form", methods=['POST'])
 def login_user():
     id_=request.form['id'] 
     pw=request.form['pw']

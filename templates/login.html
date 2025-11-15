@@ -1,27 +1,26 @@
-<!--
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>   -->
+    <title>로그인</title>
 
     <!-- 1. 라이브러리 (Swiper, Font Awesome) -->
-    <!--
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
-    -->
+    
 
     <!-- 2. 커스텀 스타일시트 & 자바스크립트 -->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
     <!-- script src="{{ url_for('static', filename='js/authjs') }}" defer></script -->
-<!--
+
 
 </head>
 
-제거% block section %}
+{% block section %}
 {% with mesg = get_flashed_messages() %}
 {% if mesg != [] %}
 <script>alert("{{mesg[0]}}")</script>
@@ -32,11 +31,11 @@
         <img src="{{ url_for('static', filename='resource/Logo/005.png') }}" alt="village 로고" class="logo-image">
     </a>
 
-    <form class="login-form" method="post" action="#">
-        <input type="text" name="id" placeholder="아이디">
-        <input type="password" name="pw" placeholder="비밀번호">
-        <button type="submit">로그인</button>
-    </form>
+    <form class="login-form" method="post" action="{{ url_for('login_user') }}">
+    <input type="text" name="id" placeholder="아이디" required>
+    <input type="password" name="pw" placeholder="비밀번호" required>
+    <button type="submit">로그인</button>
+</form>
 
     <div class="form-links-container">
         <div class="form-links">
@@ -51,27 +50,6 @@
         </div>
     </div>
 </div>
-제거% endblock section %}
+거{% endblock section %}
 
 </html>
-
--->
-
-{% extends "index.html" %}
-
-{% block section %}
-{% with mesg = get_flashed_messages() %}
-{% if mesg != [] %}
-<script>alert("{{mesg[0]}}")</script>   
-{% endif %}
-{% endwith %}
-<form action = "/login_confirm" method = "post">
-    <p> ID: <input type = "text" name = "id"></p>
-    <p> password: <input type = "password" name = "pw"></p>
-    <p> 아이디와 비밀번호를 입력하고 로그인버튼을 누르세요.<br> <input type = "submit" value = "로그인"></p>
-</form>
-
-<a href="/signup"> <button onclick="/signup">
-    회원가입
-    </button> </a>
-{% endblock section %}
