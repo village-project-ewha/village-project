@@ -20,7 +20,8 @@ class DBhandler:
             "status": data["status"],
             "place": data["place"],
             "explain":data["explain"],
-            "img_path": img_path
+            "img_path": img_path,
+            "created_at":data["created_at"]
         }
 
         self.db.child("item").child(name).set(item_info)
@@ -74,7 +75,7 @@ class DBhandler:
     def get_items(self):
         items = self.db.child("item").get().val()
         return items
-   
+    
     
     def get_item_byname(self, name):
         items = self.db.child("item").get()

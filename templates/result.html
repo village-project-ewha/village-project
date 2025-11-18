@@ -27,12 +27,7 @@
 </p>
 <p>
     거래 방식은
-    {% if data['way'] == "sell" %}
-    판매
-    {% endif %}
-    {% if data['way'] == "borrow" %}
-    대여
-    {% endif %}
+    {{data.way}}
     입니다.
 </p>
 <p>

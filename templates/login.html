@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
 
     <!-- 1. 라이브러리 (Swiper, Font Awesome) -->
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
-    
+
 
     <!-- 2. 커스텀 스타일시트 & 자바스크립트 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
@@ -32,10 +33,10 @@
     </a>
 
     <form class="login-form" method="post" action="{{ url_for('login_user') }}">
-    <input type="text" name="id" placeholder="아이디" required>
-    <input type="password" name="pw" placeholder="비밀번호" required>
-    <button type="submit">로그인</button>
-</form>
+        <input type="text" name="id" placeholder="아이디" required>
+        <input type="password" name="pw" placeholder="비밀번호" required>
+        <button type="submit">로그인</button>
+    </form>
 
     <div class="form-links-container">
         <div class="form-links">
@@ -50,6 +51,6 @@
         </div>
     </div>
 </div>
-거{% endblock section %}
+{% endblock section %}
 
 </html>
