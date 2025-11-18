@@ -20,7 +20,8 @@ class DBhandler:
             "status": data["status"],
             "place": data["place"],
             "explain":data["explain"],
-            "img_path": img_path
+            "img_path": img_path,
+            "created_at":data["created_at"]
         }
 
         self.db.child("item").child(name).set(item_info)
@@ -55,3 +56,36 @@ class DBhandler:
                 if value['id'] == id_string:
                     return False
             return True
+        
+        # 매칭되는 user 찾기    
+    def find_user(self, id_, pw_):
+        # 'user' 노드에서 'id' 필드의 값이 id_와 일치하는 사용자만 조회
+        result = self.db.child("user").order_by_child("id").equal_to(id_).get()
+    
+        # 해당 ID를 가진 사용자가 존재하는지 확인
+        if result.val():
+        # 하나의 사용자만 있다고 가정하고 반복
+            for key, user_data in result.val().items():
+                # ID와 PW 해시가 모두 일치하는지 확인
+                if user_data['id'] == id_ and user_data['pw'] == pw_:
+                    return True
+    
+        return False
+    
+    def get_items(self):
+        items = self.db.child("item").get().val()
+        return items
+    
+    
+    def get_item_byname(self, name):
+        items = self.db.child("item").get()
+        target_value = ""
+        print("##########", name)
+        for res in items.each():
+            key_value = res.key()
+
+            if key_value == name:
+                target_value = res.val()
+        return target_value
+    
+    

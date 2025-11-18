@@ -218,3 +218,34 @@ footer {
     padding: 0;
     background-color: #eee;
 }
+
+.page-wrap {
+    text-align: center;
+    font-size: 0;
+}
+
+.page-nation {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-nation li {
+    display: inline-block;
+    list-style: none;
+    margin: 4px;
+    width: 30px;
+    height: 30px;
+    flex-direction: column;
+    justify-content: center;
+    color: rgba(0, 70, 42, 0.50);
+    text-align: center;
+    font-family: var(--Static-Body-Small-Font, Roboto);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--Static-Body-Small-Line-Height, 16px);
+    /* 100% */
+    letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
+}

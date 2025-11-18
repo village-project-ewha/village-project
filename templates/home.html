@@ -5,17 +5,6 @@
 {% endblock head %}
 
 {% block section %}
-<!-- div class="main_banner">
-    <div class="banner">
-        <img src="static/resource/Main Banner/Main_Banner_1.png" alt="mainbanner1">
-    </div>
-    <div class="banner">
-        <img src="static/resource/Main Banner/Main_Banner_2.png" alt="mainbanner2">
-    </div>
-    <div class="banner">
-        <img src="static/resource/Main Banner/Main_Banner_3.png" alt="mainbanner3">
-    </div>
-</div -->
 
 <div class="swiper mySwiper">
     <div class="swiper-wrapper">
@@ -38,333 +27,136 @@
 
 <div class="pre_list">
     <p id="pre_list_title">지금 바로 대여 가능해요!</p>
-    <div class="pre_list_row">
-        <div class="card1">
-            <div class="product_card">
-                <img src="../static/resource/products_png/공학용계산기.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">공학용 계산기</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
+    <table>
+        <tr>
+            {% for key, value in row1 %}
+            <td>
+                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                    <a>
+                        <div class="product_card">
+                            <img src="/static/{{value.img_path}}" alt="product">
+
+                            <div class="product_info">
+                                <p id="product_01">{{ value.name }}</p>
+
+                                <div class="price">
+                                    <div class="price-left">
+                                        <span id="product_02">{{ value.price }}원</span>
+                                        <span id="product_03">/일</span>
+                                    </div>
+                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
+                                </div>
+
+                                <div class="p_attribute">
+                                    <div class="p_attribute_left">
+                                        <span id="product_05">{{ value.time_ago }}</span>
+                                        <a><i class="fa-solid fa-comments"></i></a>
+                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
+                                        <a><i class="fa-solid fa-heart"></i></a>
+                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                    </div>
+
+                                    <span id="product_08">{{ value.way }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
+                    </a>
                 </div>
-            </div>
-        </div>
-        <div class="card2">
-            <div class="product_card">
-                <img src="../static/resource/products_png/넷플릭스.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">넷플릭스 일일 대여</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">1,500원</span>
-                            <span id="product_03">/일</span>
+
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for key, value in row2 %}
+            <td>
+                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                    <a>
+                        <div class="product_card">
+                            <img src="/static/{{value.img_path}}" alt="product">
+
+                            <div class="product_info">
+                                <p id="product_01">{{ value.name }}</p>
+
+                                <div class="price">
+                                    <div class="price-left">
+                                        <span id="product_02">{{ value.price }}원</span>
+                                        <span id="product_03">/일</span>
+                                    </div>
+                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
+                                </div>
+
+                                <div class="p_attribute">
+                                    <div class="p_attribute_left">
+                                        <span id="product_05">{{ value.time_ago }}</span>
+                                        <a><i class="fa-solid fa-comments"></i></a>
+                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
+                                        <a><i class="fa-solid fa-heart"></i></a>
+                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                    </div>
+
+                                    <span id="product_08">{{ value.way }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">비대면 거래</span>
-                    </div>
+                    </a>
                 </div>
-            </div>
-        </div>
-        <div class="card3">
-            <div class="product_card">
-                <img src="../static/resource/products_png/이어폰.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">이어폰</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
+
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for key, value in row3 %}
+            <td>
+                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                    <a>
+                        <div class="product_card">
+                            <img src="/static/{{value.img_path}}" alt="product">
+
+                            <div class="product_info">
+                                <p id="product_01">{{ value.name }}</p>
+
+                                <div class="price">
+                                    <div class="price-left">
+                                        <span id="product_02">{{ value.price }}원</span>
+                                        <span id="product_03">/일</span>
+                                    </div>
+                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
+                                </div>
+
+                                <div class="p_attribute">
+                                    <div class="p_attribute_left">
+                                        <span id="product_05">{{ value.time_ago }}</span>
+                                        <a><i class="fa-solid fa-comments"></i></a>
+                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
+                                        <a><i class="fa-solid fa-heart"></i></a>
+                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                    </div>
+
+                                    <span id="product_08">{{ value.way }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
+                    </a>
                 </div>
-            </div>
+
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+    <div class="page-wrap">
+        <div class="page-nation">
+            <ul>
+                <li>&lt;&lt;</li>
+                <li>&lt;</li>
+                {% for i in range(page_count) %}
+                <li>
+                    <a href="{{url_for('hello', page=i)}}">{{i}}</a>
+                </li>
+                {% endfor %}
+                <li>&gt;</li>
+                <li>&gt;&gt;</li>
+            </ul>
         </div>
-        <div class="card4">
-            <div class="product_card">
-                <img src="../static/resource/products_png/충전기.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">충전기</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="pre_list_row">
-        <div class="card5">
-            <div class="product_card">
-                <img src="../static/resource/products_png/챗지피티.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">챗지피티</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card6">
-            <div class="product_card">
-                <img src="../static/resource/products_png/우산.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">우산</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card7">
-            <div class="product_card">
-                <img src="../static/resource/products_png/애플펜슬.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">애플펜슬</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card8">
-            <div class="product_card">
-                <img src="../static/resource/products_png/실험복.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">실험복</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="pre_list_row">
-        <div class="card9">
-            <div class="product_card">
-                <img src="../static/resource/products_png/애플뮤직.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">애플뮤직</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card10">
-            <div class="product_card">
-                <img src="../static/resource/products_png/샴푸.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">샴푸</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card11">
-            <div class="product_card">
-                <img src="../static/resource/products_png/슬리퍼.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">슬리퍼</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card12">
-            <div class="product_card">
-                <img src="../static/resource/products_png/디즈니플러스.png" alt="product1">
-                <!-- 백엔드와 연동하지 않고 화면만 띄우게 구현한 상태-->
-                <div class="product_info">
-                    <p id="product_01">디즈니플러스</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="pagenation">
-        <span>&lt;&lt;</span>
-        <span>&lt;</span>
-        <span id="selected">1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>&gt;</span>
-        <span>&gt;&gt;</span>
     </div>
 </div>
 <div class="find_list">

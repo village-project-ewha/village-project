@@ -7,6 +7,7 @@
 .title {
     display: flex;
     align-items: center;
+    padding-bottom: 16px;
 }
 
 #list_title {
@@ -46,4 +47,8 @@
     align-items: baseline;
     width: 100%;
     margin-bottom: 16px;
+}
+
+.products table td {
+    padding: 8px 16px 8px 8px;
 }
