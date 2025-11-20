@@ -109,4 +109,8 @@ class DBhandler:
         print("Review registered:", review_info)
         return True
     
+    def get_reviews(self):
+        reviews = self.db.child("reviews").get().val()
+        return reviews if reviews else {}
+    
     

@@ -26,93 +26,46 @@
 
             <div class="review-list">
 
-                <div class="review-card">
-                    <a href="/review_detail">
-                        <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="리뷰 이미지" height="220">
-                        <div class="review-content">
-                            <h3>챗지피티 공유팟</h3>
-                            <p>내용
-                                내용
-                                내용
-                                내용
-                            </p>
-                            <div class="review-meta">
-                                <span class="author">송한결</span>
-                                <span class="date">2025.10.08</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                {% if reviews %}
+                    {% for key, r in reviews.items() %}
+                    <div class="review-card">
 
-                <div class="review-card">
-                    <a href="/review_detail">
-                        <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="리뷰 이미지" height="220">
-                        <div class="review-content">
-                            <h3>빌리지에서 기타 피크까지 빌리지</h3>
-                            <p>...</p>
-                            <div class="review-meta">
-                                <span class="author">김민지</span>
-                                <span class="date">2025.10.08</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        <a href="{{ url_for('view_review_detail', review_id=key) }}">
 
-                <div class="review-card">
-                    <a href="/review_detail">
-                        <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="리뷰 이미지" height="220">
-                        <div class="review-content">
-                            <h3>샴푸</h3>
-                            <p>...</p>
-                            <div class="review-meta">
-                                <span class="author">박서연</span>
-                                <span class="date">2025.10.08</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                            <img src="{{ url_for('static', filename=r.img_path) }}" alt="리뷰 이미지" height="220">
 
-                <div class="review-card">
-                    <a href="/review_detail">
-                        <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="리뷰 이미지" height="220">
-                        <div class="review-content">
-                            <h3>애플펜슬 공유팟</h3>
-                            <p>...</p>
-                            <div class="review-meta">
-                                <span class="author">이하늘</span>
-                                <span class="date">2025.10.08</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                            <div class="review-content">
 
-                <div class="review-card">
-                    <a href="/review_detail">
-                        <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="리뷰 이미지" height="220">
-                        <div class="review-content">
-                            <h3>애플펜슬</h3>
-                            <p>...</p>
-                            <div class="review-meta">
-                                <span class="author">정수빈</span>
-                                <span class="date">2025.10.08</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                                <h3>{{ r.title }}</h3>
 
-                <div class="review-card">
-                    <a href="/review_detail">
-                        <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="리뷰 이미지" height="220">
-                        <div class="review-content">
-                            <h3>후드집업 빌렸어요~</h3>
-                            <p>...</p>
-                            <div class="review-meta">
-                                <span class="author">전다은</span>
-                                <span class="date">2025.10.08</span>
+                                <p>
+                                    {% if r.review %}
+                                        {{ r.review[:60] }}...
+                                    {% else %}
+                                        내용 없음
+                                    {% endif %}
+                                </p>
+
+                                <div class="review-meta">
+                                    <span class="author">{{ r.usesr_id }}</span>
+                                    <span class="date">
+                                        {% if r.created_at %}
+                                            {{ r.created_at | int | datetimeformat }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+
                             </div>
-                        </div>
-                    </a>
-                </div>
+
+                        </a>
+
+                    </div>
+                    {% endfor %}
+                
+                {% else %}
+                    <p>등록된 리뷰가 없습니다.</p>
+                {% endif %}
+            
 
             </div>
         </div>

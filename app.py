@@ -256,11 +256,27 @@ def view_list():
 
 @application.route("/review")
 def view_review():
-    return render_template("review.html")
+    reviews = DB.get_reviews()
+
+    if not reviews:
+        reviews = {}
+
+    return render_template("review.html", reviews=reviews)
 
 @application.route("/review_detail")
 def review_detail():
     return render_template("review_detail.html")
+
+@application.route("/view_review_detail/<review_id>/")
+def view_review_detail(review_id):
+    reviews = DB.get_reviews()
+    review = reviews.get(review_id)
+
+    if not review:
+        flash("리뷰를 찾을 수 없습니다.")
+        return redirect(url_for('view_review'))
+    
+    return render_template("view_review_detail.html", review=review)
 
 @application.route("/reg_items")
 def reg_items():
@@ -377,6 +393,13 @@ def reg_item_submit():
     print(name, category, mid_category, low_category, status, way, price, place, explain)
 
     return render_template("reg_item.html")
+
+@application.template_filter('datetimeformat')
+def datetimeformat(value):
+    try:
+        return datetime.fromtimestamp(value).strftime('%Y-%m-%d')
+    except:
+        return ""
 
 
 if __name__ == "__main__":
