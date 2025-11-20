@@ -16,8 +16,8 @@
             <h2>리뷰 작성하고 포인트 받으세요!</h2>
             <p>당신의 소중한 경험이 다른 사용자에게 큰 도움이 됩니다.</p>
             <div class="banner-buttons">
-                <a href="/">쇼핑 계속하기</a>
-                <a href="/select_review" class="write-review-btn">내 리뷰 작성하기</a>
+                <a href="{{ url_for('view_list') }}">쇼핑 계속하기</a>
+                <a href="{{ url_for('select_review', name=name) }}">내 리뷰 작성하기</a>
             </div>
         </div>
 

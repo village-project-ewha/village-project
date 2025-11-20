@@ -1,5 +1,6 @@
 import pyrebase
 import json
+from datetime import datetime
 
 class DBhandler:
     def __init__(self):
@@ -87,5 +88,25 @@ class DBhandler:
             if key_value == name:
                 target_value = res.val()
         return target_value
+    
+    def get_user_transactions(self, user_id):
+        transactions = self.db.child("transactions").order_by_child("user_id").equal_to(user_id).get()
+        return transactions.val()
+    
+    def reg_review(self, data, img_path):
+        review_info = {
+            "title": data['title'],
+            "rate": data['reviewStar'],        # HTML 폼의 'reviewStrar' 필드와 일치
+            "review": data['reviewContents'],
+            "img_path" : img_path,
+            "product_name": data['name'],
+            "user_id": data['user_id'],
+            "created_at": datetime.now().timestamp(),
+            # "tx_id": data.get('tx_id') # 거래 ID를 리뷰에 기록
+        }
+        
+        self.db.child("reviews").push(review_info)
+        print("Review registered:", review_info)
+        return True
     
     

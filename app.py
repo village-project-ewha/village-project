@@ -266,13 +266,87 @@ def review_detail():
 def reg_items():
     return render_template("reg_items.html")
 
-@application.route("/reg_reviews")
-def reg_reviews():
-    return render_template("reg_reviews.html")
+@application.route("/reg_review_init/<tx_id>")
+def reg_review_init(tx_id):
+    if 'user_id' not in session:
+        flash("로그인이 필요합니다.")
+        return redirect(url_for('login'))
+
+    tx_data = DB.db.child("transactions").child(tx_id).get().val()
+    
+    if not tx_data:
+        flash("유효하지 않은 거래 정보를 요청했습니다.")
+        return redirect(url_for('select_review'))
+    
+    product_info = {
+        'name': tx_data.get('product_name', '상품 이름 없음'),
+        'tx_id': tx_id,
+        'price': tx_data.get('price', '가격 정보 없음'),
+        'seller_id': tx_data.get('seller_id', '판매자 ID 없음'),
+        'category': tx_data.get('category', '미분류'),
+        'mid_category': tx_data.get('mid_category', ''),
+        'img_path': tx_data.get('product_image_url', 'resource/sample.jpg')
+    }
+
+    return render_template("reg_reviews.html", product=product_info)
+
+@application.route("/reg_review", methods=['POST'])
+def reg_review():
+    if 'user_id' not in session:
+        flash("로그인이 필요합니다.")
+        return redirect(url_for('login'))
+        
+    data = request.form.to_dict()
+    image_file = request.files.get("file")
+    
+    data['user_id'] = session['user_id']
+    
+    filename = None
+    if image_file and image_file.filename:
+        filename = image_file.filename
+        image_file.save("static/images/{}".format(filename))
+
+    DB.reg_review(data, f"images/{filename}" if filename else None)
+
+    flash("리뷰가 성공적으로 등록되었습니다. 감사합니다!")
+    return redirect(url_for('view_review'))
+
 
 @application.route("/select_review")
 def select_review():
-    return render_template("select_review.html")
+    if 'user_id' not in session:
+        flash("로그인이 필요합니다.")
+        return redirect(url_for('login'))
+        
+    current_user_id = session['user_id']
+    transactions = []
+    
+    tx_data = DB.get_user_transactions(current_user_id) 
+    
+    if tx_data:
+        for tx_id, data in tx_data.items():
+            
+            completion_ts = data.get('completion_ts') 
+            date_str = '날짜 미정'
+            if completion_ts:
+                try:
+                    completion_date = datetime.fromtimestamp(completion_ts / 1000) 
+                    date_str = completion_date.strftime('%Y-%m-%d')
+                except Exception as e:
+                    print(f"날짜 변환 오류: {e}")
+                    pass
+
+            transactions.append({
+                'id': tx_id, 
+                'product_name': data.get('product_name', '상품 이름 없음'),
+                'date': date_str,
+                # DB에 저장된 product_image_url 사용
+                'img': data.get('product_image_url', 'resource/Photo Review_svg/default.svg') 
+            })
+
+    print(f"조회된 거래 데이터 (tx_data): {tx_data}")
+            
+    return render_template("select_review.html", transactions=transactions)
 
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
