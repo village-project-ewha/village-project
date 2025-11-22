@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 from datetime import datetime
 import hashlib
@@ -400,6 +400,21 @@ def datetimeformat(value):
         return datetime.fromtimestamp(value).strftime('%Y-%m-%d')
     except:
         return ""
+
+@application.route('/show_heart/<name>/', methods=['GET'])
+def show_heart(name):
+    my_heart = DB.get_heart_byname(session['user_id'],name)
+    return jsonify({'my_heart': my_heart})
+
+@application.route('/like/<name>/', methods=['POST'])
+def like(name):
+    my_heart = DB.update_heart(session['user_id'],'Y',name)
+    return jsonify({'msg': '좋아요 완료!'})
+
+@application.route('/unlike/<name>/', methods=['POST'])
+def unlike(name):
+    my_heart = DB.update_heart(session['user_id'],'N',name)
+    return jsonify({'msg': '안좋아요 완료!'})
 
 
 if __name__ == "__main__":
