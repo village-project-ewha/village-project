@@ -17,58 +17,24 @@
 
         <div class="review-selection-list">
 
+            {% if transactions %}
+                {% for tx in transactions %}
+                <a href="{{ url_for('reg_review_init', tx_id=tx.id) }}" class="transaction-card">
 
+                    <img src="{{ url_for('static', filename=tx.img) }}" alt="{{ tx.product_name }}">
 
-            <a href="/reg_reviews" class="transaction-card">
+                    <div class="transaction-details">
+                        <p class="product-name">{{ tx.product_name }}</p>
+                        <p class="transaction-date">거래 완료일: {{ tx.date }}</p>
+                    </div>
 
-                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 1 (거래 ID: 1)">
-
-                <div class="transaction-details">
-                    <p class="product-name">테스트 상품 1 (거래 ID: 1)</p>
-                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
-                </div>
-
-                <span class="select-arrow">&gt;</span>
-            </a>
-
-
-
-            <a href="/reg_reviews" class="transaction-card">
-
-                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 5 (거래 ID: 5)">
-
-                <div class="transaction-details">
-                    <p class="product-name">테스트 상품 5 (거래 ID: 5)</p>
-                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
-                </div>
-
-                <span class="select-arrow">&gt;</span>
-            </a>
-
-
-
-            <a href="/reg_reviews" class="transaction-card">
-
-                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 9 (거래 ID: 9)">
-
-                <div class="transaction-details">
-                    <p class="product-name">테스트 상품 9 (거래 ID: 9)</p>
-                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
-                </div>
-
-                <span class="select-arrow">&gt;</span>
-            </a>
-
-
-        </div>
-
-    </div>
-
-
-
-
-
-
+                    <span class="select-arrow">&gt;</span>
+                </a>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; padding: 20px; color: #888;">리뷰를 작성할 완료된 거래 내역이 없습니다.</p>
+            {% endif %}
+            </div> </div>
 </div>
 
 

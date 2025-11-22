@@ -1,0 +1,93 @@
+{% extends "index.html" %}
+
+{% block title %}
+    리뷰 상세보기
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review_detail.css') }}">
+{% endblock head %}
+
+{% block section %}
+
+<div id="page-wrapper" class="review-detail-page">
+
+    <div class="nav-back">
+        <a href="/review">
+            <i class="fa-solid fa-chevron-left"></i> 리뷰 목록으로 돌아가기
+        </a>
+    </div>
+
+    <div class="container">
+
+        <div class="product-info">
+            <img src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
+
+            <div class="details">
+                <h3>{{ review.product_name }}</h3>
+
+                <p class="rating-text">
+                    ★ {{ review.rate }}점
+                </p>
+
+                <a href="/product_detail/{{ review.product_name }}/">
+                    상품 정보 보러가기 <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="review-main">
+
+            <div class="review-head">
+                <h2>{{ review.title }}</h2>
+
+                <div class="review-meta">
+                    <span><strong>작성자:</strong> {{ review.user_id }}</span>
+                    <span><strong>작성일:</strong> {{ review.created_at | int | datetimeformat }}</span>
+                </div>
+            </div>
+
+            <div class="review-item">
+                <div class="review-content">
+                    {{ review.review | replace('\n', '<br>') | safe }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="review-footer">
+            <div class="btn-group">
+
+                <div class="action-card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-bag-shopping card-icon"></i>
+                        <a href="/" class="card-link">쇼핑 계속하기</a>
+                    </div>
+                    <p class="card-description">새로운 상품을 둘러보세요</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="card-header">
+                        <i class="fa-regular fa-pen-to-square card-icon"></i>
+                        <a href="/select_review" class="card-link">내 리뷰 작성하기</a>
+                    </div>
+                    <p class="card-description">구매한 상품의 리뷰를 남겨보세요</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="card-header">
+                        <i class="fa-regular fa-thumbs-up card-icon"></i>
+                        <button type="button" class="card-button">
+                            이 리뷰가 도움이 되셨나요?
+                        </button>
+                    </div>
+                    <p class="card-description">다른 사용자들을 위해 의견을 남겨주세요</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock section %}
