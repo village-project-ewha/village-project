@@ -9,6 +9,11 @@
     <link rel="icon" href="{{ url_for('static', filename='resource/Logo/favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awes
+ome.min.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
 
@@ -23,8 +28,8 @@
             <div class="navbar__top">
                 <ul>
                     <!-- 로그인 상태에 따라 '로그아웃'으로 변경 필요 -->
-                     {% if session['user_id'] %}
-                     <li> <a href="/logout"><b>{{session['user_id']}}님 반갑습니다!</b> 로그아웃</a></li>
+                    {% if session['user_id'] %}
+                    <li> <a href="/logout"><b>{{session['user_id']}}님 반갑습니다!</b> 로그아웃</a></li>
                     {% else %}
                     <li><a href="/login">로그인</a></li>
                     <li><a href="/signup">회원가입</a></li>

@@ -249,3 +249,12 @@ footer {
     /* 100% */
     letter-spacing: var(--Static-Body-Small-Tracking, 0.4px);
 }
+
+#heart {
+    color: grey;
+    font-size: 50px;
+}
+
+#heart.red {
+    color: red;
+}

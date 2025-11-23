@@ -7,40 +7,40 @@
 {% endblock head %}
 
 {% block section %}
-
 <div id="page-wrapper">
     <div class="review-container">
-        <form action="/submit_review_post" method="POST">
+        <form action="{{ url_for('reg_review') }}" method="POST" enctype="multipart/form-data">
             <div class="product-group">
                 <header class="review-header">
                     리뷰 작성하기
                 </header>
-                <!-- <section>: 리뷰할 상품 정보 구역(DB에서 가져올 정보) -->
                 <section class="review-section product-section">
                     <div class="product-info-box">
-                        <!--TODO: /reg_reviews 라우트가 DB에서 'transaction' 객체 (거래내역)를 가져와야 함 -->
-                        <img src="/static/resource/sample.jpg" alt="테스트 상품명입니다" class="product-image">
+                        <img src="/static/{{ product.img_path }}" alt="{{ product.name }}" class="product-image">
 
                         <div class="product-details">
 
                             <div class="product-title-group">
-                                <p class="product-name">테스트 상품명입니다</p>
+                                <p class="product-name">{{ product.name }}</p>
                                 <p class="product-meta">
-                                    [패션/잡화] [나이키]
+                                    [{{ product.category }}] [{{ product.mid_category }}]
                                 </p>
                             </div>
 
                             <p class="product-price">
-                                35,000원
+                                {{ product.price }}원
                             </p>
 
                             <p class="seller-info">
-                                판매자: 임시판매자_이름
+                                판매자: {{ product.seller_id }}
                             </p>
 
                         </div>
-                </section>
+                    </div> </section>
             </div>
+            
+            <input type="hidden" name="tx_id" value="{{ product.tx_id }}">
+            <input type="hidden" name="name" value="{{ product.name }}">
 
             <!-- <section>: "별점" 구역 -->
             <section class="review-section rating-section">
@@ -56,21 +56,21 @@
                     </div>
                     <span class="rating-text">(0.0 / 5.0)</span>
                 </div>
-                <input type="hidden" name="rating" value="0">
+                <input type="hidden" name="reviewStar" value="0">
             </section>
 
 
             <!-- <section>: "리뷰 제목" 구역 -->
             <section class="review-section content-section">
                 <h3 class="section-title">리뷰 제목</h3>
-                <input type="text" name="review_title" class="review-input" placeholder="제목을 입력해 주세요.">
+                <input type="text" name="title" class="review-input" placeholder="제목을 입력해 주세요.">
             </section>
 
             <!-- <section>: "리뷰 내용" 구역 -->
             <section class="review-section content-section">
                 <h3 class="section-title">상세한 리뷰를 작성해 주세요.</h3>
                 <div class="textarea-wrapper">
-                    <textarea name="review_content" class="review-textarea"
+                    <textarea name="reviewContents" class="review-textarea"
                         placeholder="상품 이용 후기를 자세히 입력해 주세요. (20자 이상)&#10;• 상품 상태 / 보증금 여부 / 판매자 응답률 등"
                         maxlength="1000"></textarea>
                     <div class="char-count">
@@ -87,7 +87,7 @@
                 <h3 class="section-title">사진/동영상 첨부 <span class="optional">(선택)</span></h3>
                 <div class="photo-uploader">
                     <label class="photo-upload-box main-upload">
-                        <input type="file" name="review_photos" class="photo-input" multiple>
+                        <input type="file" name="file" class="photo-input" multiple>
                         <i class="fas fa-plus"></i> <span>사진을 추가해 주세요</span>
                     </label>
                     <div class="photo-upload-box placeholder"></div>
