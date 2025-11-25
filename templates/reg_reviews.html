@@ -9,7 +9,7 @@
 {% block section %}
 <div id="page-wrapper">
     <div class="review-container">
-        <form action="{{ url_for('reg_review') }}" method="POST" enctype="multipart/form-data">
+        <form id='reviewForm' action="{{ url_for('reg_review') }}" method="POST" enctype="multipart/form-data">
             <div class="product-group">
                 <header class="review-header">
                     리뷰 작성하기
@@ -118,8 +118,6 @@
 
         </form>
     </div>
-
-    <script src="/static/reg_reviews.js" defer></script>
 
 </div>
 

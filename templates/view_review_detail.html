@@ -48,8 +48,7 @@
 
             <div class="review-item">
                 <img src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
-                <div class="review-content">
-                    {{ review.review | replace('\n', '<br>') | safe }}
+                <div class="review-content">{{ review.review | replace('\n', '<br>') | safe }}
                 </div>
             </div>
 
