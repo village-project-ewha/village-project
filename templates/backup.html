@@ -1,0 +1,113 @@
+<!--select_review.html-->
+{% extends "index.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+{% endblock head %}
+
+{% block section %}
+
+<div id="page-wrapper">
+
+
+    <div class="content-container"
+        style="max-width: 800px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 8px;">
+
+        <h2 style="font-size: 24px; margin-bottom: 20px;">리뷰할 거래 선택</h2>
+        <p style="color: #555;">최근 거래한 내역입니다. 리뷰를 작성할 상품을 선택해주세요.</p>
+
+        <div class="review-selection-list">
+
+
+
+            <a href="/reg_reviews" class="transaction-card">
+
+                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 1 (거래 ID: 1)">
+
+                <div class="transaction-details">
+                    <p class="product-name">테스트 상품 1 (거래 ID: 1)</p>
+                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
+                </div>
+
+                <span class="select-arrow">&gt;</span>
+            </a>
+
+
+
+            <a href="/reg_reviews" class="transaction-card">
+
+                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 5 (거래 ID: 5)">
+
+                <div class="transaction-details">
+                    <p class="product-name">테스트 상품 5 (거래 ID: 5)</p>
+                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
+                </div>
+
+                <span class="select-arrow">&gt;</span>
+            </a>
+
+
+
+            <a href="/reg_reviews" class="transaction-card">
+
+                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="테스트 상품 9 (거래 ID: 9)">
+
+                <div class="transaction-details">
+                    <p class="product-name">테스트 상품 9 (거래 ID: 9)</p>
+                    <p class="transaction-date">거래 완료일: 2025-10-31 (임시)</p>
+                </div>
+
+                <span class="select-arrow">&gt;</span>
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}
+
+
+
+<!--reg_reviews 하드코딩-->>
+<div id="page-wrapper">
+    <div class="review-container">
+        <form action="{{ url_for('reg_review') }}" method="POST" enctype="multipart/form-data">
+            <div class="product-group">
+                <header class="review-header">
+                    리뷰 작성하기
+                </header>
+                <!-- <section>: 리뷰할 상품 정보 구역(DB에서 가져올 정보) -->
+                <section class="review-section product-section">
+                    <div class="product-info-box">
+                        <!--TODO: /reg_reviews 라우트가 DB에서 'transaction' 객체 (거래내역)를 가져와야 함 -->
+                        <img src="/static/resource/sample.jpg" alt="테스트 상품명입니다" class="product-image">
+
+                        <div class="product-details">
+
+                            <div class="product-title-group">
+                                <p class="product-name">테스트 상품명입니다</p>
+                                <p class="product-meta">
+                                    [패션/잡화] [나이키]
+                                </p>
+                            </div>
+
+                            <p class="product-price">
+                                35,000원
+                            </p>
+
+                            <p class="seller-info">
+                                판매자: 임시판매자_이름
+                            </p>
+
+                        </div>
+                </section>
+            </div>
