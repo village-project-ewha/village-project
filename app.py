@@ -106,7 +106,7 @@ def login_user():
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() # 입력받은 비밀번호의 해시값 생성
     if DB.find_user(id_, pw_hash): # 매칭되는 사용자 존재
         session['user_id'] = id_
-        return redirect(url_for('view_list')) # 11주차 실습 기준 home 화면 이동 아님
+        return redirect(url_for('hello')) # 11주차 실습 기준 home 화면 이동 아님
     else:
         flash("Wrong ID or PW!")
         return render_template("login.html")    
@@ -114,7 +114,7 @@ def login_user():
 @application.route("/logout")
 def logout_user():
     session.clear()
-    return redirect(url_for('view_list'))
+    return redirect(url_for('hello'))
 
 @application.route("/signup")
 def signup():
@@ -297,6 +297,7 @@ def reg_review_init(tx_id):
     product_info = {
         'name': tx_data.get('product_name', '상품 이름 없음'),
         'tx_id': tx_id,
+        "product_img": tx_data.get('product_image_url'),
         'price': tx_data.get('price', '가격 정보 없음'),
         'seller_id': tx_data.get('seller_id', '판매자 ID 없음'),
         'category': tx_data.get('category', '미분류'),

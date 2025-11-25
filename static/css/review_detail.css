@@ -183,11 +183,16 @@
     transition: max-height 0.4s ease;
 }
 
+
 .review-content.expanded {
     display: block;
     -webkit-line-clamp: unset;
     line-clamp: unset;
     max-height: 1000px;
+}
+
+.review-item {
+    display: inline-block;
 }
 
 .show-more-button {

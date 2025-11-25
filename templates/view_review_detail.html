@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block title %}
-    리뷰 상세보기
+리뷰 상세보기
 {% endblock %}
 
 {% block head %}
@@ -21,7 +21,7 @@
     <div class="container">
 
         <div class="product-info">
-            <img src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
+            <img src="{{ url_for('static', filename=review.product_img) }}" alt="상품 이미지">
 
             <div class="details">
                 <h3>{{ review.product_name }}</h3>
@@ -48,6 +48,7 @@
             </div>
 
             <div class="review-item">
+                <img src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
                 <div class="review-content">
                     {{ review.review | replace('\n', '<br>') | safe }}
                 </div>
