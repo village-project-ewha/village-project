@@ -147,6 +147,21 @@
     color: #888888;
 }
 
+/* 회색 하트 -> 마우스 올리면 빨간색 */
+#heart[onclick*="like"]:hover {
+    color: red !important; /* 밝은 빨강 */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* 2. 빨간 하트 -> 마우스 올리면 더 진한 빨간색 */
+#heart[onclick*="unlike"]:hover {
+    color: #990000 !important; /* 아주 진한 빨강 (Dark Red) */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
 #detail_chat_button_1 {
     display: flex;
     justify-content: center;
@@ -158,6 +173,18 @@
     border: 1px solid var(--Ewha-Green, #00462A);
     background: #FFF;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+
+#detail_chat_button_1:hover {
+    cursor: pointer;
+}
+
+#detail_chat_button_1:hover #button_text_1 {
+    text-decoration: underline;     
+    text-underline-offset: 3px;      
+    text-decoration-thickness: 1px;  
 }
 
 #button_text_1 {
@@ -179,6 +206,12 @@
     border-radius: 5px;
     border: 1px solid var(--Ewha-Green, #00462A);
     background: var(--Ewha-Green, #00462A);
+    transition: all 0.3s ease;
+}
+
+#detail_chat_button_2:hover {
+    background-color: #00331F;
+    cursor: pointer;
 }
 
 #button_text_2 {
