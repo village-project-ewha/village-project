@@ -84,12 +84,20 @@ def hello():
             rows_to_render[f'row{i+1}'] = row_data.items()
         else:
             break
+
+    # 홈 화면에 최근 포토 리뷰 추가
+    recent_reviews = DB.get_recent_photo_reviews(limit=8)
+    # 홈 화면에 리뷰 개수 정확하게 출력
+    review_count = len(recent_reviews) if recent_reviews else 0
+
     return render_template(
         "home.html",
         limit = per_page,
         page = page,
         page_count = int((item_counts/per_page)+1),
         total=item_counts,
+        recent_reviews=recent_reviews,
+        review_count = review_count,
         **rows_to_render # 생성된 row만 동적으로 전달
     )
     #return render_template("home.html")
@@ -134,6 +142,8 @@ def register_user():
 @application.route("/products")
 def view_products():
     page = request.args.get("page", 0, type=int)
+    category = request.args.get("category", "all")
+
     per_page = 16 
     per_row = 4
     row_count = int(per_page / per_row)
@@ -141,7 +151,10 @@ def view_products():
     start_idx = per_page * page
     end_idx = per_page * (page + 1)
 
-    data = DB.get_items() 
+    if category == "all":
+        data = DB.get_items() 
+    else:
+        data = DB.get_items_bycategory(category) 
     
     if not data: # 데이터가 아예 없을 때 처리
         item_counts = 0
@@ -183,12 +196,14 @@ def view_products():
             rows_to_render[f'row{i+1}'] = row_data.items()
         else:
             break
+
     return render_template(
         "products.html",
         limit = per_page,
         page = page,
         page_count = int((item_counts/per_page)+1),
         total=item_counts,
+        category=category,
         **rows_to_render # 생성된 row만 동적으로 전달
     )
 
@@ -204,6 +219,9 @@ def product_detail(name):
 def view_list():
     page = request.args.get("page", 0, type=int)
     # 현재 설정으로 테스트 진행
+
+    category = request.args.get("category", "all") # 셀렉트 박스에서 선택한 카테고리 값 받아옴
+
     per_page = 2 
     per_row = 2 
     row_count = int(per_page / per_row) # 현재는 1
@@ -211,16 +229,25 @@ def view_list():
     start_idx = per_page * page
     end_idx = per_page * (page + 1)
 
-    data = DB.get_items() 
+    # 카테고리로 DB에서 데이터 받아오기
+    if category == "all":
+        data = DB.get_items() 
+    else:
+        data = DB.get_items_bycategory(category)
+    
+    data = dict(sorted(data.items(), key=lambda x:x[0], reverse=False))  #sorting
     
     if not data: # 데이터가 아예 없을 때 처리
         item_counts = 0
         data_for_page = {}
+        tot_count = 0
     else:
         item_counts = len(data)
+
         # 딕셔너리를 리스트로 변환하여 페이징 인덱스를 사용
         data_list = list(data.items()) 
         data_for_page = dict(data_list[start_idx:end_idx])
+
         tot_count = len(data_for_page)
 
     # 템플릿에 전달할 데이터를 담을 딕셔너리
@@ -251,17 +278,52 @@ def view_list():
         page = page,
         page_count = int((item_counts/per_page)+1),
         total=item_counts,
+        category=category,  #카테고리를 html 코드로 전달
         **rows_to_render # 생성된 row만 동적으로 전달
     )
 
 @application.route("/review")
 def view_review():
-    reviews = DB.get_reviews()
+    reviews = DB.get_all_reviews()
+
+    print("🔥 /review reviews:", reviews)
+    print("🔥 type:", type(reviews))
+    print("🔥 len:", len(reviews))
 
     if not reviews:
         reviews = {}
 
     return render_template("review.html", reviews=reviews)
+
+def get_reviews(self):
+    reviews = self.db.child("review").get().val()
+
+    if not reviews:
+        return {}
+
+    review_list = []
+
+    for key, value in reviews.items():
+        img = value.get("img_path")
+
+        # 썸네일에는 무조건 대표 이미지 한 장만 보여줌
+        if isinstance(img, list) and len(img) > 0:
+            value["thumb"] = img[0]
+        elif isinstance(img, str):
+            value["thumb"] = img
+        else:
+            value["thumb"] = None
+
+        review_list.append((key, value))
+
+    # 최신 등록순으로 리뷰 보여주기
+    review_list.sort(
+    key=lambda x: int(x[1].get("created_at", 0)) if str(x[1].get("created_at", 0)).isdigit() else 0,
+    reverse=True
+    )
+
+    return dict(review_list)
+
 
 @application.route("/review_detail")
 def review_detail():
