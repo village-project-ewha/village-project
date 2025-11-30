@@ -239,23 +239,52 @@
         <span id="list_title">Photo Review</span>
         <div id="r_num">
             <span>(</span>
-            <span>123</span>
+            <span>{{ review_count }}</span>
             <span>)</span>
         </div>
     </div>
+
     <a href="#"><i class="fa-regular fa-square-plus"></i></a>
     <span id="see_all">전체보기</span>
-    <div class="r_img">
-        <div class="r_img_row">
-            <img src="../static/resource/Photo Review_svg/기타피크.svg" alt="review1">
-            <img src="../static/resource/Photo Review_svg/넷플릭스.svg" alt="review2">
-            <img src="../static/resource/Photo Review_svg/샴푸.svg" alt="review3">
-            <img src="../static/resource/Photo Review_svg/스템플러.svg" alt="review4">
-            <img src="../static/resource/Photo Review_svg/애플뮤직.svg" alt="review5">
-            <img src="../static/resource/Photo Review_svg/애플펜슬.svg" alt="review6">
-            <img src="../static/resource/Photo Review_svg/우산.svg" alt="review7">
-            <img src="../static/resource/Photo Review_svg/이어폰.svg" alt="review8">
+
+    <div class="r_img_row">
+
+    {% if recent_reviews %}
+        {% for key, review in recent_reviews.items() %}
+
+        <div class="card"
+             onclick="location.href='/view_review_detail/{{ key }}/';"
+             style="cursor:pointer;">
+
+            <div class="product_card">
+
+                <img src="{{ url_for('static', filename=review.thumb) }}" alt="review">
+
+                <div class="product_info">
+
+                    <p id="product_01">
+                        {{ review.title }}
+                    </p>
+
+                    <div class="price">
+                        <span>★ {{ review.rate }}점</span>
+                    </div>
+
+                    <div class="p_attribute">
+                        <span>{{ review.user_id }}</span>
+                        <span>{{ review.created_at | int | datetimeformat }}</span>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
+
+        {% endfor %}
+    {% else %}
+        <p>등록된 포토 리뷰가 없습니다.</p>
+    {% endif %}
+
+</div>
+
 </div>
 {% endblock section %}
