@@ -9,7 +9,7 @@
 {% block section %}
 <div id="page-wrapper">
     <div class="review-container">
-        <form action="{{ url_for('reg_review') }}" method="POST" enctype="multipart/form-data">
+        <form id='reviewForm' action="{{ url_for('reg_review') }}" method="POST" enctype="multipart/form-data">
             <div class="product-group">
                 <header class="review-header">
                     리뷰 작성하기
@@ -36,11 +36,13 @@
                             </p>
 
                         </div>
-                    </div> </section>
+                    </div>
+                </section>
             </div>
-            
+
             <input type="hidden" name="tx_id" value="{{ product.tx_id }}">
             <input type="hidden" name="name" value="{{ product.name }}">
+            <input type="hidden" name="product_image" value="{{ product.img_path }}">
 
             <!-- <section>: "별점" 구역 -->
             <section class="review-section rating-section">
@@ -116,8 +118,6 @@
 
         </form>
     </div>
-
-    <script src="/static/reg_reviews.js" defer></script>
 
 </div>
 
