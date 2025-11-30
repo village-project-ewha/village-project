@@ -114,7 +114,7 @@ def login_user():
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() # 입력받은 비밀번호의 해시값 생성
     if DB.find_user(id_, pw_hash): # 매칭되는 사용자 존재
         session['user_id'] = id_
-        return redirect(url_for('home.html'))
+        return redirect(url_for('hello'))
     else:
         flash("Wrong ID or PW!")
         return render_template("login.html")  
