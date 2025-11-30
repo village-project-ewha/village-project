@@ -3,6 +3,18 @@
 {% block section %}
 등록된 상품 리스트 조회 화면 입니다.
 
+<div>
+    <select id="category" name="category" onchange="location=this.value">
+        <option value="{{url_for('view_list', page=page, category='all')}}">All</option>
+        <option value="{{url_for('view_list', page=page, category='Clothes')}}">Clothes</option>
+        <option value="{{url_for('view_list', page=page, category='Beauty')}}">Beauty</option>
+        <option value="{{url_for('view_list', page=page, category='Books')}}">Books</option>
+        <option value="{{url_for('view_list', page=page, category='Furniture')}}">Furniture</option>
+        <option value="{{url_for('view_list', page=page, category='Electronics')}}">Electronics</option>
+        <option value="{{url_for('view_list', page=page, category='ETC')}}">ETC</option>        
+    </select>
+</div>
+
 {% if total > 0 %}
 <p>
     상품 리스트 -- 현재까지 {{total}}개 등록됨
@@ -46,7 +58,7 @@
         <ui>
             <li>
                 {% for i in range(page_count) %}
-                    <a href = "{{url_for('view_list', page=i)}}" color = "black">{{i}}</a>
+                    <a href = "{{url_for('view_list', page=i, category=category)}}" color = "black">{{i}}</a>
                 {% endfor %}
             </li>
         </ui>

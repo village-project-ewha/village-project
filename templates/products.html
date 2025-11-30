@@ -6,6 +6,36 @@
 {% endblock head %}
 
 {% block section %}
+
+
+<div>
+    <select id="category" name="category" onchange="location=this.value">
+
+        <option value="{{ url_for('view_products', page=0, category='all') }}"
+            {% if category == 'all' %}selected{% endif %}>All</option>
+
+        <option value="{{ url_for('view_products', page=0, category='Clothes') }}"
+            {% if category == 'Clothes' %}selected{% endif %}>Clothes</option>
+
+        <option value="{{ url_for('view_products', page=0, category='Beauty') }}"
+            {% if category == 'Beauty' %}selected{% endif %}>Beauty</option>
+
+        <option value="{{ url_for('view_products', page=0, category='Books') }}"
+            {% if category == 'Books' %}selected{% endif %}>Books</option>
+
+        <option value="{{ url_for('view_products', page=0, category='Furniture') }}"
+            {% if category == 'Furniture' %}selected{% endif %}>Furniture</option>
+
+        <option value="{{ url_for('view_products', page=0, category='Electronics') }}"
+            {% if category == 'Electronics' %}selected{% endif %}>Electronics</option>
+
+        <option value="{{ url_for('view_products', page=0, category='ETC') }}"
+            {% if category == 'ETC' %}selected{% endif %}>ETC</option>
+
+    </select>
+</div>
+
+
 <div class="products">
     {% if total > 0 %}
     <div class="title">
@@ -178,7 +208,7 @@
                 <li>&lt;</li>
                 <li>
                     {% for i in range(page_count) %}
-                    <a href="{{url_for('view_products', page=i)}}">{{i}}</a>
+                    <a href="{{url_for('view_products', page=i, category=category)}}">{{i}}</a>
                     {% endfor %}
                 </li>
                 <li>&gt;</li>

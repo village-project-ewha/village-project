@@ -89,6 +89,19 @@ class DBhandler:
                 target_value = res.val()
         return target_value
     
+    def get_items_bycategory(self, cate):
+        items = self.db.child("item").get()
+        new_dict = {}
+
+        for res in items.each():
+            value = res.val()
+            key_value = res.key()
+
+            if value.get("category") == cate:
+                new_dict[key_value] = value
+        
+        return new_dict
+    
     def get_user_transactions(self, user_id):
         transactions = self.db.child("transactions").order_by_child("user_id").equal_to(user_id).get()
         return transactions.val()
@@ -113,6 +126,72 @@ class DBhandler:
         reviews = self.db.child("reviews").get().val()
         return reviews if reviews else {}
     
+    def get_recent_photo_reviews(self, limit=8):
+        reviews = self.db.child("reviews").get()
+        raw = reviews.val()
+
+        if not raw:
+            return {}
+
+        review_list = []
+        # 홈 화면에 사진이 있는 리뷰만 띄울 예정
+        for key, value in raw.items():
+
+            img = value.get("img_path")
+
+            # 이미지가 여러장이라면 첫 번째 사진을 대표 이미지로 선택
+            if isinstance(img, list):
+                value["thumb"] = img[0]
+            else:
+                value["thumb"] = img
+            
+            # 이미지가 있는 리뷰만 홈 화면에 표시
+            if value.get("thumb"):
+                review_list.append((key, value))
+
+        # 최신순
+        review_list.sort(
+            key=lambda x: x[1].get("created_at", 0),
+            reverse=True
+        )
+
+        return dict(review_list[:limit])
+
+    def get_all_reviews(self):
+        reviews = self.db.child("reviews").get()
+
+        # 리뷰가 없다면
+        if reviews is None:
+            return {}
+
+        raw = reviews.val()
+
+        if not raw:
+            return {}
+
+        review_list = []
+
+        for key, value in raw.items():
+            img = value.get("img_path")
+
+            # 홈화면과 동일하게 대표 이미지 선정
+            if isinstance(img, list) and len(img) > 0:
+                value["thumb"] = img[0]
+            elif isinstance(img, str):
+                value["thumb"] = img
+            else:
+                value["thumb"] = ""
+
+            review_list.append((key, value))
+
+        # 리뷰 최신 등록순으로 정렬
+        review_list.sort(
+            key=lambda x: x[1].get("created_at", 0),
+            reverse=True
+        )
+
+        return dict(review_list) 
+
     def get_heart_byname(self, uid, name):
         hearts = self.db.child("heart").child(uid).get()
         target_value=""
