@@ -377,6 +377,8 @@ def reg_review():
         return redirect(url_for('login'))
         
     data = request.form.to_dict()
+    print("🔥 받은 데이터:", data)  # 디버깅
+    print("🔥 product_img:", data.get('product_img'))  # 디버깅
     image_file = request.files.get("file")
     
     data['user_id'] = session['user_id']

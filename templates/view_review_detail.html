@@ -21,14 +21,17 @@
     <div class="container">
 
         <div class="product-info">
+            {% if review.product_img %}
             <img src="{{ url_for('static', filename=review.product_img) }}" alt="상품 이미지">
+            {% else %}
+            <img src="{{ url_for('static', filename='resource/Photo Review_svg/default.svg') }}" alt="상품 이미지">
+            {% endif %}
+
             <div class="details">
                 <h3>{{ review.product_name }}</h3>
-
                 <p class="rating-text">
                     ★ {{ review.rate }}점
                 </p>
-
                 <a href="/product_detail/{{ review.product_name }}/">
                     상품 정보 보러가기 <i class="fa-solid fa-chevron-right"></i>
                 </a>

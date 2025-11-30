@@ -109,10 +109,11 @@ class DBhandler:
     def reg_review(self, data, img_path):
         review_info = {
             "title": data['title'],
-            "rate": data['reviewStar'],        # HTML 폼의 'reviewStrar' 필드와 일치
+            "rate": data['reviewStar'],        
             "review": data['reviewContents'],
             "img_path" : img_path,
             "product_name": data['name'],
+            "product_img": data.get('product_img', ''),
             "user_id": data['user_id'],
             "created_at": datetime.now().timestamp(),
             # "tx_id": data.get('tx_id') # 거래 ID를 리뷰에 기록
