@@ -210,4 +210,30 @@ class DBhandler:
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
     
+    def get_heart_byname(self, user_id, item_name):
+        heart = self.db.child("heart").child(user_id).child(item_name).get()
+        if heart.val() and 'interested' in heart.val():
+            return heart.val()['interested']
+        return 'N'
+    
+    def get_heart_list(self, user_id):
+        hearts = self.db.child("heart").child(user_id).get()
+        if hearts.val() is None:
+            return {}
+        
+        liked_item_names = []
+        for item_name, is_liked in hearts.val().items():
+            if isinstance(is_liked, dict) and is_liked.get('interested') == 'Y':
+                liked_item_names.append(item_name)
+
+        liked_items = {}
+        all_items = self.db.child("item").get().val()
+        
+        if all_items:
+            for item_name in liked_item_names:
+                if item_name in all_items:
+                    liked_items[item_name] = all_items[item_name]
+        return liked_items
+
+    
     
