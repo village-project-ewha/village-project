@@ -116,7 +116,6 @@ def login_user():
         session['user_id'] = id_
 
         return redirect(url_for('hello')) # 11주차 실습 기준 home 화면 이동 아님
- review_test
     else:
         flash("Wrong ID or PW!")
         return render_template("login.html")    
