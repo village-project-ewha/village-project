@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // 1. 별점 (Star Rating) 기능
   // ==========================================
   const starRatingBox = document.querySelector('.rating-box');
-  // [수정] 백엔드(app.py)가 'reviewStar'를 원하므로 name을 맞춰줍니다.
   const ratingInput = document.querySelector('input[name="reviewStar"]'); 
   const ratingText = document.querySelector('.rating-text');
   
