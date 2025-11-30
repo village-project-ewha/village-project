@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
+import uuid
 import hashlib
 import sys
 
@@ -114,8 +117,7 @@ def login_user():
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() # 입력받은 비밀번호의 해시값 생성
     if DB.find_user(id_, pw_hash): # 매칭되는 사용자 존재
         session['user_id'] = id_
-
-        return redirect(url_for('hello')) # 11주차 실습 기준 home 화면 이동 아님
+        return redirect(url_for('hello')) # home 화면 이동 수정
     else:
         flash("Wrong ID or PW!")
         return render_template("login.html")    
@@ -287,10 +289,6 @@ def view_list():
 def view_review():
     reviews = DB.get_all_reviews()
 
-    print("🔥 /review reviews:", reviews)
-    print("🔥 type:", type(reviews))
-    print("🔥 len:", len(reviews))
-
     if not reviews:
         reviews = {}
 
@@ -360,12 +358,11 @@ def reg_review_init(tx_id):
     product_info = {
         'name': tx_data.get('product_name', '상품 이름 없음'),
         'tx_id': tx_id,
-        "product_img": tx_data.get('product_image_url'),
         'price': tx_data.get('price', '가격 정보 없음'),
         'seller_id': tx_data.get('seller_id', '판매자 ID 없음'),
         'category': tx_data.get('category', '미분류'),
         'mid_category': tx_data.get('mid_category', ''),
-        'img_path': tx_data.get('product_image_url', 'resource/sample.jpg')
+        'img_path': tx_data.get('product_image_url', 'images/sample.webp')
     }
 
     return render_template("reg_reviews.html", product=product_info)
@@ -377,17 +374,28 @@ def reg_review():
         return redirect(url_for('login'))
         
     data = request.form.to_dict()
-    print("🔥 받은 데이터:", data)  # 디버깅
-    print("🔥 product_img:", data.get('product_img'))  # 디버깅
+
+    print("DEBUG form data:", data)
+
     image_file = request.files.get("file")
     
     data['user_id'] = session['user_id']
     
     filename = None
     if image_file and image_file.filename:
-        filename = image_file.filename
-        image_file.save("static/images/{}".format(filename))
 
+        # 파일명 보안 처리
+        original_name = secure_filename(image_file.filename)
+
+        # 파일명 중복 방지용 UUID
+        ext = os.path.splitext(original_name)[1]
+        filename = f"{uuid.uuid4().hex}{ext}"
+
+        # static/images 경로 저장
+        save_path = os.path.join("static", "images", filename)
+        image_file.save(save_path)
+
+    # DB에 static 제외한 상대 경로로 저장
     DB.reg_review(data, f"images/{filename}" if filename else None)
 
     flash("리뷰가 성공적으로 등록되었습니다. 감사합니다!")

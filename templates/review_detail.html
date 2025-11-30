@@ -18,59 +18,54 @@
         </div>
         <div class="container">
 
+            <!--상품 썸네일-->
             <div class="product-info">
-                <img src="static/resource/Photo Review_svg/챗지피티.svg" alt="Mock 상품 1">
+
+                {% if review.product_img %}
+                <img src="{{ url_for('static', filename=review.product_img) }}" alt="상품 이미지">
+                {% else %}
+                <img src="{{ url_for('static', filename='resource/Photo Review_svg/default.svg') }}" alt="상품 이미지">
+                {% endif %}
+
                 <div class="details">
-                    <h3>Mock 상품 1</h3>
+                    <h3>{{ review.product_name }}</h3>
+
                     <div class="star-star">
                         <div class="average-star">
-                            <div class="empty-stars">
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
-                            </div>
-                            <div class="full-stars" style="width: 84%;">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                        <div class="rating-text">
-                            <strong>4.2</strong> <span>(120)</span>
+                            ★ {{ review.rate }}점
                         </div>
                     </div>
 
-                    <a href="/product_detail">
+                    <a href="/product_detail/{{ review.product_name }}">
                         상품 정보 보러가기<i class="fa-solid fa-chevron-right"></i>
                     </a>
                 </div>
             </div>
 
+            <!--리뷰 메인 정보-->
             <div class="review-main">
 
                 <div class="review-head">
-                    <h2>챗지피티 공유팟</h2>
+                    <h2>{{ review.title }}</h2>
                     <div class="review-meta">
-                        <span class="review-rating">★ 5점</span>
-                        <span><strong>작성자:</strong> 송한결</span>
-                        <span><strong>작성일:</strong> 2025.10.08</span>
+                        <span><strong>작성자:</strong> {{ review.user_id }}</span>
+                        <span><strong>작성일:</strong> {{ review.created_at | int | datetimeformat }}</span>
                     </div>
                 </div>
 
+                <!--리뷰 내용-->
                 <div class="review-item">
-                    <div class="review-content" id="reviewText_1">내용<br>내용<br>내용<br>내용<br>내용
+                    <div class="review-content">
+                        {{ review.review | replace('\n', '<br>') | safe }}
                     </div>
-                    <button class="show-more-button" id="toggleButton_1">더보기</button>
                 </div>
 
+                <!--리뷰 이미지 갤러리-->
+                {% if review.img_path %}
                 <div class="product-gallery">
 
                     <div class="main-image-viewer">
-                        <img id="mainImage_1" src="" alt="메인 리뷰 사진">
+                        <img id="mainImage_1" src="{ url_for('static', filename=review.img_path) }" alt="메인 리뷰 사진">
                     </div>
 
                     <div class="thumbnail-carousel-container">
@@ -78,15 +73,21 @@
                         <button class="carousel-nav prev-btn" data-target-id="thumbnailList_1">❮</button>
 
                         <div class="thumbnail-list" id="thumbnailList_1">
+                            <img class="thumbnail-item active" src="{{ url_for('static', filename=review.img_path) }}"
+                                        data-full-src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
                         </div>
 
                         <button class="carousel-nav next-btn" data-target-id="thumbnailList_1">❯</button>
 
                     </div>
                 </div>
+                {% endif %}
+
             </div>
 
         </div>
+
+        <!--하단 버튼 영역-->
         <div class="review-footer">
             <div class="btn-group">
 
@@ -130,135 +131,20 @@
 
 
 
+    <!--썸네일 클릭 스크립트-->
     <script>
-        const writeReview = document.querySelector('.write-review');
-        if (writeReview) {
-            writeReview.style.opacity = '1';
-            writeReview.style.pointerEvents = 'auto';
-        }
+        const thumbnails = document.querySelectorAll('.thumbnail-item');
+        const mainImage = document.getElementById('mainImage');
 
-        // ==========================================================
-        // 갤러리 스크립트 (생성 + 기능)
-        // ==========================================================
-
-        // 1. 임시 Mock 데이터 정의
-        const mockImages = [
-            { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' },
-            { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' },
-            { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' },
-            { url: 'resource/sample.jpg', thumbnail_url: 'resource/sample.jpg' }
-        ];
-
-        // 2. Jinja2 변수를 JavaScript 변수로 가져오기
-        const reviewId = parseInt('1');
-
-        // 3. 관련 DOM 요소 찾기
-        const mainImage = document.getElementById(`mainImage_${reviewId}`);
-        const thumbnailList = document.getElementById(`thumbnailList_${reviewId}`);
-
-        // 버튼 요소 찾기
-        const prevBtn = document.querySelector(`button[data-target-id="thumbnailList_${reviewId}"].prev-btn`);
-        const nextBtn = document.querySelector(`button[data-target-id="thumbnailList_${reviewId}"].next-btn`);
-
-
-        // 4. [1단계] 썸네일 이미지 동적 생성
-        if (mainImage && thumbnailList && mockImages.length > 0) {
-
-            // 메인 이미지 초기화
-            mainImage.src = `static/${mockImages[0].url}`;
-
-            // 썸네일 목록 비우기
-            thumbnailList.innerHTML = '';
-
-            // 썸네일 생성
-            mockImages.forEach((image, index) => {
-                const imgElement = document.createElement('img');
-                const thumbnailUrl = `static/${image.thumbnail_url || image.url}`;
-                const fullSrcUrl = `static/${image.url}`;
-
-                imgElement.className = 'thumbnail-item';
-                if (index === 0) {
-                    imgElement.classList.add('active');
-                }
-                imgElement.dataset.mainImgId = `mainImage_${reviewId}`;
-                imgElement.dataset.fullSrc = fullSrcUrl;
-                imgElement.src = thumbnailUrl;
-                imgElement.alt = `미리보기 사진 ${index + 1}`;
-
-                thumbnailList.appendChild(imgElement);
-            });
-
-            // -----------------------------------------------------
-            // 5. [2단계] 기능(이벤트) 로직 실행
-            // -----------------------------------------------------
-
-            // 5-1. 방금 생성한 썸네일 요소들과 상태 변수 선언
-            const thumbnails = thumbnailList.querySelectorAll('.thumbnail-item');
-
-
-            let currentIndex = 0;
-            const totalImages = thumbnails.length;
-            function showSlide(index) {
-
-                // 1. 인덱스 순환 처리 (다음/이전 버튼 클릭 시 범위 체크)
-                if (index >= totalImages) {
-                    currentIndex = 0; // 마지막 이미지에서 '다음' 누르면 0번으로
-                } else if (index < 0) {
-                    currentIndex = totalImages - 1; // 0번 이미지에서 '이전' 누르면 마지막으로
-                } else {
-                    currentIndex = index; // 썸네일 클릭 시 해당 인덱스로
-                }
-
-                // 2. 새로 활성화될 썸네일 요소 가져오기
-                const newActiveThumbnail = thumbnails[currentIndex];
-
-                // 3. 메인 이미지 소스(src) 변경
-                mainImage.src = newActiveThumbnail.dataset.fullSrc;
-
-                // 4. 모든 썸네일에서 'active' 클래스 제거
-                thumbnails.forEach(t => t.classList.remove('active'));
-
-                // 5. 현재 썸네일에 'active' 클래스 추가
-                newActiveThumbnail.classList.add('active');
-
-                // 6. (기존 기능) 활성화된 썸네일이 중앙에 오도록 스크롤
-                scrollToCenter(newActiveThumbnail, thumbnailList);
-            }
-
-            // 5-2. 썸네일 클릭 시 메인 이미지 변경 
-            thumbnails.forEach((thumbnail, index) => {
+        if (thumbnails && mainImage) {
+            thumbnails.forEach(thumbnail => {
                 thumbnail.addEventListener('click', function () {
-                    showSlide(index);
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    mainImage.src = this.dataset.fullSrc;
                 });
             });
-
-            // 5-3. 캐러셀 스크롤 버튼 기능 
-            if (prevBtn && nextBtn) {
-
-                prevBtn.addEventListener('click', () => {
-                    // '이전' 이미지 보여주기
-                    showSlide(currentIndex - 1);
-                });
-
-                nextBtn.addEventListener('click', () => {
-                    // '다음' 이미지 보여주기
-                    showSlide(currentIndex + 1);
-                });
-            }
         }
-
-        // 6. 헬퍼 함수 (스크롤) 정의
-        function scrollToCenter(element, listContainer) {
-            const listWidth = listContainer.clientWidth;
-            const itemCenter = element.offsetLeft + (element.offsetWidth / 2);
-            const scrollPosition = itemCenter - (listWidth / 2);
-
-            listContainer.scrollTo({
-                left: scrollPosition,
-                behavior: 'smooth'
-            });
-        }
-
     </script>
 
 </div>

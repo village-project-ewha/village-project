@@ -121,6 +121,7 @@ class DBhandler:
         
         self.db.child("reviews").push(review_info)
         print("Review registered:", review_info)
+
         return True
     
     def get_reviews(self):
