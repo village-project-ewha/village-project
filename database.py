@@ -209,12 +209,29 @@ class DBhandler:
         }
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         return True
+
+    def get_heart_byname(self, uid, name):
+        hearts = self.db.child("heart").child(uid).get()
+        
+        if hearts.val() is None:
+            return ""
+
+        heart_data = hearts.val().get(name) 
+
+        if heart_data and heart_data.get('interested') == 'Y':
+            return 'Y'
+        elif heart_data and heart_data.get('interested') == 'N':
+            return 'N'
+        else:
+            return ""
     
-    def get_heart_byname(self, user_id, item_name):
-        heart = self.db.child("heart").child(user_id).child(item_name).get()
-        if heart.val() and 'interested' in heart.val():
-            return heart.val()['interested']
-        return 'N'
+        
+    def update_heart(self, user_id, isHeart, item):
+        heart_info ={
+            "interested": isHeart
+        }
+        self.db.child("heart").child(user_id).child(item).set(heart_info)
+        return True
     
     def get_heart_list(self, user_id):
         hearts = self.db.child("heart").child(user_id).get()

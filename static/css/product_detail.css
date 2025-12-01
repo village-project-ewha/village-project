@@ -146,17 +146,35 @@
     font-size: 48px;
     color: #888888;
 }
+/* 하트 아이콘 기본 크기 설정 */
+.detail_card_bottom .fa-heart {
+    font-size: 36px; /* 원하는 크기로 통일 */
+    cursor: pointer;
+}
+
+/* 빈 하트 (좋아요 취소 상태) 색상 */
+.far.fa-heart {
+    color: #888888; /* 회색 */
+}
+
+/* 채워진 하트 (좋아요 완료 상태) 색상 */
+.fas.fa-heart {
+    color: #ff0000; /* 빨간색 */
+}
 
 /* 회색 하트 -> 마우스 올리면 빨간색 */
-#heart[onclick*="like"]:hover {
-    color: red !important; /* 밝은 빨강 */
+
+.far.fa-heart:hover {
+    color: red; /* 밝은 빨강 */
+    font-weight: 900 !important;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 /* 2. 빨간 하트 -> 마우스 올리면 더 진한 빨간색 */
-#heart[onclick*="unlike"]:hover {
+.fas.fa-heart:hover {
     color: #990000 !important; /* 아주 진한 빨강 (Dark Red) */
+    font-weight: 900 !important;
     cursor: pointer;
     transition: color 0.3s ease;
 }

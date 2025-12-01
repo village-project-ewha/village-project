@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/product_detail.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<script src="{{ url_for('static', filename='js/product_detail.js') }}" defer></script> 
 {% endblock head %}
 
 {% block section %}
@@ -67,7 +68,9 @@
         </div>
         <div class="detail_card_bottom">
             <!-- a href="#"><i class="fa-regular fa-heart"></i></a -->
-            <i class="fa fa-heart" id="heart"></i>
+            <i class="far fa-heart" id="heart-icon" onclick="toggleHeart('{{name}}')" data-product-name="{{name}}"></i>
+            <input type="hidden" id="product-name-data" value="{{name}}">
+            
             <div id="detail_chat_button_1">
                 <!-- span id="button_text_1" >채팅하기</span -->
                 <span id="button_text_1" onclick="location.href='/reg_review_init/{{name}}/';">리뷰등록</span>
