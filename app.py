@@ -169,29 +169,41 @@ def register_user():
 def view_products():
     page = request.args.get("page", 0, type=int)
     category = request.args.get("category", "all")
+    sort_method = request.args.get("sort", "recent") 
 
     per_page = 16 
     per_row = 4
-    row_count = int(per_page / per_row)
 
     start_idx = per_page * page
     end_idx = per_page * (page + 1)
 
+    # 1. DB에서 데이터 가져오기
     if category == "all":
         data = DB.get_items() 
     else:
         data = DB.get_items_bycategory(category) 
     
-    if not data: # 데이터가 아예 없을 때 처리
+    # 2. 데이터 유무 확인 및 정렬 로직 수행
+    if not data: 
         item_counts = 0
         data_for_page = {}
         tot_count = 0
     else:
         item_counts = len(data)
-        # 딕셔너리를 리스트로 변환하여 페이징 인덱스를 사용
         data_list = list(data.items())
-        data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True) #시간순 정렬
 
+        # 정렬 로직 적용
+        if sort_method == "low_price":
+            # 낮은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 오름차순 정렬
+            data_list.sort(key=lambda x: int(str(x[1].get("price", "0")).replace(",", "")))
+        elif sort_method == "high_price":
+            # 높은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 내림차순 정렬(reverse=True)
+            data_list.sort(key=lambda x: int(str(x[1].get("price", "0")).replace(",", "")), reverse=True)
+        else:
+            # 최신순 (기본값): 생성일 기준 내림차순
+            data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True)
+
+        # 3. 시간 계산 및 데이터 가공 (타임스탬프 -> "3분 전")
         processed_data_list = []
         for key, value in data_list:
             if "created_at" in value:
@@ -199,10 +211,12 @@ def view_products():
             else:
                 value["time_ago"] = ""
             processed_data_list.append((key, value))
+        
+        # 4. 현재 페이지에 해당하는 데이터만 자르기
         data_for_page = dict(processed_data_list[start_idx:end_idx])
         tot_count = len(data_for_page)
 
-    # 템플릿에 전달할 데이터를 담을 딕셔너리
+    # 5. 템플릿에 전달할 row 데이터 생성
     rows_to_render = {}
     row_count = int(per_page / per_row) # 실제 필요한 행의 수 계산
 
@@ -218,7 +232,7 @@ def view_products():
             # data_for_page 딕셔너리에서 현재 행의 데이터를 잘라냄
             row_data = dict(list(data_for_page.items())[start:end])
             
-            # row1, row2, row3... 형식으로 저장하고 전달
+            # row1, row2... 형식으로 저장
             rows_to_render[f'row{i+1}'] = row_data.items()
         else:
             break
@@ -227,10 +241,11 @@ def view_products():
         "products.html",
         limit = per_page,
         page = page,
-        page_count = int((item_counts/per_page)+1),
-        total=item_counts,
-        category=category,
-        **rows_to_render # 생성된 row만 동적으로 전달
+        page_count = int((item_counts/per_page) + 1) if item_counts % per_page != 0 else int(item_counts/per_page), # 페이지 수 계산 안전장치
+        total = item_counts,
+        category = category,
+        sort = sort_method, # [중요] 템플릿에 현재 정렬 상태 전달
+        **rows_to_render 
     )
 
 @application.route("/product_detail/<name>/")

@@ -1,13 +1,43 @@
-/* 전체 영역 설정  */
+/* =========================================
+   [1] 메인 컨테이너 (1170px 고정)
+   ========================================= */
 .products {
-    padding: 0 40px 40px 40px; 
-    width: auto;
-    font-family: "Noto Sans KR", "Roboto", system-ui, -apple-system, sans-serif;
+    width: 1170px !important;
+    max-width: 1170px;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box;
 }
 
-/* 테이블 셀 간격  */
-.products table td {
-    padding: 8px 16px 8px 8px;
+/* =========================================
+   [2] 상품 그리드 (Grid System)
+   ========================================= */
+.product-grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================
+   [3] 개별 상품 아이템
+   ========================================= */
+.product-item {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.card {
+    width: 100%;
+    display: block;
+    height: 100%;
+    cursor: pointer;
 }
 
 
@@ -15,9 +45,9 @@
 /* 제목 옆의 숫자 스타일  */
 .category_count {
     font-size: 16px;
-    color: #888;           
-    font-weight: 500;     
-    margin-left: 10px;     
+    color: #888;
+    font-weight: 500;
+    margin-left: 10px;
 }
 
 .section_title_area .main_title_link {
@@ -29,28 +59,28 @@
 /* small banner slider styles */
 /* 1. 배너 섹션 전체 틀 */
 .small-banner-section {
-    width: 1170px;       
-    height: 220px;       
-    margin: 0 auto 15px auto; 
+    width: 1170px;
+    height: 220px;
+    margin: 0 auto 15px auto;
     position: relative;
-    overflow: hidden;    
-    border-radius: 20px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 /* 2. 슬라이드들을 감싸는 긴 트랙 */
 .banner-container {
-    display: flex;       
-    width: 300%;         
+    display: flex;
+    width: 300%;
     height: 100%;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); 
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* 3. 개별 슬라이드 영역 (이미지를 감싸는 div) */
 .mini-banner-slide {
-    width: 1170px;       
-    height: 100%;       
-    flex-shrink: 0;     
+    width: 1170px;
+    height: 100%;
+    flex-shrink: 0;
     position: relative;
 }
 
@@ -58,35 +88,35 @@
 .mini-banner-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
-    display: block;   
+    object-fit: cover;
+    display: block;
 }
 
 /* 컨트롤러 컨테이너 (알약 모양) */
 .small-banner-section .slider-controls {
     position: absolute;
     bottom: 20px;
-    
-    left: auto;          
-    right: 20px;       
-    transform: none;     
-    
+
+    left: auto;
+    right: 20px;
+    transform: none;
+
     z-index: 10;
-    
+
     width: auto;
     height: 30px;
     border-radius: 20px;
     background-color: rgba(51, 51, 51, 0.5);
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 8px;
     gap: 0;
     box-sizing: border-box;
-    
-    opacity: 1;          
-    animation: none;   
+
+    opacity: 1;
+    animation: none;
 }
 
 
@@ -103,7 +133,8 @@
     flex-shrink: 0;
     transition: opacity 0.3s;
     color: #fff;
-    opacity: 0.7; /* 평소 투명도 */
+    opacity: 0.7;
+    /* 평소 투명도 */
 }
 
 .small-banner-section .control-btn:hover {
@@ -124,7 +155,7 @@
     align-items: center;
     justify-content: center;
     width: auto;
-    min-width: 40px; 
+    min-width: 40px;
     color: #fff;
     font-family: "Circular Std", sans-serif;
     font-size: 0.875rem;
@@ -136,4 +167,136 @@
 .small-banner-section .page-sep {
     margin: 0 4px;
     font-weight: 400;
+}
+
+
+
+/* =========================================
+   [4] 헤더 및 기타 스타일
+   ========================================= */
+.list-header-wrapper {
+    width: 100%;
+    padding: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* [첫째 줄] 카테고리 제목 */
+.page-category-title {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 70px;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.75rem;
+}
+
+/* [둘째 줄] 정보 바 (Flexbox로 양옆 배치) */
+.list-info-bar {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 왼쪽: 총 건수 */
+.total-count {
+    font-size: 0.875rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.total-count strong {
+    color: #00462a;
+    font-weight: 500;
+}
+
+/* 오른쪽: 정렬 링크들 */
+.sort-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-size: 14px;
+}
+
+/* 정렬 링크 기본 스타일 */
+.sort-link {
+    text-decoration: none;
+    color: #888;
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin-top: -2px;
+    cursor: pointer;
+    transition: color 0.2s;
+
+}
+
+/* 기본 리셋 */
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.sort-nav ul {
+    display: flex;   
+    align-items: center; 
+}
+
+
+.sort-nav ul li {
+    padding: 0 10px;
+    line-height: 1;     
+}
+
+
+.sort-nav ul li ~ li {
+    border-left: 1px solid #ddd;
+}
+
+
+/* [Active] 현재 선택된 정렬 옵션 */
+.sort-link.active {
+    color: #555;
+    font-weight: 500;
+}
+
+
+
+/* =========================================
+   [5] 상품 카드 강제 맞춤 (Fix Product Card Width Issues)
+   ========================================= */
+/* 1. 그리드 셀 자체 */
+.product-item {
+    width: 100% !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box; 
+}
+
+/*2. 내부 카드 박스들 강제 확장 */
+.card, 
+.product_card,
+.product_info {
+    width: 100% !important; 
+    max-width: 100% !important; 
+    display: block;
+    margin: 0 !important;
+    box-sizing: border-box;
+}
+
+/* 3. 이미지 꽉 채우기 */
+.product_card img {
+    width: 100% !important; 
+    display: block; 
+    object-fit: cover; 
+    margin: 0 !important;
 }
