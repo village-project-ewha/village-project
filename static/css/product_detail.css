@@ -232,7 +232,7 @@
     cursor: pointer;
 }
 
-#button_text_2 {
+#rental-button {
     display: flex;
     font-size: 14px;
     font-weight: 700;

@@ -534,6 +534,25 @@ def view_heart_list():
     
     return render_template("heart_list.html", liked_items=liked_items)
 
+@application.route("/request_rental/<name>/", methods=['POST'])
+def request_rental(name):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': '로그인이 필요합니다.'}), 401
+
+    user_id = session['user_id']
+    
+    item_data = DB.get_item_byname(name)
+    
+    if not item_data:
+        return jsonify({'success': False, 'message': '상품 정보를 찾을 수 없습니다.'}), 404
+
+    success = DB.insert_transaction(name, user_id, item_data)
+    
+    if success:
+        return jsonify({'success': True, 'message': '대여 신청이 완료되었습니다.'})
+    else:
+        return jsonify({'success': False, 'message': '거래 정보 저장에 실패했습니다.'}), 500
+
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0')

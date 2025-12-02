@@ -116,12 +116,31 @@ class DBhandler:
             "product_img": data.get('product_img', ''),
             "user_id": data['user_id'],
             "created_at": datetime.now().timestamp(),
+            "tx_id": data.get('tx_id')
             # "tx_id": data.get('tx_id') # 거래 ID를 리뷰에 기록
         }
         
         self.db.child("reviews").push(review_info)
         print("Review registered:", review_info)
 
+        return True
+
+    def insert_transaction(self, item_name, user_id, item_data):
+        """새로운 대여 신청(거래) 정보를 Firebase에 저장합니다."""
+        
+        transaction_info = {
+            "product_name": item_name,
+            "product_image_url": item_data.get("img_path"), 
+            "price": item_data.get("price"),
+            "seller_id": item_data.get("seller_id", "미정"), 
+            "user_id": user_id,
+            "status": "pending",
+            "request_ts": datetime.now().timestamp(),
+        }
+
+        # transactions 노드에 PUSH하여 고유 ID 생성
+        self.db.child("transactions").push(transaction_info)
+        print("Transaction registered:", transaction_info)
         return True
     
     def get_reviews(self):
@@ -194,16 +213,6 @@ class DBhandler:
 
         return dict(review_list) 
 
-    def get_heart_byname(self, uid, name):
-        hearts = self.db.child("heart").child(uid).get()
-        target_value=""
-        if hearts.val() == None:
-            return target_value
-        for res in hearts.each():
-            key_value = res.key()
-            if key_value == name:
-                target_value=res.val()
-            return target_value
         
     def update_heart(self, user_id, isHeart, item):
         heart_info ={
@@ -252,5 +261,4 @@ class DBhandler:
                 if item_name in all_items:
                     liked_items[item_name] = all_items[item_name]
         return liked_items
-    
     
