@@ -127,11 +127,36 @@ class DBhandler:
             "tx_id": data.get('tx_id')
             # "tx_id": data.get('tx_id') # 거래 ID를 리뷰에 기록
         }
-        
+
         self.db.child("reviews").push(review_info)
         print("Review registered:", review_info)
 
         return True
+    # database.py 파일의 DBhandler 클래스 내부
+
+    def get_transaction_status(self, user_id, item_name):
+        """
+        특정 사용자가 특정 상품에 대해 'pending' 상태의 거래가 있는지 조회합니다.
+        """
+        try:
+            # 1. user_id로 거래 목록을 필터링합니다. (이전에 정의한 get_user_transactions 활용)
+            transactions_data = self.get_user_transactions(user_id) 
+            
+            if not transactions_data:
+                return None # 거래 기록 없음
+
+            # 2. 거래 목록을 순회하며 'pending' 상태의 해당 상품 거래를 찾습니다.
+            for tx_id, transaction in transactions_data.items():
+                if (transaction.get("product_name") == item_name and 
+                    transaction.get("status") == "pending"):
+                    
+                    return "pending" # 대기 중인 거래가 있으면 상태 반환
+
+            return None # 대기 중인 거래 없음
+
+        except Exception as e:
+            print(f"Error checking transaction status: {e}")
+            return None
 
     def insert_transaction(self, item_name, user_id, item_data):
         """새로운 대여 신청(거래) 정보를 Firebase에 저장합니다."""
@@ -269,4 +294,6 @@ class DBhandler:
                 if item_name in all_items:
                     liked_items[item_name] = all_items[item_name]
         return liked_items
+    
+    
     

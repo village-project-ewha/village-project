@@ -574,6 +574,22 @@ def request_rental(name):
         return jsonify({'success': True, 'message': '대여 신청이 완료되었습니다.'})
     else:
         return jsonify({'success': False, 'message': '거래 정보 저장에 실패했습니다.'}), 500
+    
+    
+@application.route("/check_rental_status/<name>/", methods=['GET'])
+def check_rental_status(name):
+    if 'user_id' not in session:
+        return jsonify({'status': 'logged_out'}), 200 # 로그인 상태가 아니면 '로그아웃' 상태 반환
+
+    user_id = session['user_id']
+    
+    # DBhandler를 통해 현재 사용자의 대여 신청 상태를 확인
+    status = DB.get_transaction_status(user_id, name)
+    
+    if status == 'pending':
+        return jsonify({'status': 'completed'}) # 대기 중이면 신청 완료로 표시
+    else:
+        return jsonify({'status': 'available'}) # 거래가 없거나 완료/취소 상태면 신청 가능
 
 
 if __name__ == "__main__":

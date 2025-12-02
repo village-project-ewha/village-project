@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const productName = document.getElementById('product-name-data').value;
     
     if (productName) {
-        checkHeartStatus(productName);
+        checkHeartStatus(productName); // 좋아요
+        updateRentalButton(productName); // 대여 신청
     }
 });
 
@@ -87,4 +88,26 @@ function requestRental(productName) {
         }
     })
     .catch(error => console.error('대여 신청 오류:', error));
+}
+
+// 대여 신청 상태 업데이트
+function updateRentalButton(productName) {
+    const rentalButtonContainer = document.getElementById('detail_chat_button_2');
+    const rentalButtonSpan = document.getElementById('rental-button');
+
+    fetch(`/check_rental_status/${productName}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'completed') {
+                // 신청 완료 상태인 경우
+                rentalButtonSpan.textContent = '신청 완료';
+                rentalButtonContainer.style.backgroundColor = '#ccc';
+                rentalButtonSpan.style.cursor = 'default';
+                rentalButtonSpan.onclick = () => alert('이미 대여 신청을 완료했습니다.');
+            } else {
+                // 신청 가능한 상태인 경우
+                rentalButtonSpan.textContent = '대여 신청하기';
+            }
+        })
+        .catch(error => console.error('대여 상태 조회 오류:', error));
 }
