@@ -8,101 +8,94 @@
 {% block section %}
 <form action="/submit_item_post" method="post" enctype="multipart/form-data">
     <input type="hidden" name="created_at" value="{{ created_at }}">
-    <div class="product_image">
-        <p id="prod_reg_title">대표 이미지</p>
-        <label for="file" class="image_box" id="image_box">
-            <a href="#"><i class="fa-regular fa-square-plus"></i></a>
-            <p id="upload_text">사진을 추가해 주세요</p>
-            <img id="preview" alt="미리보기" />
-        </label>
-        <input type="file" name="file" id="file">
-    </div>
-    <div class="product_name">
-        <p id="prod_reg_title">상품 이름</p>
-        <label for="name" class="name_box">
-            <input type="text" name="name" id="name" maxlength="40" placeholder="상품 이름을 입력해주세요">
-            <span class="char_count" id="charCount">[0/40]</span>
-        </label>
-    </div>
-    <div class="product_category">
-        <p id="prod_reg_title">카테고리</p>
-        <label for="category" class="category_box">
-            <select id="category" name="category">
-                <option value="Clothes" selected> 의류 </option>
-                <option value="Beauty"> 뷰티 </option>
-                <option value="Books"> 전공서적 </option>
-                <option value="Furniture"> 가구 </option>
-                <option value="Electronics"> 전자기기 </option>
-                <option value="ETC"> 기타 </option>
-            </select>
-            <select id="mid_category" name="mid_category">
-                <option value="" disabled selected>중분류</option>
-            </select>
-            <select id="low_category" name="low_category">
-                <option value="" disabled selected>소분류</option>
-            </select>
-        </label>
-    </div>
-    <div class="product_way">
-        <p id="prod_reg_title">거래 방식</p>
-        <label class="way_box">
-            <label class="sell_box">
-                <input type="checkbox" name="way" id="sell_box" value="판매">
-                <p id="sell_text">판매</p>
+
+    <div class="form-section">
+        <h3 class="section-header">상품 기본 정보</h3>
+        
+        <div class="product_image">
+            <p class="field-label">대표 이미지</p>
+            <label for="file" class="image_box" id="image_box">
+                <i class="fa-regular fa-square-plus"></i>
+                <p id="upload_text">사진을 추가해 주세요</p>
+                <img id="preview" alt="미리보기" />
             </label>
-            <label class="borrow_box">
-                <input type="checkbox" name="way" id="borrow_box" value="대여">
-                <p id="borrow_text">대여</p>
+            <input type="file" name="file" id="file">
+        </div>
+
+        <div class="product_name">
+            <p class="field-label">상품 이름</p>
+            <label for="name" class="name_box">
+                <input type="text" name="name" id="name" maxlength="40" placeholder="상품 이름을 입력해주세요">
+                <span class="char_count" id="charCount">[0/40]</span>
             </label>
-        </label>
+        </div>
+
+        <div class="product_category">
+            <p class="field-label">카테고리</p>
+            <label for="category" class="category_box">
+                <select id="category" name="category">
+                    <option value="Clothes" selected> 의류 </option>
+                    <option value="Beauty"> 뷰티 </option>
+                    <option value="Books"> 전공서적 </option>
+                    <option value="Furniture"> 가구 </option>
+                    <option value="Electronics"> 전자기기 </option>
+                    <option value="ETC"> 기타 </option>
+                </select>
+                <select id="mid_category" name="mid_category"><option disabled selected>중분류</option></select>
+                <select id="low_category" name="low_category"><option disabled selected>소분류</option></select>
+            </label>
+        </div>
+
+        <div class="product_status">
+            <p class="field-label">상품 상태</p>
+            <label class="status_box">
+                <label><input type="checkbox" name="status" value="새 상품 (미사용)"> <p>새 상품</p></label>
+                <label><input type="checkbox" name="status" value="사용감 거의 없음"> <p>사용감 적음</p></label>
+                <label><input type="checkbox" name="status" value="사용감 많음"> <p>사용감 많음</p></label>
+                <label><input type="checkbox" name="status" value="고장/파손"> <p>고장/파손</p></label>
+            </label>
+        </div>
     </div>
 
-    <div class="product_price">
-        <p id="prod_reg_title">가격(판매가)</p>
-        <label for="price" class="name_box">
-            <input type="number" name="price" id="price" maxlength="40" placeholder="판매 가격을 입력해주세요.">
-        </label>
-    </div>
-    <div class="product_status">
-        <p id="prod_reg_title">상품 상태</p>
-        <label class="status_box">
-            <label class="new_box">
-                <input type="checkbox" name="status" id="new_box" value="새 상품 (미사용)">
-                <p id="new_text">새 상품 (미사용)</p>
+    <div class="form-section">
+        <h3 class="section-header">거래 정보</h3>
+
+        <div class="product_way">
+            <p class="field-label">거래 방식</p>
+            <label class="way_box">
+                <label><input type="checkbox" name="way" value="판매"> <p>판매</p></label>
+                <label><input type="checkbox" name="way" value="대여"> <p>대여</p></label>
             </label>
-            <label class="likely_box">
-                <input type="checkbox" name="status" id="likely_box" value="사용감 거의 없음">
-                <p id="likely_text">사용감 거의 없음</p>
+        </div>
+
+        <div class="product_price">
+            <p class="field-label">가격 (₩)</p>
+            <label for="price" class="name_box">
+                <input type="number" name="price" id="price" placeholder="가격을 입력해주세요 (숫자만)">
             </label>
-            <label class="old_box">
-                <input type="checkbox" name="status" id="old_box" value="사용감 많음">
-                <p id="old_text">사용감 많음</p>
+        </div>
+
+        <div class="product_place">
+            <p class="field-label">거래 장소</p>
+            <label for="place" class="name_box">
+                <input type="text" name="place" id="place" placeholder="예: 이화여자대학교 정문 앞">
             </label>
-            <label class="broken_box">
-                <input type="checkbox" name="status" id="broken_box" value="고장/파손">
-                <p id="broken_text">고장/파손 상품</p>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h3 class="section-header">상세 설명</h3>
+        
+        <div class="product_explain">
+            <label for="explain" class="explain_box">
+                <textarea name="explain" id="explain" maxlength="2000" placeholder="구매 시기, 브랜드, 사용감 등 상품에 대한 자세한 정보를 입력해주세요."></textarea>
+                <span class="char_count_explain" id="charCount_explain">[0/2000]</span>
             </label>
-        </label>
+        </div>
     </div>
-    <div class="product_place">
-        <p id="prod_reg_title">거래 장소</p>
-        <label for="place" class="name_box">
-            <input type="text" name="place" id="name" maxlength="40" placeholder="예: 이화여자대학교 정문 앞">
-        </label>
-    </div>
-    <div class="product_explain">
-        <p id="prod_reg_title">설명</p>
-        <label for="explain" class="explain_box">
-            <textarea type="text" name="explain" id="explain" maxlength="2000" placeholder="상품에 대한 설명을 자세하게 입력해주세요.
-- 전공책의 경우: 교수명, 출판사, 필기 여부 등 
-- 대여의 경우: 대여 가능 기간, 보증금 여부 등"></textarea>
-            <span class="char_count_explain" id="charCount_explain">[0/2000]</span>
-        </label>
-    </div>
+
     <label class="submit_box">
-        <p id="submit_text">등록하기</p>
-        <input type="submit" value="submit">
+        <input type="submit" value="등록하기">
     </label>
 </form>
-
 {% endblock section %}
