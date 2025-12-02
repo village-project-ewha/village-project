@@ -1,24 +1,22 @@
 body {
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 
-/* 카테고리 전체 감싸는 영역 */
+/* 카테고리 전체 */
 .category-nav-wrapper {
     width: 100%;
     background: #fff;
-    padding: 30px 0; /* 위아래 여백 */
-    border-bottom: 1px solid #f0f0f0; /* 하단 구분선 (선택사항) */
-    margin-bottom: 40px; /* 아래 리스트와 간격 */
+    padding: 0 0 30px 0;
 }
 
 /* 카테고리 리스트 (가로 정렬) */
 .category-nav {
     display: flex;
-    justify-content: center; /* 가운데 정렬 */
+    justify-content: center;
     align-items: center;
-    gap: 40px; /* 아이콘 사이 간격 */
-    flex-wrap: wrap; /* 화면 작으면 줄바꿈 */
+    gap: 40px;
+    flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -26,10 +24,10 @@ body {
 /* 개별 카테고리 버튼 */
 .cat-item {
     display: flex;
-    flex-direction: column; /* 아이콘 위, 텍스트 아래 */
+    flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: #888; /* 기본 색상 (회색) */
+    color: #888;
     transition: all 0.3s ease;
     cursor: pointer;
     min-width: 60px;
@@ -37,16 +35,37 @@ body {
 
 /* 아이콘 박스 디자인 */
 .cat-item .icon-box {
-    width: 50px;
-    height: 50px;
-    background-color: #f9f9f9; /* 연한 회색 원 */
-    border-radius: 50%; /* 동그라미 */
+    width: 70px;
+    height: 70px;
+    border-radius: 30px;
+    margin: 0 auto;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px; /* 아이콘 크기 */
-    margin-bottom: 8px; /* 텍스트와 간격 */
-    transition: all 0.3s ease;
+
+
+    background-color: #Fafafa;
+    color: #4f4f4f;
+
+    border: 1.5px solid transparent;
+
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.cat-item .icon-box svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+    stroke: none;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.2s ease;
 }
 
 /* 텍스트 디자인 */
@@ -58,35 +77,48 @@ body {
 
 /* [Hover 효과] 마우스 올렸을 때 */
 .cat-item:hover {
-    color: #333; /* 글자색 진하게 */
-    transform: translateY(-5px); /* 살짝 위로 뜸 */
+    color: #333;
 }
 
 .cat-item:hover .icon-box {
-    background-color: #eee; /* 배경 약간 진하게 */
+    transform: translateY(-3px);
+    background-color: #F0F7F4; 
+    border-color: #00462a;     
+    color: #00462a;
 }
 
-/* [Active 효과] 현재 선택된 카테고리 */
-.cat-item.active {
-    color: #333; /* 브랜드 컬러나 검정색 */
+.cat-item:hover span {
+    color: #00462a;
     font-weight: 700;
 }
 
+/* [Active 효과] 현재 선택된 카테고리 */
 .cat-item.active .icon-box {
-    background-color: #333; /* 선택되면 배경색 진하게 */
-    color: #fff; /* 아이콘은 흰색으로 */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* 그림자 효과 */
+    background-color: #00462a; 
+    border-color: #00462a;
+
+    color: #ffffff;
+
+    box-shadow: 0 4px 10px rgba(0, 70, 42, 0.3);
 }
+
+.cat-item.active span {
+    color: #00462a;
+    font-weight: 800;
+}
+
+
 
 
 /* 1. 배너 등장 애니메이션 정의  */
 @keyframes expandBanner {
     0% {
-        clip-path: inset(0 50% 0 50%); 
-        transform: scale(0.95);        
+        clip-path: inset(0 50% 0 50%);
+        transform: scale(0.95);
     }
+
     100% {
-        clip-path: inset(0 0 0 0);  
+        clip-path: inset(0 0 0 0);
         transform: scale(1);
     }
 }
@@ -96,6 +128,7 @@ body {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -145,9 +178,17 @@ body {
     background-repeat: no-repeat;
 }
 
-.bg-1 { background-image: url('/static/resource/Main Banner/Main_Banner_1.jpg'); }
-.bg-2 { background-image: url('/static/resource/Main Banner/Main_Banner_2.png'); }
-.bg-3 { background-image: url('/static/resource/Main Banner/Main_Banner_3.jpg'); }
+.bg-1 {
+    background-image: url('/static/resource/Main Banner/Main_Banner_1.jpg');
+}
+
+.bg-2 {
+    background-image: url('/static/resource/Main Banner/Main_Banner_2.png');
+}
+
+.bg-3 {
+    background-image: url('/static/resource/Main Banner/Main_Banner_3.jpg');
+}
 
 
 
@@ -172,7 +213,7 @@ body {
 
     /* 초기 상태: 투명도 0 */
     opacity: 0;
-    
+
     /* 애니메이션 */
     animation: fadeInControl 0.8s ease-out 3.0s forwards;
 }
@@ -193,13 +234,13 @@ body {
 
 /* 3. 구분선 (/) 스타일 */
 .page-sep {
-    margin: 0 2px;   
+    margin: 0 2px;
     font-weight: 400;
 }
 
 /* 4. 화살표 버튼  */
 .control-btn {
-    width: 20px; 
+    width: 20px;
     height: 100%;
     background: none;
     border: none;
@@ -237,17 +278,17 @@ body {
 
 .section_title_area {
     text-align: center;
-    margin-bottom: 50px; 
+    margin-bottom: 50px;
     margin-top: 100px;
     font-family: "Noto Sans KR", sans-serif;
 }
 
 /* 메인 타이틀 (링크) 스타일 */
 .main_title_link {
-    display: inline-flex; 
+    display: inline-flex;
     align-items: center;
-    gap: 8px; 
-    font-size: 1.75rem; 
+    gap: 8px;
+    font-size: 1.75rem;
     font-weight: 500;
     color: #333;
     text-decoration: none;
@@ -260,14 +301,14 @@ body {
 }
 
 .main_title_link svg {
-    margin-top: 4px; 
+    margin-top: 4px;
 }
 
 
 .sub_desc {
-    margin-top: 12px; 
+    margin-top: 12px;
     font-size: 15px;
-    color: #999999; 
+    color: #999999;
     font-weight: 400;
     letter-spacing: -0.5px;
 }
@@ -276,9 +317,9 @@ body {
 .pre_list_row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; 
-    gap: 75px 20px; 
-    
+    justify-content: flex-start;
+    gap: 75px 20px;
+
     width: 100%;
 }
 
@@ -287,11 +328,12 @@ body {
     width: 264px;
     background: #fff;
     overflow: hidden;
-    margin-bottom: 0;    
+    margin-bottom: 0;
     margin-right: 0;
     border: none;
     box-shadow: none;
 }
+
 .product_card img {
     width: 100%;
     height: 264px;
@@ -302,10 +344,10 @@ body {
 }
 
 .product_card:hover {
-    box-shadow: none !important;  
-    transform: none !important;   
-    border: none !important;      
-    margin-top: 0 !important;     
+    box-shadow: none !important;
+    transform: none !important;
+    border: none !important;
+    margin-top: 0 !important;
 }
 
 .product_card:hover img {
@@ -458,47 +500,47 @@ body {
 
 /* 1. 구해드림 섹션 전체*/
 .find_list {
-    padding: 40px; 
-    background-color: #fff; 
-    overflow: hidden; 
+    padding: 40px;
+    background-color: #fff;
+    overflow: hidden;
 }
 
 /* 2. 슬라이더 컨테이너 */
 .find-slider {
     width: 100%;
-    padding-bottom: 50px; 
-    overflow: visible; 
+    padding-bottom: 50px;
+    overflow: visible;
 }
 
 /* 3. 슬라이드 개별 영역 (카드 감싸는 박스) */
 .find-slider .swiper-slide {
-    width: 280px; 
+    width: 280px;
     height: auto;
     margin-right: 20px;
 }
 
 /* 4. 카드 디자인 */
 .find_card {
-    width: 100%; 
-    height: 180px; 
-    
+    width: 100%;
+    height: 180px;
+
     background: #fff;
-    border: 1px solid #eee; 
-    border-radius: 16px;    
-    padding: 24px;          
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 24px;
     box-sizing: border-box;
-    
+
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
-    
+    justify-content: space-between;
+
     transition: all 0.3s ease;
 }
 
 /* 마우스 올렸을 때 살짝 떠오르는 효과 */
 .find_card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     border-color: transparent;
 }
 
@@ -511,7 +553,7 @@ body {
     color: #222;
     margin-bottom: 8px;
     padding: 0;
-    
+
     /* 2줄 이상 넘어가면 ... 처리 */
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -536,9 +578,9 @@ body {
 
 /* 6. 하단 스크롤바 디자인 (세련된 얇은 바) */
 .find-slider .swiper-scrollbar {
-    background: #f0f0f0; 
-    height: 4px;       
-    bottom: 0;          
+    background: #f0f0f0;
+    height: 4px;
+    bottom: 0;
     left: 0;
     width: 100%;
     border-radius: 2px;
@@ -554,43 +596,43 @@ body {
 
 /* 리뷰 개수 숫자 스타일 */
 .title_count {
-    font-size: 0.9em; 
-    font-weight: 400; 
-    color: #666;      
-    margin-left: 4px; 
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #666;
+    margin-left: 4px;
     margin-right: 2px;
 }
 
 
 
 .review-slider-wrapper {
-    position: relative; 
+    position: relative;
     padding: 0 10px;
 }
 
 
 .review-slider .swiper-wrapper {
-    transition-timing-function: linear; 
+    transition-timing-function: linear;
 }
 
 
 .review-slider .swiper-slide {
-    width: 200px; 
-    margin-right: 15px; 
+    width: 200px;
+    margin-right: 15px;
 }
 
 
 .review_card_style {
     width: 100%;
-    margin-bottom: 0; 
+    margin-bottom: 0;
     border: none;
     box-shadow: none;
 }
 
 .review_card_style .img-box {
     width: 100%;
-    height: 200px; 
-    background-color: #f5f5f5; 
+    height: 200px;
+    background-color: #f5f5f5;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -608,18 +650,18 @@ body {
 
 .review_card_style img {
     width: 100%;
-    height: 100%; 
-    object-fit: cover; 
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
 
 .review_card_style #product_01 {
-    font-size: 14px; 
+    font-size: 14px;
     margin-top: 8px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
 }
 
 
@@ -628,14 +670,14 @@ body {
     height: 40px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    color: #333; 
-    opacity: 0; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: #333;
+    opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .review-btn::after {
-    font-size: 16px; 
+    font-size: 16px;
     font-weight: bold;
 }
 

@@ -10,59 +10,85 @@
 
 <div class="category-nav-wrapper">
     <div class="category-nav">
-        
-        <a href="{{ url_for('view_products', page=0, category='all') }}" 
-           class="cat-item {% if category == 'all' or not category %}active{% endif %}">
+
+        <a href="{{ url_for('view_products', page=0, category='all') }}"
+            class="cat-item {% if category == 'all' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-border-all"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="2" ry="2"></rect>
+                    <rect x="14" y="3" width="7" height="7" rx="2" ry="2"></rect>
+                    <rect x="14" y="14" width="7" height="7" rx="2" ry="2"></rect>
+                    <rect x="3" y="14" width="7" height="7" rx="2" ry="2"></rect>
+                </svg>
             </div>
             <span>전체</span>
         </a>
 
-        <a href="{{ url_for('view_products', page=0, category='Clothes') }}" 
-           class="cat-item {% if category == 'Clothes' %}active{% endif %}">
+        <a href="{{ url_for('view_products', page=0, category='Clothes') }}"
+            class="cat-item {% if category == 'Clothes' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-shirt"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z">
+                    </path>
+                </svg>
             </div>
             <span>의류</span>
         </a>
-
-        <a href="{{ url_for('view_products', page=0, category='Beauty') }}" 
-           class="cat-item {% if category == 'Beauty' %}active{% endif %}">
+        <a href="{{ url_for('view_products', page=0, category='Beauty') }}"
+            class="cat-item {% if category == 'Beauty' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="7" y="12" width="10" height="9" rx="2" ry="2"></rect>
+                    <line x1="7" y1="17" x2="17" y2="17"></line>
+                    <path d="M9 12V6c0-1.66 1.34-3 3-3s3 1.34 3 3v6"></path>
+                </svg>
             </div>
             <span>뷰티</span>
         </a>
 
-        <a href="{{ url_for('view_products', page=0, category='Books') }}" 
-           class="cat-item {% if category == 'Books' %}active{% endif %}">
+        <a href="{{ url_for('view_products', page=0, category='Books') }}"
+            class="cat-item {% if category == 'Books' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-book"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
             </div>
             <span>서적</span>
         </a>
 
-        <a href="{{ url_for('view_products', page=0, category='Furniture') }}" 
-           class="cat-item {% if category == 'Furniture' %}active{% endif %}">
+        <a href="{{ url_for('view_products', page=0, category='Furniture') }}"
+            class="cat-item {% if category == 'Furniture' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-couch"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
+                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"></path>
+                </svg>
             </div>
             <span>가구</span>
         </a>
 
-        <a href="{{ url_for('view_products', page=0, category='Electronics') }}" 
-           class="cat-item {% if category == 'Electronics' %}active{% endif %}">
+        <a href="{{ url_for('view_products', page=0, category='Electronics') }}"
+            class="cat-item {% if category == 'Electronics' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-laptop"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
             </div>
             <span>전자기기</span>
         </a>
 
-        <a href="{{ url_for('view_products', page=0, category='ETC') }}" 
-           class="cat-item {% if category == 'ETC' %}active{% endif %}">
+        <a href="{{ url_for('view_products', page=0, category='ETC') }}"
+            class="cat-item {% if category == 'ETC' %}active{% endif %}">
             <div class="icon-box">
-                <i class="fa-solid fa-ellipsis"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                </svg>
             </div>
             <span>기타</span>
         </a>
@@ -70,16 +96,59 @@
     </div>
 </div>
 
-
-<div class="products">
-    {% if total > 0 %}
-    <div class="title">
-        <span id="list_title">등록된 전체 상품</span>
-        <div id="list_num">
-            <span id="num">{{total}}</span>
-            <span>개</span>
+<div class="small-banner-section">
+    <div class="banner-container">
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너1">
+        </div>
+        
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너2">
+        </div>
+        
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너3">
         </div>
     </div>
+
+    <div class="slider-controls">
+        <button type="button" class="control-btn prev" aria-label="이전">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6" transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+
+        <div class="fraction-pagination"></div>
+
+        <button type="button" class="control-btn next" aria-label="다음">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(180deg);">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6" transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+    </div>
+
+</div>
+
+<div class="products">
+
+    <div class="section_title_area">
+        <div class="main_title_link">
+
+            {% if category == 'Clothes' %}의류
+            {% elif category == 'Beauty' %}뷰티
+            {% elif category == 'Books' %}서적
+            {% elif category == 'Furniture' %}가구
+            {% elif category == 'Electronics' %}전자기기
+            {% elif category == 'ETC' %}기타
+            {% else %}전체 상품{% endif %}
+
+            <span class="category_count">(총 {{ total }}개)</span>
+
+        </div>
+    </div>
+    {% if total > 0 %}
     <table>
         <tr>
             {% for key, value in row1 %}
@@ -239,26 +308,44 @@
     <div class="page-wrap">
         <div class="page-nation">
             <ul>
-                <li>&lt;&lt;</li>
-                <li>&lt;</li>
                 <li>
-                    {% for i in range(page_count) %}
-                    <a href="{{url_for('view_products', page=i, category=category)}}">{{i}}</a>
-                    {% endfor %}
+                    <a href="{{ url_for('view_products', page=0, category=category) }}">&lt;&lt;</a>
                 </li>
-                <li>&gt;</li>
-                <li>&gt;&gt;</li>
+
+                <li>
+                    {% if page > 0 %}
+                    <a href="{{ url_for('view_products', page=page-1, category=category) }}">&lt;</a>
+                    {% else %}
+                    <a href="#">&lt;</a>
+                    {% endif %}
+                </li>
+
+                {% for i in range(page_count) %}
+                <li>
+                    <a href="{{ url_for('view_products', page=i, category=category) }}"
+                        class="{% if i == page %}active{% endif %}">
+                        {{ i + 1 }}
+                    </a>
+                </li>
+                {% endfor %}
+
+                <li>
+                    {% if page < page_count - 1 %} <a
+                        href="{{ url_for('view_products', page=page+1, category=category) }}">&gt;</a>
+                        {% else %}
+                        <a href="#">&gt;</a>
+                        {% endif %}
+                </li>
+
+                <li>
+                    <a href="{{ url_for('view_products', page=page_count-1, category=category) }}">&gt;&gt;</a>
+                </li>
             </ul>
         </div>
     </div>
+
+
     {% else %}
-    <div class="title">
-        <span id="list_title">등록된 전체 상품</span>
-        <div id="list_num">
-            <span id="num">{{total}}</span>
-            <span>개</span>
-        </div>
-    </div>
     <p>
         등록된 상품이 없습니다.
     </p>
