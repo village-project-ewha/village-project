@@ -95,9 +95,6 @@ ul {
     gap: 2rem;
 }
 
-.main-menu li .nav-home {
-    color: #00462a;
-}
 
 .main-menu li {
     font-size: 16px;
@@ -111,6 +108,17 @@ ul {
     padding: 6px 10px;
     border-radius: 20px;
 }
+
+.main-menu li a.active {
+    color: #00462a !important; 
+    font-weight: 700;          
+}
+
+.main-menu li a:hover {
+    cursor: pointer;
+}
+
+
 
 
 

@@ -64,7 +64,7 @@
     margin: 0 auto 15px auto;
     position: relative;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
@@ -295,7 +295,8 @@ li {
 
 /* 3. 이미지 꽉 채우기 */
 .product_card img {
-    width: 100% !important; 
+    width: 100% !important;
+    height: 280px !important; 
     display: block; 
     object-fit: cover; 
     margin: 0 !important;
