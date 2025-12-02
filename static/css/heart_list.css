@@ -183,7 +183,7 @@
 
 .btn-go-shop {
     display: inline-block;
-    background-color: #007bff;
+    background-color: #00462a;
     color: white;
     padding: 8px 20px;
     border-radius: 50px;
@@ -193,5 +193,5 @@
 }
 
 .btn-go-shop:hover {
-    background-color: #0056b3;
+    background-color: #00331F;
 }

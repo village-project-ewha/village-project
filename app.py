@@ -134,12 +134,22 @@ def signup():
 
 @application.route("/signup_post", methods=['POST'])
 def register_user():
-    data=request.form
-    pw=request.form['pw']
-    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() #id 중복 체크 필요
-    if DB.insert_user(data,pw_hash):
+    data = request.form.to_dict() 
+    
+    # 1. 사용자가 입력한 아이디 가져오기
+    email_id = data['email']
+    
+    # 2. 뒤에 학교 도메인 강제로 붙이기
+    data['email'] = f"{email_id}@ewha.ac.kr"
+
+    # 비밀번호 해싱
+    pw = request.form['pw']
+    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() 
+
+    # 3. 수정된 data(전체 이메일 포함)를 DB에 저장
+    if DB.insert_user(data, pw_hash):
         return render_template("login.html")
-    else:   # 중복 아이디 존재 시 플래시 메세지 띄움
+    else:   
         flash("user id already exist!")
         return render_template("signup.html")
 
