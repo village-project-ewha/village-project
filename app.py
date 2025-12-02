@@ -6,6 +6,7 @@ import os
 import uuid
 import hashlib
 import sys
+import math
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
@@ -287,12 +288,44 @@ def view_list():
 
 @application.route("/review")
 def view_review():
-    reviews = DB.get_all_reviews()
+    page = request.args.get("page", 1, type=int) 
+    per_page = 8 
+    
+    reviews_data = DB.get_all_reviews()
 
-    if not reviews:
-        reviews = {}
+    if not reviews_data:
+        return render_template("review.html", reviews={}, page=1, page_count=1, total=0)
 
-    return render_template("review.html", reviews=reviews)
+    # 1. 딕셔너리를 리스트로 변환 [(key, value), ...]
+    data_list = list(reviews_data.items())
+
+    # 2. 최신순(created_at)으로 정렬
+    data_list.sort(
+        key=lambda x: float(x[1].get("created_at", 0)), 
+        reverse=True
+    )
+
+    # 3. 전체 아이템 수 및 총 페이지 수 계산
+    total_count = len(data_list)
+    page_count = math.ceil(total_count / per_page) 
+
+    # 4. 현재 페이지에 해당하는 데이터 슬라이싱
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+    
+    # 리스트 슬라이싱 (범위를 벗어나도 에러 안 남)
+    sliced_list = data_list[start_idx:end_idx]
+
+    # 5. 템플릿 호환성을 위해 다시 딕셔너리로 변환
+    paginated_reviews = dict(sliced_list)
+
+    return render_template(
+        "review.html", 
+        reviews=paginated_reviews, 
+        page=page, 
+        page_count=page_count, 
+        total=total_count
+    )
 
 def get_reviews(self):
     reviews = self.db.child("review").get().val()

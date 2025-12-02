@@ -10,7 +10,6 @@
 {% block section %}
 <div id="page-wrapper">
 
-
     <section class="review-page">
         <div class="review-banner">
             <h2>리뷰 작성하고 포인트 받으세요!</h2>
@@ -25,19 +24,13 @@
             <h2 class="section-title">빌리지 이웃들의 최신 리뷰!</h2>
 
             <div class="review-list">
-
                 {% if reviews %}
                     {% for key, r in reviews.items() %}
                     <div class="review-card">
-
                         <a href="{{ url_for('view_review_detail', review_id=key) }}">
-
                             <img src="{{ url_for('static', filename=r.thumb) }}" alt="리뷰 이미지" height="220">
-
                             <div class="review-content">
-
                                 <h3>{{ r.title }}</h3>
-
                                 <p>
                                     {% if r.review %}
                                         {{ r.review[:60] }}...
@@ -45,7 +38,6 @@
                                         내용 없음
                                     {% endif %}
                                 </p>
-
                                 <div class="review-meta">
                                     <span class="author">{{ r.user_id }}</span>
                                     <span class="date">
@@ -54,51 +46,56 @@
                                         {% endif %}
                                     </span>
                                 </div>
-
                             </div>
-
                         </a>
-
                     </div>
                     {% endfor %}
-                
                 {% else %}
                     <p>등록된 리뷰가 없습니다.</p>
                 {% endif %}
-            
-
             </div>
         </div>
 
-        <nav class="pagination-container" aria-label="Page navigation">
+        {% if reviews %}
+        <div class="page-wrap">
+            <div class="page-nation">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('view_review', page=1) }}">&lt;&lt;</a>
+                    </li>
+                    
+                    <li>
+                        {% if page > 1 %}
+                            <a href="{{ url_for('view_review', page=page-1) }}">&lt;</a>
+                        {% else %}
+                            <a href="javascript:void(0)" class="disabled">&lt;</a>
+                        {% endif %}
+                    </li>
 
-            <ul class="pagination">
+                    <li>
+                        {% for i in range(page_count) %}
+                            {% set p = i + 1 %}
+                            <a href="{{ url_for('view_review', page=p) }}" {% if p == page %}class="active"{% endif %}>
+                                {{ p }}
+                            </a>
+                        {% endfor %}
+                    </li>
 
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">&laquo;</a>
-                </li>
+                    <li>
+                        {% if page < page_count %}
+                            <a href="{{ url_for('view_review', page=page+1) }}">&gt;</a>
+                        {% else %}
+                            <a href="javascript:void(0)" class="disabled">&gt;</a>
+                        {% endif %}
+                    </li>
 
-
-
-                <li class="page-item active">
-                    <a class="page-link" href="/review?page=1">1</a>
-                </li>
-
-
-
-                <li class="page-item ">
-                    <a class="page-link" href="/review?page=2">2</a>
-                </li>
-
-
-
-                <li class="page-item ">
-                    <a class="page-link" href="/review?page=2">&raquo;</a>
-                </li>
-
-            </ul>
-
-        </nav>
-    </section>
+                    <li>
+                        <a href="{{ url_for('view_review', page=page_count) }}">&gt;&gt;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        </section>
 </div>
-{% endblock section%}
+{% endblock section %}
