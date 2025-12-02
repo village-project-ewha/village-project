@@ -134,24 +134,36 @@ def signup():
 
 @application.route("/signup_post", methods=['POST'])
 def register_user():
-    data = request.form.to_dict() 
-    
-    # 1. 사용자가 입력한 아이디 가져오기
+    mode = request.form.get("mode")  # 요청 구분 키 (중복 확인 vs 실제 회원가입)
+
+    # 아이디 중복 확인 
+    if mode == "id_check":
+        user_id = request.form.get("id")
+
+        if DB.user_duplicate_check(user_id):
+            return {"result": "ok"}
+        else:
+            return {"result": "duplicate"}
+
+    # 실제 회원가입 로직
+    data = request.form.to_dict()
+
+    # 학교 이메일 도메인 강제 처리
     email_id = data['email']
-    
-    # 2. 뒤에 학교 도메인 강제로 붙이기
     data['email'] = f"{email_id}@ewha.ac.kr"
 
     # 비밀번호 해싱
-    pw = request.form['pw']
-    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() 
+    pw = data['pw']
+    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
 
-    # 3. 수정된 data(전체 이메일 포함)를 DB에 저장
+    # DB 저장
     if DB.insert_user(data, pw_hash):
         return render_template("login.html")
-    else:   
+    else:
         flash("user id already exist!")
         return render_template("signup.html")
+
+
 
 @application.route("/products")
 def view_products():

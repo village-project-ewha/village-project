@@ -27,7 +27,7 @@
     </a>
     <h2>회원 가입</h2>
 
-    <form method="post" action="/signup_post">
+    <form method="post" action="/signup_post" onsubmit="return finalCheck();">
 
         <div class="form-group">
             <label for="userid">아이디</label>
@@ -91,6 +91,57 @@
         <p>이미 아이디가 있으신가요? <a href="/login">로그인</a></p>
     </div>
 </div>
+
+
+<!--아이디 중복 확인-->
+<script>
+let idChecked = false;
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("id-check-btn").addEventListener("click", function () {
+        const userId = document.getElementById("userid").value;
+        const msg = document.getElementById("id-message");
+
+        if (!userId) {
+            alert("아이디를 입력하세요!");
+            return;
+        }
+
+        fetch("/signup_post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "mode=id_check&id=" + userId
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.result === "ok") {
+                msg.innerText = "사용 가능한 아이디입니다.";
+                msg.style.color = "green";
+                idChecked = true;
+            } else {
+                msg.innerText = "이미 사용 중인 아이디입니다.";
+                msg.style.color = "red";
+                idChecked = false;
+            }
+        });
+    });
+});
+
+//최종 submit 차단용
+function finalCheck() {
+    if (!idChecked) {
+        alert("아이디 중복 확인을 먼저 해주세요!");
+        return false;   //submit 차단
+    }
+    return true;        //submit 허용
+}
+</script>
+
+
+
+
 {% endblock section %}
 
 </html>

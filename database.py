@@ -36,9 +36,11 @@ class DBhandler:
             "email": data['email']
         }
 
+        user_id = str(data['id'])
+
         #아이디 중복 체크
-        if self.user_duplicate_check(str(data['id'])):
-            self.db.child("user").push(user_info)
+        if self.user_duplicate_check(user_id):
+            self.db.child("user").child(user_id).set(user_info) # push -> set
             print(data)
             return True
         else:
@@ -47,16 +49,22 @@ class DBhandler:
     def user_duplicate_check(self, id_string):
         users = self.db.child("user").get()
 
-        print("users###",users.val())
-        if str(users.val()) == "None": # first registration
+        if users.val() is None:
             return True
-        else:
-            for res in users.each():
-                value = res.val()
 
-                if value['id'] == id_string:
-                    return False
-            return True
+        for res in users.each():
+            value = res.val()
+
+            # 기존 push 구조로 들어간 id 확인
+            if isinstance(value, dict) and value.get("id") == id_string:
+                return False
+
+            # 새로운 child 구조로 들어간 id 확인
+            if res.key() == id_string:
+                return False
+
+        return True
+
         
         # 매칭되는 user 찾기    
     def find_user(self, id_, pw_):
