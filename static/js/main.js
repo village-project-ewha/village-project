@@ -1,28 +1,40 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Swiper 캐러셀 초기화 (home.html) ---
-    const swiperContainer = document.querySelector(".mySwiper");
-    if (swiperContainer) {
-        const swiper = new Swiper(".mySwiper", {
-            loop: true,
-            slidesPerView: 1,
-            centeredSlides: true,
-            spaceBetween: 30,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-    }
+
+    const bannerSwiper = new Swiper(".main-slider", {
+    loop: true,
+    effect: "fade",
+    fadeEffect: { crossFade: true },
+
+    pagination: {
+        el: ".fraction-pagination",
+        type: "fraction", 
+        
+
+        formatFractionCurrent: function (number) {
+            return String(number).padStart(2, '0');
+        },
+        
+
+        formatFractionTotal: function (number) {
+            return String(number).padStart(2, '0');
+        },
+        
+
+        renderFraction: function (currentClass, totalClass) {
+            return '<span class="' + currentClass + '"></span>' +
+                   '<span class="page-sep">/</span>' +
+                   '<span class="' + totalClass + '"></span>';
+        }
+    },
+
+
+    navigation: {
+        nextEl: ".control-btn.next",
+        prevEl: ".control-btn.prev",
+    },
+});
 
     // --- 드롭다운 메뉴 로직 (index.html) ---
     const profileButton = document.getElementById('profile-menu-button');

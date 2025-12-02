@@ -1,96 +1,115 @@
-/*
-.main_banner {
-    max-width: 1200px;
-    width: 100%;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-    padding: 32px 32px 32px 16px;
-    overflow-y: hidden;
-    overflow-x: auto;
-    gap: 20px;
-    scrollbar-color: white transparent;
+body {
+    overflow-x: hidden; /* 가로 스크롤 방지 */
 }
 
-.banner {
-    width: 1200px;
-    height: 400px;
-    padding: 32px 32px 32px 0px;
-}
-*/
-/* 메인 배너 */
-.mySwiper {
+
+/* 1. 전체 배너 영역*/
+.main-banner-wrapper {
+    width: 1920px;
+    height: 500px;
+    margin-left: calc(50% - 960px);
     position: relative;
-    overflow: hidden;
-    width: 75rem;
-    height: 25rem;
-    margin-bottom: 5rem;
-    margin: 0 auto;
-    border: none;
+    overflow: visible;
+    background-color: #f5f5f5;
 }
 
-/* 슬라이드들을 감싸는 래퍼 (실제 움직이는 부분) */
-.swiper-wrapper {
-    display: flex;
+.main-slider {
     width: 100%;
     height: 100%;
-    transition: transform 0.5s ease-in-out;
 }
 
-/* 각 개별 슬라이드 */
-.swiper-slide {
-    min-width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-/* 슬라이드 내부 이미지 */
-.swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.slide-link {
     display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }
 
-.swiper-button-next {
-    right: 0.625rem;
+.slide-bg {
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.swiper-button-prev {
-    left: 0.625rem;
+.bg-1 { background-image: url('/static/resource/Main Banner/Main_Banner_1.png'); }
+.bg-2 { background-image: url('/static/resource/Main Banner/Main_Banner_2.png'); }
+.bg-3 { background-image: url('/static/resource/Main Banner/Main_Banner_3.png'); }
+
+
+
+/* 1. 컨트롤러 전체 영역 (크기 줄임) */
+.slider-controls {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: auto;
+    min-width: 90px; 
+    height: 30px;
+    
+    border-radius: 20px;
+    background-color: rgba(51, 51, 51, 0.5);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 0 15px;
+    gap: 15px; 
+    
+    box-sizing: border-box;
+    transition: 0.6s;
 }
 
-.swiper-button-prev,
-.swiper-button-next {
-    color: #ffffff;
+/* 2. 페이지네이션 텍스트 (01/03) */
+.fraction-pagination {
+    color: #fff;
+    font-size: 13px;
+    font-family: sans-serif; 
+    font-weight: 500; 
+    letter-spacing: 0.5px; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3. 구분선 (/) 스타일 */
+.page-sep {
+    margin: 0 2px; 
+    opacity: 0.6;  
+    font-weight: 400;
+}
+
+/* 4. 화살표 버튼 (기존 유지) */
+.control-btn {
+    width: 20px; 
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0.7;
     transition: opacity 0.3s;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    cursor: pointer;
+    color: #fff;
 }
 
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
+.control-btn:hover {
     opacity: 1;
 }
 
-/* 페이지네이션 점들 */
-.swiper-pagination-bullet {
-    background: #ffffff;
-    opacity: 0.6;
+.control-btn svg {
+    width: 13px;
+    height: 13px;
+    display: block;
+    stroke: #fff; 
 }
 
-.swiper-pagination-bullet-active {
-    background: #00462A;
-    opacity: 1;
-}
 
 .pre_list {
     padding: 40px;
@@ -99,41 +118,82 @@
     color: #000;
 }
 
-.pre_list table td {
-    padding: 8px 16px 8px 8px;
+
+.section_title_area {
+    text-align: center;
+    margin-bottom: 50px; 
+    margin-top: 100px;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
-#pre_list_title {
-    color: #000;
-    font-family: var(--Static-Display-Small-Font, Roboto);
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: var(--Static-Display-Small-Line-Height, 44px);
-    /* 137.5% */
-    letter-spacing: var(--Static-Display-Small-Tracking, 0);
+/* 메인 타이틀 (링크) 스타일 */
+.main_title_link {
+    display: inline-flex; 
+    align-items: center;
+    gap: 8px; 
+    font-size: 1.75rem; 
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    line-height: 1.2;
+    transition: opacity 0.3s;
 }
 
+.main_title_link:hover {
+    cursor: pointer;
+}
+
+.main_title_link svg {
+    margin-top: 4px; 
+}
+
+
+.sub_desc {
+    margin-top: 12px; 
+    font-size: 15px;
+    color: #999999; 
+    font-weight: 400;
+    letter-spacing: -0.5px;
+}
+
+/* 1. 부모 요소 (컨테이너)  */
 .pre_list_row {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+    gap: 75px 20px; 
+    
     width: 100%;
-    margin-bottom: 16px;
 }
 
+/* 2. 자식 요소 (카드)  */
 .product_card {
     width: 264px;
-    overflow: hidden;
     background: #fff;
+    overflow: hidden;
+    margin-bottom: 0;    
+    margin-right: 0;
+    border: none;
+    box-shadow: none;
 }
-
 .product_card img {
     width: 100%;
     height: 264px;
     object-fit: cover;
     display: block;
     border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.product_card:hover {
+    box-shadow: none !important;  
+    transform: none !important;   
+    border: none !important;      
+    margin-top: 0 !important;     
+}
+
+.product_card:hover img {
+    transform: scale(1.05);
 }
 
 .product_info {
@@ -143,7 +203,7 @@
 
 #product_01 {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin: 0;
 }
@@ -164,10 +224,10 @@
 #product_02 {
     font-family: "Roboto", sans-serif;
     font-weight: 700;
-    font-size: 26px;
-    line-height: 36px;
-    width: 96px;
-    height: 32px;
+    font-size: 20px;
+    line-height: 1.4;
+    width: auto;
+    height: auto;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
@@ -236,8 +296,9 @@
     margin: 0 8px;
 }
 
-.product_info a i.fa-solid {
-    color: rgba(0, 70, 42, 0.50);
+
+.product_info i.fa-solid {
+    color: rgba(0, 70, 42, 0.50); 
     font-size: 16px;
     vertical-align: -2px;
     padding-right: 4px;
@@ -407,6 +468,15 @@ a i.fa-regular.fa-square-plus {
     font-weight: 600;
     line-height: 140%;
     /* 33.6px */
+}
+
+/* 리뷰 개수 숫자 스타일 */
+.title_count {
+    font-size: 0.9em; 
+    font-weight: 400; 
+    color: #666;      
+    margin-left: 4px; 
+    margin-right: 2px;
 }
 
 #r_num {
