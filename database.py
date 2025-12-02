@@ -158,7 +158,7 @@ class DBhandler:
             print(f"Error checking transaction status: {e}")
             return None
 
-    def insert_transaction(self, item_name, user_id, item_data):
+    def insert_transaction(self, item_name, user_id, item_data, way):
         """새로운 대여 신청(거래) 정보를 Firebase에 저장합니다."""
         
         transaction_info = {
@@ -167,6 +167,7 @@ class DBhandler:
             "price": item_data.get("price"),
             "seller_id": item_data.get("seller_id", "미정"), 
             "user_id": user_id,
+            "type": way,
             "status": "pending",
             "request_ts": datetime.now().timestamp(),
         }
@@ -245,7 +246,30 @@ class DBhandler:
         )
 
         return dict(review_list) 
+    
+    def get_review_count(self, product_name):
+        reviews = self.db.child("reviews").get().val()
+        if not reviews:
+            return 0
 
+        count = 0
+        for key, value in reviews.items():
+            if value.get("product_name") == product_name:
+                count += 1
+
+        return count
+
+
+    def get_heart_byname(self, uid, name):
+        hearts = self.db.child("heart").child(uid).get()
+        target_value=""
+        if hearts.val() == None:
+            return target_value
+        for res in hearts.each():
+            key_value = res.key()
+            if key_value == name:
+                target_value=res.val()
+            return target_value
         
     def update_heart(self, user_id, isHeart, item):
         heart_info ={
@@ -295,5 +319,15 @@ class DBhandler:
                     liked_items[item_name] = all_items[item_name]
         return liked_items
     
-    
+    def get_heart_count(self, item_name):
+        hearts = self.db.child("heart").get().val()
+        if not hearts:
+            return 0
+        
+        count = 0
+        for user_id, items in hearts.items():
+            if items and item_name in items:
+                if items[item_name].get("interested") == 'Y':
+                    count += 1
+        return count
     

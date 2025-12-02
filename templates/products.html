@@ -11,26 +11,26 @@
 <div>
     <select id="category" name="category" onchange="location=this.value">
 
-        <option value="{{ url_for('view_products', page=0, category='all') }}"
-            {% if category == 'all' %}selected{% endif %}>All</option>
+        <option value="{{ url_for('view_products', page=0, category='all') }}" {% if category=='all' %}selected{% endif
+            %}>All</option>
 
-        <option value="{{ url_for('view_products', page=0, category='Clothes') }}"
-            {% if category == 'Clothes' %}selected{% endif %}>Clothes</option>
+        <option value="{{ url_for('view_products', page=0, category='Clothes') }}" {% if category=='Clothes'
+            %}selected{% endif %}>Clothes</option>
 
-        <option value="{{ url_for('view_products', page=0, category='Beauty') }}"
-            {% if category == 'Beauty' %}selected{% endif %}>Beauty</option>
+        <option value="{{ url_for('view_products', page=0, category='Beauty') }}" {% if category=='Beauty' %}selected{%
+            endif %}>Beauty</option>
 
-        <option value="{{ url_for('view_products', page=0, category='Books') }}"
-            {% if category == 'Books' %}selected{% endif %}>Books</option>
+        <option value="{{ url_for('view_products', page=0, category='Books') }}" {% if category=='Books' %}selected{%
+            endif %}>Books</option>
 
-        <option value="{{ url_for('view_products', page=0, category='Furniture') }}"
-            {% if category == 'Furniture' %}selected{% endif %}>Furniture</option>
+        <option value="{{ url_for('view_products', page=0, category='Furniture') }}" {% if category=='Furniture'
+            %}selected{% endif %}>Furniture</option>
 
-        <option value="{{ url_for('view_products', page=0, category='Electronics') }}"
-            {% if category == 'Electronics' %}selected{% endif %}>Electronics</option>
+        <option value="{{ url_for('view_products', page=0, category='Electronics') }}" {% if category=='Electronics'
+            %}selected{% endif %}>Electronics</option>
 
-        <option value="{{ url_for('view_products', page=0, category='ETC') }}"
-            {% if category == 'ETC' %}selected{% endif %}>ETC</option>
+        <option value="{{ url_for('view_products', page=0, category='ETC') }}" {% if category=='ETC' %}selected{% endif
+            %}>ETC</option>
 
     </select>
 </div>
@@ -71,7 +71,8 @@
                                         <a><i class="fa-solid fa-comments"></i></a>
                                         <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
                                         <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
+                                        <!-- 좋아요 기능 구현 후 수정 -->
                                     </div>
 
                                     <span id="product_08">{{ value.way }}</span>
@@ -109,7 +110,8 @@
                                         <a><i class="fa-solid fa-comments"></i></a>
                                         <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
                                         <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
+                                        <!-- 좋아요 기능 구현 후 수정 -->
                                     </div>
 
                                     <span id="product_08">{{ value.way }}</span>
@@ -147,7 +149,8 @@
                                         <a><i class="fa-solid fa-comments"></i></a>
                                         <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
                                         <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
+                                        <!-- 좋아요 기능 구현 후 수정 -->
                                     </div>
 
                                     <span id="product_08">{{ value.way }}</span>
@@ -185,7 +188,8 @@
                                         <a><i class="fa-solid fa-comments"></i></a>
                                         <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
                                         <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">1</span> <!-- 좋아요 기능 구현 후 수정 -->
+                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
+                                        <!-- 좋아요 기능 구현 후 수정 -->
                                     </div>
 
                                     <span id="product_08">{{ value.way }}</span>

@@ -64,6 +64,9 @@ def hello():
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
+            value["heart_count"] = DB.get_heart_count(key)
+            value["review_count"] = DB.get_review_count(key)
+
             processed_data_list.append((key, value))
         data_for_page = dict(processed_data_list[start_idx:end_idx])
         tot_count = len(data_for_page)
@@ -162,6 +165,7 @@ def register_user():
     else:
         flash("user id already exist!")
         return render_template("signup.html")
+    
 
 
 
@@ -198,6 +202,10 @@ def view_products():
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
+            
+            value["heart_count"] = DB.get_heart_count(key)
+            value["review_count"] = DB.get_review_count(key)
+
             processed_data_list.append((key, value))
         data_for_page = dict(processed_data_list[start_idx:end_idx])
         tot_count = len(data_for_page)
@@ -568,10 +576,11 @@ def request_rental(name):
     if not item_data:
         return jsonify({'success': False, 'message': '상품 정보를 찾을 수 없습니다.'}), 404
 
-    success = DB.insert_transaction(name, user_id, item_data)
+    way = item_data.get("way", "대여")
+    success = DB.insert_transaction(name, user_id, item_data, way)
     
     if success:
-        return jsonify({'success': True, 'message': '대여 신청이 완료되었습니다.'})
+        return jsonify({'success': True, 'message': '신청이 완료되었습니다.'})
     else:
         return jsonify({'success': False, 'message': '거래 정보 저장에 실패했습니다.'}), 500
     
