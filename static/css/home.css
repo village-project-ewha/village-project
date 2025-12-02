@@ -1,96 +1,272 @@
-/*
-.main_banner {
-    max-width: 1200px;
+body {
+    overflow-x: hidden;
+}
+
+
+/* 카테고리 전체 */
+.category-nav-wrapper {
     width: 100%;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-    padding: 32px 32px 32px 16px;
-    overflow-y: hidden;
-    overflow-x: auto;
-    gap: 20px;
-    scrollbar-color: white transparent;
+    background: #fff;
+    padding: 0 0 30px 0;
 }
 
-.banner {
-    width: 1200px;
-    height: 400px;
-    padding: 32px 32px 32px 0px;
-}
-*/
-/* 메인 배너 */
-.mySwiper {
-    position: relative;
-    overflow: hidden;
-    width: 75rem;
-    height: 25rem;
-    margin-bottom: 5rem;
-    margin: 0 auto;
-    border: none;
-}
-
-/* 슬라이드들을 감싸는 래퍼 (실제 움직이는 부분) */
-.swiper-wrapper {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-}
-
-/* 각 개별 슬라이드 */
-.swiper-slide {
-    min-width: 100%;
-    height: 100%;
+/* 카테고리 리스트 (가로 정렬) */
+.category-nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* 슬라이드 내부 이미지 */
-.swiper-slide img {
+/* 개별 카테고리 버튼 */
+.cat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #888;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 60px;
+}
+
+/* 아이콘 박스 디자인 */
+.cat-item .icon-box {
+    width: 70px;
+    height: 70px;
+    border-radius: 30px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    background-color: #Fafafa;
+    color: #4f4f4f;
+
+    border: 1.5px solid transparent;
+
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.cat-item .icon-box svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+    stroke: none;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.2s ease;
+}
+
+/* 텍스트 디자인 */
+.cat-item span {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* [Hover 효과] 마우스 올렸을 때 */
+.cat-item:hover {
+    color: #333;
+}
+
+.cat-item:hover .icon-box {
+    transform: translateY(-3px);
+    background-color: #F0F7F4; 
+    border-color: #00462a;     
+    color: #00462a;
+}
+
+.cat-item:hover span {
+    color: #00462a;
+    font-weight: 700;
+}
+
+/* [Active 효과] 현재 선택된 카테고리 */
+.cat-item.active .icon-box {
+    background-color: #00462a; 
+    border-color: #00462a;
+
+    color: #ffffff;
+
+    box-shadow: 0 4px 10px rgba(0, 70, 42, 0.3);
+}
+
+.cat-item.active span {
+    color: #00462a;
+    font-weight: 800;
+}
+
+
+
+
+/* 1. 배너 등장 애니메이션 정의  */
+@keyframes expandBanner {
+    0% {
+        clip-path: inset(0 50% 0 50%);
+        transform: scale(0.95);
+    }
+
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: scale(1);
+    }
+}
+
+/* 2. 컨트롤러 등장 애니메이션 정의 */
+@keyframes fadeInControl {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 3. 배너 영역에 애니메이션 적용 */
+.main-banner-wrapper {
+    animation: expandBanner 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 4. 컨트롤러(알약)에 애니메이션 적용 */
+.slider-controls {
+    opacity: 0;
+    animation: popUpControl 0.6s ease-out 0.8s forwards;
+}
+
+/* 1. 전체 배너 영역*/
+.main-banner-wrapper {
+    width: 1920px;
+    height: 500px;
+    margin-left: calc(50% - 960px);
+    position: relative;
+    overflow: visible;
+    background-color: #f5f5f5;
+    will-change: clip-path, transform;
+    transform: translateZ(0);
+    animation: expandBanner 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.main-slider {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+}
+
+.slide-link {
     display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }
 
-.swiper-button-next {
-    right: 0.625rem;
+.slide-bg {
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.swiper-button-prev {
-    left: 0.625rem;
+.bg-1 {
+    background-image: url('/static/resource/Main Banner/Main_Banner_1.jpg');
 }
 
-.swiper-button-prev,
-.swiper-button-next {
-    color: #ffffff;
-    opacity: 0.7;
-    transition: opacity 0.3s;
+.bg-2 {
+    background-image: url('/static/resource/Main Banner/Main_Banner_2.png');
+}
+
+.bg-3 {
+    background-image: url('/static/resource/Main Banner/Main_Banner_3.jpg');
+}
+
+
+
+.slider-controls {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
+    width: auto;
+    min-width: auto;
+    height: 30px;
+    border-radius: 20px;
+    background-color: rgba(51, 51, 51, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    gap: 0;
+    box-sizing: border-box;
+    transition: 0.6s;
+
+    /* 초기 상태: 투명도 0 */
+    opacity: 0;
+
+    /* 애니메이션 */
+    animation: fadeInControl 0.8s ease-out 3.0s forwards;
+}
+
+
+.fraction-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    color: #fff;
+    font-family: "Circular Std", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+/* 3. 구분선 (/) 스타일 */
+.page-sep {
+    margin: 0 2px;
+    font-weight: 400;
+}
+
+/* 4. 화살표 버튼  */
+.control-btn {
+    width: 20px;
+    height: 100%;
+    background: none;
+    border: none;
     cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.3s;
+    color: #fff;
 }
 
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
+.control-btn svg {
+    width: 13px !important;
+    height: 13px !important;
+    min-width: 13px;
+    display: block;
+    stroke: #fff;
+}
+
+.control-btn:hover {
     opacity: 1;
 }
 
-/* 페이지네이션 점들 */
-.swiper-pagination-bullet {
-    background: #ffffff;
-    opacity: 0.6;
-}
 
-.swiper-pagination-bullet-active {
-    background: #00462A;
-    opacity: 1;
-}
 
 .pre_list {
     padding: 40px;
@@ -99,33 +275,63 @@
     color: #000;
 }
 
-.pre_list table td {
-    padding: 8px 16px 8px 8px;
+
+.section_title_area {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 100px;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
-#pre_list_title {
-    color: #000;
-    font-family: var(--Static-Display-Small-Font, Roboto);
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: var(--Static-Display-Small-Line-Height, 44px);
-    /* 137.5% */
-    letter-spacing: var(--Static-Display-Small-Tracking, 0);
+/* 메인 타이틀 (링크) 스타일 */
+.main_title_link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    line-height: 1.2;
+    transition: opacity 0.3s;
 }
 
+.main_title_link:hover {
+    cursor: pointer;
+}
+
+.main_title_link svg {
+    margin-top: 4px;
+}
+
+
+.sub_desc {
+    margin-top: 12px;
+    font-size: 15px;
+    color: #999999;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+}
+
+/* 1. 부모 요소 (컨테이너)  */
 .pre_list_row {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 75px 20px;
+
     width: 100%;
-    margin-bottom: 16px;
 }
 
+/* 2. 자식 요소 (카드)  */
 .product_card {
     width: 264px;
-    overflow: hidden;
     background: #fff;
+    overflow: hidden;
+    margin-bottom: 0;
+    margin-right: 0;
+    border: none;
+    box-shadow: none;
 }
 
 .product_card img {
@@ -134,6 +340,18 @@
     object-fit: cover;
     display: block;
     border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.product_card:hover {
+    box-shadow: none !important;
+    transform: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+}
+
+.product_card:hover img {
+    transform: scale(1.05);
 }
 
 .product_info {
@@ -143,7 +361,7 @@
 
 #product_01 {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin: 0;
 }
@@ -164,10 +382,10 @@
 #product_02 {
     font-family: "Roboto", sans-serif;
     font-weight: 700;
-    font-size: 26px;
-    line-height: 36px;
-    width: 96px;
-    height: 32px;
+    font-size: 20px;
+    line-height: 1.4;
+    width: auto;
+    height: auto;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
@@ -218,13 +436,12 @@
 }
 
 #product_05 {
-    color: rgba(0, 70, 42, 0.50);
+    color: #999;
     font-family: "Noto Sans KR";
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
-    /* 21px */
 }
 
 #product_05::after {
@@ -232,25 +449,24 @@
     display: inline-block;
     width: 1px;
     height: 12px;
-    background: rgba(0, 70, 42, 0.50);
+    background: #999;
     margin: 0 8px;
 }
 
-.product_info a i.fa-solid {
-    color: rgba(0, 70, 42, 0.50);
+.product_info i.fa-solid {
+    color: #999;
     font-size: 16px;
     vertical-align: -2px;
     padding-right: 4px;
 }
 
 #product_06 {
-    color: rgba(0, 70, 42, 0.50);
+    color: #999;
     font-family: "Noto Sans KR";
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
-    /* 21px */
 }
 
 #product_06::after {
@@ -258,22 +474,21 @@
     display: inline-block;
     width: 1px;
     height: 12px;
-    background: rgba(0, 70, 42, 0.50);
+    background: #999;
     margin: 0 8px;
 }
 
 #product_07 {
-    color: rgba(0, 70, 42, 0.50);
+    color: #999;
     font-family: "Noto Sans KR";
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
-    /* 21px */
 }
 
 #product_08 {
-    color: rgba(0, 70, 42, 0.50);
+    color: #999;
     font-family: "Noto Sans KR";
     font-size: 14px;
     font-style: normal;
@@ -281,156 +496,191 @@
     line-height: 150%;
     position: absolute;
     right: 0;
-    /* 21px */
 }
 
+/* 1. 구해드림 섹션 전체*/
 .find_list {
     padding: 40px;
-    width: auto;
-    font-family: "Noto Sans KR", "Roboto", system-ui, -apple-system, sans-serif;
-    color: #000;
+    background-color: #fff;
+    overflow: hidden;
 }
 
-#list_title {
-    padding-right: 8px;
-    color: #000;
-    font-family: var(--sds-typography-body-font-family);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%;
-    /* 33.6px */
-}
-
-a i.fa-regular.fa-square-plus {
-    color: var(--Ewha-Mint, #36AE92);
-    font-size: 14px;
-    align-items: center;
-    justify-content: center;
-}
-
-#see_all {
-    color: var(--Ewha-Mint, #36AE92);
-    font-family: "Noto Sans KR";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-}
-
-.find_list_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+/* 2. 슬라이더 컨테이너 */
+.find-slider {
     width: 100%;
-    margin: 16px 0;
+    padding-bottom: 50px;
+    overflow: visible;
 }
 
+/* 3. 슬라이드 개별 영역 (카드 감싸는 박스) */
+.find-slider .swiper-slide {
+    width: 280px;
+    height: auto;
+    margin-right: 20px;
+}
+
+/* 4. 카드 디자인 */
 .find_card {
-    width: 272px;
-    height: 152px;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 70, 42, 0.50);
+    width: 100%;
+    height: 180px;
+
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 24px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: all 0.3s ease;
 }
 
+/* 마우스 올렸을 때 살짝 떠오르는 효과 */
+.find_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border-color: transparent;
+}
+
+/* 5. 텍스트 스타일 다듬기 */
 #find_t {
-    padding: 0 16px;
-    width: 240px;
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 18px;
-    font-style: normal;
+    width: 100%;
+    font-size: 17px;
     font-weight: 700;
-    /* 27px */
-}
+    line-height: 1.4;
+    color: #222;
+    margin-bottom: 8px;
+    padding: 0;
 
-.find_attribute {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0 16px;
-}
-
-.f_attr {
-    display: flex;
-    align-items: center;
-    color: rgba(0, 70, 42, 0.50);
-    font-family: "Noto Sans KR";
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.f_attr::after {
-    content: "";
-    display: inline-block;
-    width: 1px;
-    height: 12px;
-    background: rgba(0, 70, 42, 0.50);
-    margin: 0 8px;
-}
-
-.f_attr:last-child::after {
-    content: none;
-}
-
-#f_chat {
-    margin-left: 4px;
+    /* 2줄 이상 넘어가면 ... 처리 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .find_text {
-    padding: 0 16px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
+    font-size: 14px;
+    color: #666;
     line-height: 1.5;
-    max-width: 240px;
+    padding: 0;
+    margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 100%;
 }
 
-.review_list {
-    padding: 40px;
-    width: auto;
-    font-family: "Noto Sans KR", "Roboto", system-ui, -apple-system, sans-serif;
-    color: #000;
+/* 6. 하단 스크롤바 디자인 (세련된 얇은 바) */
+.find-slider .swiper-scrollbar {
+    background: #f0f0f0;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 2px;
 }
 
-#review_title {
-    display: inline-flex;
-    align-items: center;
-    padding-right: 8px;
-    color: #000;
-    font-family: var(--sds-typography-body-font-family);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%;
-    /* 33.6px */
+/* 드래그 되는 핸들바 색상 */
+.find-slider .swiper-scrollbar-drag {
+    background: #00462a;
+    border-radius: 2px;
 }
 
-#r_num {
-    align-items: center;
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+
+
+/* 리뷰 개수 숫자 스타일 */
+.title_count {
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #666;
+    margin-left: 4px;
+    margin-right: 2px;
 }
 
-.r_img img {
-    width: 120px;
-    height: 120px;
+
+
+.review-slider-wrapper {
+    position: relative;
+    padding: 0 10px;
+}
+
+
+.review-slider .swiper-wrapper {
+    transition-timing-function: linear;
+}
+
+
+.review-slider .swiper-slide {
+    width: 200px;
+    margin-right: 15px;
+}
+
+
+.review_card_style {
+    width: 100%;
+    margin-bottom: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.review_card_style .img-box {
+    width: 100%;
+    height: 200px;
+    background-color: #f5f5f5;
     border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-box.no-img::after {
+    content: "No Image";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ccc;
+    font-size: 12px;
+}
+
+.review_card_style img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
 
-.r_img_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 100%;
-    margin: 16px 0;
+
+.review_card_style #product_01 {
+    font-size: 14px;
+    margin-top: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.review-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: #333;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.review-btn::after {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.review-slider-wrapper:hover .review-btn {
+    opacity: 1;
 }

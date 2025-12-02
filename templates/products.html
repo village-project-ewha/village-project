@@ -7,229 +7,352 @@
 
 {% block section %}
 
+<!-- 1. 카테고리 네비게이션 -->
+<div class="category-nav-wrapper">
+    <div class="category-nav">
 
-<div>
-    <select id="category" name="category" onchange="location=this.value">
+        <a href="{{ url_for('view_products', page=0, category='all') }}"
+            class="cat-item {% if category == 'all' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="2" ry="2"></rect>
+                    <rect x="14" y="3" width="7" height="7" rx="2" ry="2"></rect>
+                    <rect x="14" y="14" width="7" height="7" rx="2" ry="2"></rect>
+                    <rect x="3" y="14" width="7" height="7" rx="2" ry="2"></rect>
+                </svg>
+            </div>
+            <span>전체</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='all') }}" {% if category=='all' %}selected{% endif
-            %}>All</option>
+        <a href="{{ url_for('view_products', page=0, category='Clothes') }}"
+            class="cat-item {% if category == 'Clothes' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z">
+                    </path>
+                </svg>
+            </div>
+            <span>의류</span>
+        </a>
+        <a href="{{ url_for('view_products', page=0, category='Beauty') }}"
+            class="cat-item {% if category == 'Beauty' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="7" y="12" width="10" height="9" rx="2" ry="2"></rect>
+                    <line x1="7" y1="17" x2="17" y2="17"></line>
+                    <path d="M9 12V6c0-1.66 1.34-3 3-3s3 1.34 3 3v6"></path>
+                </svg>
+            </div>
+            <span>뷰티</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Clothes') }}" {% if category=='Clothes'
-            %}selected{% endif %}>Clothes</option>
+        <a href="{{ url_for('view_products', page=0, category='Books') }}"
+            class="cat-item {% if category == 'Books' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <span>서적</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Beauty') }}" {% if category=='Beauty' %}selected{%
-            endif %}>Beauty</option>
+        <a href="{{ url_for('view_products', page=0, category='Furniture') }}"
+            class="cat-item {% if category == 'Furniture' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
+                    <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"></path>
+                </svg>
+            </div>
+            <span>가구</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Books') }}" {% if category=='Books' %}selected{%
-            endif %}>Books</option>
+        <a href="{{ url_for('view_products', page=0, category='Electronics') }}"
+            class="cat-item {% if category == 'Electronics' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+            </div>
+            <span>전자기기</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Furniture') }}" {% if category=='Furniture'
-            %}selected{% endif %}>Furniture</option>
+        <a href="{{ url_for('view_products', page=0, category='ETC') }}"
+            class="cat-item {% if category == 'ETC' %}active{% endif %}">
+            <div class="icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                </svg>
+            </div>
+            <span>기타</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Electronics') }}" {% if category=='Electronics'
-            %}selected{% endif %}>Electronics</option>
-
-        <option value="{{ url_for('view_products', page=0, category='ETC') }}" {% if category=='ETC' %}selected{% endif
-            %}>ETC</option>
-
-    </select>
+    </div>
 </div>
 
+<!-- 2. 소형 배너 섹션 -->
+<div class="small-banner-section">
+    <div class="banner-container">
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너1">
+        </div>
 
-<div class="products">
-    {% if total > 0 %}
-    <div class="title">
-        <span id="list_title">등록된 전체 상품</span>
-        <div id="list_num">
-            <span id="num">{{total}}</span>
-            <span>개</span>
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너2">
+        </div>
+
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너3">
         </div>
     </div>
-    <table>
-        <tr>
-            {% for key, value in row1 %}
-            <td>
-                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-                    <a>
-                        <div class="product_card">
-                            <img src="/static/{{value.img_path}}" alt="product">
 
-                            <div class="product_info">
-                                <p id="product_01">{{ value.name }}</p>
+    <div class="slider-controls">
+        <button type="button" class="control-btn prev" aria-label="이전">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
 
-                                <div class="price">
-                                    <div class="price-left">
-                                        <span id="product_02">{{ value.price }}원</span>
-                                        <span id="product_03">/일</span>
-                                    </div>
-                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
-                                </div>
+        <div class="fraction-pagination"></div>
 
-                                <div class="p_attribute">
-                                    <div class="p_attribute_left">
-                                        <span id="product_05">{{ value.time_ago }}</span>
-                                        <a><i class="fa-solid fa-comments"></i></a>
-                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
-                                        <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
-                                        <!-- 좋아요 기능 구현 후 수정 -->
-                                    </div>
+        <button type="button" class="control-btn next" aria-label="다음">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="transform: rotate(180deg);">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+    </div>
 
-                                    <span id="product_08">{{ value.way }}</span>
-                                </div>
+</div>
+
+<!-- 3. 상품 리스트 영역 -->
+<div class="products">
+
+    <!-- 리스트 헤더 (제목 + 정렬) -->
+    <div class="list-header-wrapper">
+        <h2 class="page-category-title">
+            {% if category == 'Clothes' %}의류
+            {% elif category == 'Beauty' %}뷰티
+            {% elif category == 'Books' %}서적
+            {% elif category == 'Furniture' %}가구
+            {% elif category == 'Electronics' %}전자기기
+            {% elif category == 'ETC' %}기타
+            {% else %}전체 상품{% endif %}
+        </h2>
+
+        <div class="list-info-bar">
+            <span class="total-count">총 <strong>{{ total }}</strong>건</span>
+
+            <div class="sort-nav">
+                <ul>
+                    <li><a href="{{ url_for('view_products', page=0, category=category, sort='recent') }}"
+                            class="sort-link {% if sort == 'recent' or not sort %}active{% endif %}">최신순</a>
+                    </li>
+
+                    <li><a href="{{ url_for('view_products', page=0, category=category, sort='low_price') }}"
+                            class="sort-link {% if sort == 'low_price' %}active{% endif %}">낮은 가격순</a>
+                    </li>
+
+                    <li><a href="{{ url_for('view_products', page=0, category=category, sort='high_price') }}"
+                            class="sort-link {% if sort == 'high_price' %}active{% endif %}">높은 가격순</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상품 그리드 -->
+    {% if total > 0 %}
+    <div class="product-grid-container">
+
+        {% if row1 %}
+        {% for key, value in row1 %}
+        <div class="product-item">
+            <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                <div class="product_card">
+                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="product_info">
+                        <p id="product_01">{{ value.name }}</p>
+                        <div class="price">
+                            <div class="price-left">
+                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_03">/일</span>
                             </div>
                         </div>
-                    </a>
+                        <div class="p_attribute">
+                            <div class="p_attribute_left">
+                                <span id="product_05">{{ value.time_ago }}</span>
+                                <a><i class="fa-solid fa-comments"></i></a>
+                                <span id="product_06">1</span>
+                                <a><i class="fa-solid fa-heart"></i></a>
+                                <span id="product_07">1</span>
+                            </div>
+                            <span id="product_08">{{ value.way }}</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 
-            </td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key, value in row2 %}
-            <td>
-                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-                    <a>
-                        <div class="product_card">
-                            <img src="/static/{{value.img_path}}" alt="product">
-
-                            <div class="product_info">
-                                <p id="product_01">{{ value.name }}</p>
-
-                                <div class="price">
-                                    <div class="price-left">
-                                        <span id="product_02">{{ value.price }}원</span>
-                                        <span id="product_03">/일</span>
-                                    </div>
-                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
-                                </div>
-
-                                <div class="p_attribute">
-                                    <div class="p_attribute_left">
-                                        <span id="product_05">{{ value.time_ago }}</span>
-                                        <a><i class="fa-solid fa-comments"></i></a>
-                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
-                                        <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
-                                        <!-- 좋아요 기능 구현 후 수정 -->
-                                    </div>
-
-                                    <span id="product_08">{{ value.way }}</span>
-                                </div>
+        {% if row2 %}
+        {% for key, value in row2 %}
+        <div class="product-item">
+            <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                <div class="product_card">
+                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="product_info">
+                        <p id="product_01">{{ value.name }}</p>
+                        <div class="price">
+                            <div class="price-left">
+                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_03">/일</span>
                             </div>
                         </div>
-                    </a>
+                        <div class="p_attribute">
+                            <div class="p_attribute_left">
+                                <span id="product_05">{{ value.time_ago }}</span>
+                                <a><i class="fa-solid fa-comments"></i></a>
+                                <span id="product_06">1</span>
+                                <a><i class="fa-solid fa-heart"></i></a>
+                                <span id="product_07">1</span>
+                            </div>
+                            <span id="product_08">{{ value.way }}</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 
-            </td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key, value in row3 %}
-            <td>
-                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-                    <a>
-                        <div class="product_card">
-                            <img src="/static/{{value.img_path}}" alt="product">
-
-                            <div class="product_info">
-                                <p id="product_01">{{ value.name }}</p>
-
-                                <div class="price">
-                                    <div class="price-left">
-                                        <span id="product_02">{{ value.price }}원</span>
-                                        <span id="product_03">/일</span>
-                                    </div>
-                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
-                                </div>
-
-                                <div class="p_attribute">
-                                    <div class="p_attribute_left">
-                                        <span id="product_05">{{ value.time_ago }}</span>
-                                        <a><i class="fa-solid fa-comments"></i></a>
-                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
-                                        <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
-                                        <!-- 좋아요 기능 구현 후 수정 -->
-                                    </div>
-
-                                    <span id="product_08">{{ value.way }}</span>
-                                </div>
+        {% if row3 %}
+        {% for key, value in row3 %}
+        <div class="product-item">
+            <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                <div class="product_card">
+                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="product_info">
+                        <p id="product_01">{{ value.name }}</p>
+                        <div class="price">
+                            <div class="price-left">
+                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_03">/일</span>
                             </div>
                         </div>
-                    </a>
+                        <div class="p_attribute">
+                            <div class="p_attribute_left">
+                                <span id="product_05">{{ value.time_ago }}</span>
+                                <a><i class="fa-solid fa-comments"></i></a>
+                                <span id="product_06">1</span>
+                                <a><i class="fa-solid fa-heart"></i></a>
+                                <span id="product_07">1</span>
+                            </div>
+                            <span id="product_08">{{ value.way }}</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 
-            </td>
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for key, value in row4 %}
-            <td>
-                <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-                    <a>
-                        <div class="product_card">
-                            <img src="/static/{{value.img_path}}" alt="product">
-
-                            <div class="product_info">
-                                <p id="product_01">{{ value.name }}</p>
-
-                                <div class="price">
-                                    <div class="price-left">
-                                        <span id="product_02">{{ value.price }}원</span>
-                                        <span id="product_03">/일</span>
-                                    </div>
-                                    <span id="product_04">보증금 원</span> <!-- 상품 등록에서 보증금 추가 필요 -->
-                                </div>
-
-                                <div class="p_attribute">
-                                    <div class="p_attribute_left">
-                                        <span id="product_05">{{ value.time_ago }}</span>
-                                        <a><i class="fa-solid fa-comments"></i></a>
-                                        <span id="product_06">1</span> <!-- 채팅 기능은 구현이 어려우므로 제외시키는 방향을 고민해봐요 -->
-                                        <a><i class="fa-solid fa-heart"></i></a>
-                                        <span id="product_07">{{ value.heart_count or 0 }}</span>
-                                        <!-- 좋아요 기능 구현 후 수정 -->
-                                    </div>
-
-                                    <span id="product_08">{{ value.way }}</span>
-                                </div>
+        {% if row4 %}
+        {% for key, value in row4 %}
+        <div class="product-item">
+            <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
+                <div class="product_card">
+                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="product_info">
+                        <p id="product_01">{{ value.name }}</p>
+                        <div class="price">
+                            <div class="price-left">
+                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_03">/일</span>
                             </div>
                         </div>
-                    </a>
+                        <div class="p_attribute">
+                            <div class="p_attribute_left">
+                                <span id="product_05">{{ value.time_ago }}</span>
+                                <a><i class="fa-solid fa-comments"></i></a>
+                                <span id="product_06">1</span>
+                                <a><i class="fa-solid fa-heart"></i></a>
+                                <span id="product_07">1</span>
+                            </div>
+                            <span id="product_08">{{ value.way }}</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 
-            </td>
-            {% endfor %}
-        </tr>
-    </table>
+    </div>
 
     <!--페이지네이션-->
     <div class="page-wrap">
         <div class="page-nation">
             <ul>
-                <li>&lt;&lt;</li>
-                <li>&lt;</li>
                 <li>
-                    {% for i in range(page_count) %}
-                    <a href="{{url_for('view_products', page=i, category=category)}}">{{i}}</a>
-                    {% endfor %}
+                    <a href="{{ url_for('view_products', page=0, category=category, sort=sort) }}">&lt;&lt;</a>
                 </li>
-                <li>&gt;</li>
-                <li>&gt;&gt;</li>
+
+                <li>
+                    {% if page > 0 %}
+                    <a href="{{ url_for('view_products', page=page-1, category=category, sort=sort) }}">&lt;</a>
+                    {% else %}
+                    <a href="#">&lt;</a>
+                    {% endif %}
+                </li>
+
+                {% for i in range(page_count) %}
+                <li>
+                    <a href="{{ url_for('view_products', page=i, category=category, sort=sort) }}"
+                        class="{% if i == page %}active{% endif %}">
+                        {{ i + 1 }}
+                    </a>
+                </li>
+                {% endfor %}
+
+                <li>
+                    {% if page < page_count - 1 %} <a
+                        href="{{ url_for('view_products', page=page+1, category=category, sort=sort) }}">&gt;</a>
+                        {% else %}
+                        <a href="#">&gt;</a>
+                        {% endif %}
+                </li>
+
+                <li>
+                    <a
+                        href="{{ url_for('view_products', page=page_count-1, category=category, sort=sort) }}">&gt;&gt;</a>
+                </li>
             </ul>
         </div>
     </div>
+
     {% else %}
-    <div class="title">
-        <span id="list_title">등록된 전체 상품</span>
-        <div id="list_num">
-            <span id="num">{{total}}</span>
-            <span>개</span>
-        </div>
-    </div>
-    <p>
+    <p style="text-align: center; margin-top: 50px; color: #888;">
         등록된 상품이 없습니다.
     </p>
     {% endif %}
-    {% endblock section %}
+
+</div>
+{% endblock section %}
