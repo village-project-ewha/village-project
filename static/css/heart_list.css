@@ -6,18 +6,18 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* --- 헤더 영역 --- */
+/* --- 헤더 영역  --- */
 .liked-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px; /* 간격 축소 */
+    margin-bottom: 20px; 
     padding-bottom: 10px;
     border-bottom: 2px solid #eee;
 }
 
 .page-title {
-    font-size: 22px; /* 제목 크기 약간 축소 */
+    font-size: 22px; 
     font-weight: 700;
     color: #333;
     margin: 0;
@@ -41,8 +41,12 @@
     border-radius: 8px; 
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row; 
+    height: 140px; 
+    margin-bottom: 15px; 
 }
 
 .product-card:hover {
@@ -51,11 +55,14 @@
     border-color: #b0b0b0;
 }
 
-/* 이미지 박스 */
+/* 이미지 박스  */
 .card-image-box {
     position: relative;
-    width: 100%;
+
+    width: 140px; 
     height: 140px; 
+    flex-shrink: 0; 
+    
     overflow: hidden;
     background-color: #f9f9f9;
 }
@@ -77,18 +84,22 @@
     left: 8px;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
-    font-size: 11px; /* 배지 글씨 축소 */
+    font-size: 11px; 
     padding: 2px 6px;
     border-radius: 3px;
 }
 
-/* 카드 정보 영역 */
+/* 카드 정보 영역  */
 .card-info {
-    padding: 15px; /* 내부 여백 축소 */
+
+    padding: 15px 20px; 
     flex-grow: 1;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
+
 }
 
 .info-top {
@@ -98,19 +109,19 @@
 .sub-category {
     font-size: 11px;
     color: #888;
-    margin-bottom: 3px;
+    margin-bottom: 5px; 
 }
 
 .product-name {
-    font-size: 15px; /* 상품명 글씨 크기 축소 */
+    font-size: 16px; 
     font-weight: 600;
     margin: 0;
-    line-height: 1.3;
-    
-    /* 상품명이 길면 말줄임표(...) 처리 */
-    white-space: nowrap;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .product-name a {
@@ -119,30 +130,33 @@
 }
 
 .product-name a:hover {
-    color: #007bff;
+    color: #00462a;
 }
 
+/* 하단 가격 및 버튼 영역  */
 .info-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
+    
+    border-top: none; 
+    padding-top: 0;
+    
     margin-top: auto;
 }
 
 .price {
-    font-size: 15px; 
+    font-size: 18px; 
     font-weight: 700;
-    color: #e53935;
+    color: #333;
 }
 
 .btn-detail {
-    font-size: 12px;
-    color: #777;
+    font-size: 13px; 
+    color: #555;
     text-decoration: none;
     background-color: #f1f3f5;
-    padding: 4px 8px;
+    padding: 6px 12px; 
     border-radius: 4px;
     transition: background ease 0.2s;
 }
@@ -152,7 +166,7 @@
     color: #333;
 }
 
-/* --- 빈 상태 (Empty State) --- */
+/* --- 빈 상태 --- */
 .empty-state {
     text-align: center;
     padding: 60px 0;
