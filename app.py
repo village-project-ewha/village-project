@@ -199,10 +199,10 @@ def view_products():
         # 정렬 로직 적용
         if sort_method == "low_price":
             # 낮은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 오름차순 정렬
-            data_list.sort(key=lambda x: int(str(x[1].get("price", "0")).replace(",", "")))
+            data_list.sort(key=lambda x: int(str(x[1].get("price") or "0").replace(",", "")))
         elif sort_method == "high_price":
             # 높은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 내림차순 정렬(reverse=True)
-            data_list.sort(key=lambda x: int(str(x[1].get("price", "0")).replace(",", "")), reverse=True)
+            data_list.sort(key=lambda x: int(str(x[1].get("price") or "0").replace(",", "")), reverse=True)
         else:
             # 최신순 (기본값): 생성일 기준 내림차순
             data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True)
