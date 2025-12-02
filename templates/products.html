@@ -8,31 +8,66 @@
 {% block section %}
 
 
-<div>
-    <select id="category" name="category" onchange="location=this.value">
+<div class="category-nav-wrapper">
+    <div class="category-nav">
+        
+        <a href="{{ url_for('view_products', page=0, category='all') }}" 
+           class="cat-item {% if category == 'all' or not category %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-border-all"></i>
+            </div>
+            <span>전체</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='all') }}"
-            {% if category == 'all' %}selected{% endif %}>All</option>
+        <a href="{{ url_for('view_products', page=0, category='Clothes') }}" 
+           class="cat-item {% if category == 'Clothes' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-shirt"></i>
+            </div>
+            <span>의류</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Clothes') }}"
-            {% if category == 'Clothes' %}selected{% endif %}>Clothes</option>
+        <a href="{{ url_for('view_products', page=0, category='Beauty') }}" 
+           class="cat-item {% if category == 'Beauty' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span>뷰티</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Beauty') }}"
-            {% if category == 'Beauty' %}selected{% endif %}>Beauty</option>
+        <a href="{{ url_for('view_products', page=0, category='Books') }}" 
+           class="cat-item {% if category == 'Books' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <span>서적</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Books') }}"
-            {% if category == 'Books' %}selected{% endif %}>Books</option>
+        <a href="{{ url_for('view_products', page=0, category='Furniture') }}" 
+           class="cat-item {% if category == 'Furniture' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-couch"></i>
+            </div>
+            <span>가구</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Furniture') }}"
-            {% if category == 'Furniture' %}selected{% endif %}>Furniture</option>
+        <a href="{{ url_for('view_products', page=0, category='Electronics') }}" 
+           class="cat-item {% if category == 'Electronics' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-laptop"></i>
+            </div>
+            <span>전자기기</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='Electronics') }}"
-            {% if category == 'Electronics' %}selected{% endif %}>Electronics</option>
+        <a href="{{ url_for('view_products', page=0, category='ETC') }}" 
+           class="cat-item {% if category == 'ETC' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <span>기타</span>
+        </a>
 
-        <option value="{{ url_for('view_products', page=0, category='ETC') }}"
-            {% if category == 'ETC' %}selected{% endif %}>ETC</option>
-
-    </select>
+    </div>
 </div>
 
 

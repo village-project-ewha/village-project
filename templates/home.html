@@ -6,6 +6,68 @@
 
 {% block section %}
 
+<div class="category-nav-wrapper">
+    <div class="category-nav">
+        
+        <a href="{{ url_for('view_products', page=0, category='all') }}" 
+           class="cat-item {% if category == 'all' or not category %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-border-all"></i>
+            </div>
+            <span>전체</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Clothes') }}" 
+           class="cat-item {% if category == 'Clothes' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-shirt"></i>
+            </div>
+            <span>의류</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Beauty') }}" 
+           class="cat-item {% if category == 'Beauty' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span>뷰티</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Books') }}" 
+           class="cat-item {% if category == 'Books' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <span>서적</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Furniture') }}" 
+           class="cat-item {% if category == 'Furniture' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-couch"></i>
+            </div>
+            <span>가구</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Electronics') }}" 
+           class="cat-item {% if category == 'Electronics' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-laptop"></i>
+            </div>
+            <span>전자기기</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='ETC') }}" 
+           class="cat-item {% if category == 'ETC' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <span>기타</span>
+        </a>
+
+    </div>
+</div>
+
 <section class="main-banner-wrapper">
 
     <div class="swiper main-slider">
@@ -53,10 +115,14 @@
         <div class="fraction-pagination"></div>
 
         <button type="button" class="control-btn next" aria-label="다음">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-chevron-right">
-                <path d="m9 18 6-6-6-6" />
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="transform: rotate(180deg);">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
             </svg>
         </button>
     </div>
@@ -83,7 +149,7 @@
         {% if row1 %}
         {% for key, value in row1 %}
         <div class="product_card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-            <img src="/static/{{value.img_path}}" alt="product">
+            <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
             <div class="product_info">
                 <p id="product_01">{{ value.name }}</p>
                 <div class="price">
@@ -111,7 +177,7 @@
         {% if row2 %}
         {% for key, value in row2 %}
         <div class="product_card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-            <img src="/static/{{value.img_path}}" alt="product">
+            <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
             <div class="product_info">
                 <p id="product_01">{{ value.name }}</p>
                 <div class="price">
@@ -139,7 +205,7 @@
         {% if row3 %}
         {% for key, value in row3 %}
         <div class="product_card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
-            <img src="/static/{{value.img_path}}" alt="product">
+            <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
             <div class="product_info">
                 <p id="product_01">{{ value.name }}</p>
                 <div class="price">
@@ -206,8 +272,10 @@
         <a href="/shop/request_list.php" class="main_title_link">
             구해 드림
             <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="7.42822" y1="13.8014" x2="13.2364" y2="7.99315" stroke="#555555" stroke-width="2" stroke-linecap="round" />
-                <line x1="13.2376" y1="7.9928" x2="7.42943" y2="2.18459" stroke="#555555" stroke-width="2" stroke-linecap="round" />
+                <line x1="7.42822" y1="13.8014" x2="13.2364" y2="7.99315" stroke="#555555" stroke-width="2"
+                    stroke-linecap="round" />
+                <line x1="13.2376" y1="7.9928" x2="7.42943" y2="2.18459" stroke="#555555" stroke-width="2"
+                    stroke-linecap="round" />
             </svg>
         </a>
         <p class="sub_desc">
@@ -252,8 +320,8 @@
                     </p>
                 </div>
             </div>
-            
-             <div class="swiper-slide">
+
+            <div class="swiper-slide">
                 <div class="find_card">
                     <p id="find_t">우산 2시간만 빌려주실 분</p>
                     <div class="find_attribute">
@@ -270,7 +338,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="swiper-slide">
                 <div class="find_card">
                     <p id="find_t">블루투스 키보드 하루 대여</p>
@@ -289,8 +357,8 @@
                 </div>
             </div>
 
-            
-            </div>
+
+        </div>
 
         <div class="swiper-scrollbar"></div>
     </div>
@@ -298,11 +366,13 @@
 <div class="review_list">
     <div class="section_title_area">
         <a href="/board/review_list.php" class="main_title_link">
-            포토 리뷰 
+            포토 리뷰
             <span class="title_count">({{ review_count }})</span>
             <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="7.42822" y1="13.8014" x2="13.2364" y2="7.99315" stroke="#555555" stroke-width="2" stroke-linecap="round" />
-                <line x1="13.2376" y1="7.9928" x2="7.42943" y2="2.18459" stroke="#555555" stroke-width="2" stroke-linecap="round" />
+                <line x1="7.42822" y1="13.8014" x2="13.2364" y2="7.99315" stroke="#555555" stroke-width="2"
+                    stroke-linecap="round" />
+                <line x1="13.2376" y1="7.9928" x2="7.42943" y2="2.18459" stroke="#555555" stroke-width="2"
+                    stroke-linecap="round" />
             </svg>
         </a>
         <p class="sub_desc">
@@ -319,7 +389,8 @@
                     <div class="card" onclick="location.href='/view_review_detail/{{ key }}/';" style="cursor:pointer;">
                         <div class="product_card review_card_style">
                             <div class="img-box">
-                                <img src="{{ url_for('static', filename=review.thumb) }}" alt="review" onerror="this.style.display='none'; this.parentElement.classList.add('no-img');">
+                                <img src="{{ url_for('static', filename=review.thumb) }}" alt="review"
+                                    onerror="this.style.display='none'; this.parentElement.classList.add('no-img');">
                             </div>
                             <div class="product_info">
                                 <p id="product_01">{{ review.title }}</p>

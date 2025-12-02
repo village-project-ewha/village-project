@@ -1,7 +1,116 @@
 body {
-    overflow-x: hidden; /* 가로 스크롤 방지 */
+    overflow-x: hidden; 
 }
 
+
+/* 카테고리 전체 감싸는 영역 */
+.category-nav-wrapper {
+    width: 100%;
+    background: #fff;
+    padding: 30px 0; /* 위아래 여백 */
+    border-bottom: 1px solid #f0f0f0; /* 하단 구분선 (선택사항) */
+    margin-bottom: 40px; /* 아래 리스트와 간격 */
+}
+
+/* 카테고리 리스트 (가로 정렬) */
+.category-nav {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    gap: 40px; /* 아이콘 사이 간격 */
+    flex-wrap: wrap; /* 화면 작으면 줄바꿈 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 개별 카테고리 버튼 */
+.cat-item {
+    display: flex;
+    flex-direction: column; /* 아이콘 위, 텍스트 아래 */
+    align-items: center;
+    text-decoration: none;
+    color: #888; /* 기본 색상 (회색) */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 60px;
+}
+
+/* 아이콘 박스 디자인 */
+.cat-item .icon-box {
+    width: 50px;
+    height: 50px;
+    background-color: #f9f9f9; /* 연한 회색 원 */
+    border-radius: 50%; /* 동그라미 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px; /* 아이콘 크기 */
+    margin-bottom: 8px; /* 텍스트와 간격 */
+    transition: all 0.3s ease;
+}
+
+/* 텍스트 디자인 */
+.cat-item span {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* [Hover 효과] 마우스 올렸을 때 */
+.cat-item:hover {
+    color: #333; /* 글자색 진하게 */
+    transform: translateY(-5px); /* 살짝 위로 뜸 */
+}
+
+.cat-item:hover .icon-box {
+    background-color: #eee; /* 배경 약간 진하게 */
+}
+
+/* [Active 효과] 현재 선택된 카테고리 */
+.cat-item.active {
+    color: #333; /* 브랜드 컬러나 검정색 */
+    font-weight: 700;
+}
+
+.cat-item.active .icon-box {
+    background-color: #333; /* 선택되면 배경색 진하게 */
+    color: #fff; /* 아이콘은 흰색으로 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* 그림자 효과 */
+}
+
+
+/* 1. 배너 등장 애니메이션 정의  */
+@keyframes expandBanner {
+    0% {
+        clip-path: inset(0 50% 0 50%); 
+        transform: scale(0.95);        
+    }
+    100% {
+        clip-path: inset(0 0 0 0);  
+        transform: scale(1);
+    }
+}
+
+/* 2. 컨트롤러 등장 애니메이션 정의 */
+@keyframes fadeInControl {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 3. 배너 영역에 애니메이션 적용 */
+.main-banner-wrapper {
+    animation: expandBanner 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 4. 컨트롤러(알약)에 애니메이션 적용 */
+.slider-controls {
+    opacity: 0;
+    animation: popUpControl 0.6s ease-out 0.8s forwards;
+}
 
 /* 1. 전체 배너 영역*/
 .main-banner-wrapper {
@@ -11,6 +120,9 @@ body {
     position: relative;
     overflow: visible;
     background-color: #f5f5f5;
+    will-change: clip-path, transform;
+    transform: translateZ(0);
+    animation: expandBanner 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .main-slider {
@@ -33,13 +145,12 @@ body {
     background-repeat: no-repeat;
 }
 
-.bg-1 { background-image: url('/static/resource/Main Banner/Main_Banner_1.png'); }
+.bg-1 { background-image: url('/static/resource/Main Banner/Main_Banner_1.jpg'); }
 .bg-2 { background-image: url('/static/resource/Main Banner/Main_Banner_2.png'); }
-.bg-3 { background-image: url('/static/resource/Main Banner/Main_Banner_3.png'); }
+.bg-3 { background-image: url('/static/resource/Main Banner/Main_Banner_3.jpg'); }
 
 
 
-/* 1. 컨트롤러 전체 영역 (크기 줄임) */
 .slider-controls {
     position: absolute;
     bottom: 28px;
@@ -47,43 +158,46 @@ body {
     transform: translateX(-50%);
     z-index: 10;
     width: auto;
-    min-width: 90px; 
+    min-width: auto;
     height: 30px;
-    
     border-radius: 20px;
     background-color: rgba(51, 51, 51, 0.5);
-    
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    padding: 0 15px;
-    gap: 15px; 
-    
-    box-sizing: border-box;
-    transition: 0.6s;
-}
-
-/* 2. 페이지네이션 텍스트 (01/03) */
-.fraction-pagination {
-    color: #fff;
-    font-size: 13px;
-    font-family: sans-serif; 
-    font-weight: 500; 
-    letter-spacing: 0.5px; 
-    
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 8px;
+    gap: 0;
+    box-sizing: border-box;
+    transition: 0.6s;
+
+    /* 초기 상태: 투명도 0 */
+    opacity: 0;
+    
+    /* 애니메이션 */
+    animation: fadeInControl 0.8s ease-out 3.0s forwards;
+}
+
+
+.fraction-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    color: #fff;
+    font-family: "Circular Std", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.1em;
 }
 
 /* 3. 구분선 (/) 스타일 */
 .page-sep {
-    margin: 0 2px; 
-    opacity: 0.6;  
+    margin: 0 2px;   
     font-weight: 400;
 }
 
-/* 4. 화살표 버튼 (기존 유지) */
+/* 4. 화살표 버튼  */
 .control-btn {
     width: 20px; 
     height: 100%;
@@ -94,21 +208,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.7;
+    flex-shrink: 0;
     transition: opacity 0.3s;
     color: #fff;
+}
+
+.control-btn svg {
+    width: 13px !important;
+    height: 13px !important;
+    min-width: 13px;
+    display: block;
+    stroke: #fff;
 }
 
 .control-btn:hover {
     opacity: 1;
 }
 
-.control-btn svg {
-    width: 13px;
-    height: 13px;
-    display: block;
-    stroke: #fff; 
-}
 
 
 .pre_list {
@@ -340,41 +456,41 @@ body {
     right: 0;
 }
 
-/* 1. 구해드림 섹션 전체 - 배경색 제거 */
+/* 1. 구해드림 섹션 전체*/
 .find_list {
-    padding: 40px; /* 기존 여백 유지 */
-    background-color: #fff; /* 흰색 배경으로 변경 (기존 회색 삭제) */
-    overflow: hidden; /* 슬라이더 넘침 방지 */
+    padding: 40px; 
+    background-color: #fff; 
+    overflow: hidden; 
 }
 
 /* 2. 슬라이더 컨테이너 */
 .find-slider {
     width: 100%;
-    padding-bottom: 50px; /* 아래쪽 스크롤바 공간 확보 */
-    overflow: visible; /* 그림자 잘림 방지 */
+    padding-bottom: 50px; 
+    overflow: visible; 
 }
 
 /* 3. 슬라이드 개별 영역 (카드 감싸는 박스) */
 .find-slider .swiper-slide {
-    width: 280px; /* 카드의 고정 너비 설정 */
+    width: 280px; 
     height: auto;
-    margin-right: 20px; /* 카드 사이 간격 */
+    margin-right: 20px;
 }
 
-/* 4. 카드 디자인 리뉴얼 (깔끔하고 모던하게) */
+/* 4. 카드 디자인 */
 .find_card {
-    width: 100%; /* 슬라이드 너비에 맞춤 */
-    height: 180px; /* 높이 약간 키움 */
+    width: 100%; 
+    height: 180px; 
     
     background: #fff;
-    border: 1px solid #eee; /* 아주 연한 테두리 */
-    border-radius: 16px;    /* 둥근 모서리 */
-    padding: 24px;          /* 내부 여백 넉넉하게 */
+    border: 1px solid #eee; 
+    border-radius: 16px;    
+    padding: 24px;          
     box-sizing: border-box;
     
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* 내용 위아래 분배 */
+    justify-content: space-between; 
     
     transition: all 0.3s ease;
 }
@@ -382,7 +498,7 @@ body {
 /* 마우스 올렸을 때 살짝 떠오르는 효과 */
 .find_card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* 은은한 그림자 */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
     border-color: transparent;
 }
 
@@ -399,6 +515,7 @@ body {
     /* 2줄 이상 넘어가면 ... 처리 */
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

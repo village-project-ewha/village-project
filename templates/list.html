@@ -1,18 +1,73 @@
 {% extends "index.html" %}
 
-{% block section %}
-등록된 상품 리스트 조회 화면 입니다.
+{% block title %}list{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock head %}
 
-<div>
-    <select id="category" name="category" onchange="location=this.value">
-        <option value="{{url_for('view_list', page=page, category='all')}}">All</option>
-        <option value="{{url_for('view_list', page=page, category='Clothes')}}">Clothes</option>
-        <option value="{{url_for('view_list', page=page, category='Beauty')}}">Beauty</option>
-        <option value="{{url_for('view_list', page=page, category='Books')}}">Books</option>
-        <option value="{{url_for('view_list', page=page, category='Furniture')}}">Furniture</option>
-        <option value="{{url_for('view_list', page=page, category='Electronics')}}">Electronics</option>
-        <option value="{{url_for('view_list', page=page, category='ETC')}}">ETC</option>        
-    </select>
+{% block section %}
+
+
+<div class="category-nav-wrapper">
+    <div class="category-nav">
+        
+        <a href="{{ url_for('view_products', page=0, category='all') }}" 
+           class="cat-item {% if category == 'all' or not category %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-border-all"></i>
+            </div>
+            <span>전체</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Clothes') }}" 
+           class="cat-item {% if category == 'Clothes' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-shirt"></i>
+            </div>
+            <span>의류</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Beauty') }}" 
+           class="cat-item {% if category == 'Beauty' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span>뷰티</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Books') }}" 
+           class="cat-item {% if category == 'Books' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <span>서적</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Furniture') }}" 
+           class="cat-item {% if category == 'Furniture' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-couch"></i>
+            </div>
+            <span>가구</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='Electronics') }}" 
+           class="cat-item {% if category == 'Electronics' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-laptop"></i>
+            </div>
+            <span>전자기기</span>
+        </a>
+
+        <a href="{{ url_for('view_products', page=0, category='ETC') }}" 
+           class="cat-item {% if category == 'ETC' %}active{% endif %}">
+            <div class="icon-box">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <span>기타</span>
+        </a>
+
+    </div>
 </div>
 
 {% if total > 0 %}
