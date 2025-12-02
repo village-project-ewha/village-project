@@ -1,6 +1,6 @@
 function toggleHeart(productName) {
     const heartIcon = document.getElementById('heart-icon');
-    const isLiked = heartIcon.classList.contains('fas'); // 현재 채워진 하트인지 확인 (좋아요 상태인지)
+    const isLiked = heartIcon.classList.contains('fas'); // 현재 채워진 하트인지 확인 (좋아요 상태인지)git add
     
     // 좋아요 상태 -> 취소
     const actionUrl = isLiked ? `/unlike/${productName}/` : `/like/${productName}/`;
