@@ -3,38 +3,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const bannerSwiper = new Swiper(".main-slider", {
-    loop: true,
-    effect: "fade",
-    fadeEffect: { crossFade: true },
+        loop: true,
+        effect: "fade",
+        fadeEffect: { crossFade: true },
 
-    pagination: {
-        el: ".fraction-pagination",
-        type: "fraction", 
-        
+        pagination: {
+            el: ".fraction-pagination",
+            type: "fraction",
 
-        formatFractionCurrent: function (number) {
-            return String(number).padStart(2, '0');
+
+            formatFractionCurrent: function (number) {
+                return String(number).padStart(2, '0');
+            },
+
+
+            formatFractionTotal: function (number) {
+                return String(number).padStart(2, '0');
+            },
+
+
+            renderFraction: function (currentClass, totalClass) {
+                return '<span class="' + currentClass + '"></span>' +
+                    '<span class="page-sep">/</span>' +
+                    '<span class="' + totalClass + '"></span>';
+            }
         },
-        
 
-        formatFractionTotal: function (number) {
-            return String(number).padStart(2, '0');
+
+        navigation: {
+            nextEl: ".control-btn.next",
+            prevEl: ".control-btn.prev",
         },
-        
-
-        renderFraction: function (currentClass, totalClass) {
-            return '<span class="' + currentClass + '"></span>' +
-                   '<span class="page-sep">/</span>' +
-                   '<span class="' + totalClass + '"></span>';
-        }
-    },
-
-
-    navigation: {
-        nextEl: ".control-btn.next",
-        prevEl: ".control-btn.prev",
-    },
-});
+    });
 
     // --- 드롭다운 메뉴 로직 (index.html) ---
     const profileButton = document.getElementById('profile-menu-button');
@@ -85,4 +85,44 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+
+    // 구해드림 슬라이더 설정
+    const findSlider = new Swiper(".find-slider", {
+        slidesPerView: "auto", 
+        spaceBetween: 20,      
+        freeMode: true,         
+        grabCursor: true,       
+
+        // 스크롤바 설정
+        scrollbar: {
+            el: ".swiper-scrollbar",
+            draggable: true,    
+            hide: false,        
+        },
+    });
+
+    // 포토 리뷰 슬라이더 설정
+    const reviewSlider = new Swiper(".review-slider", {
+    slidesPerView: "auto", 
+    spaceBetween: 15,      
+    loop: true,      
+    
+
+    speed: 5000, 
+    autoplay: {
+        delay: 0, 
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+    },
+    
+   
+    navigation: {
+        nextEl: ".review-slider-wrapper .swiper-button-next",
+        prevEl: ".review-slider-wrapper .swiper-button-prev",
+    },
+    
+
+    freeMode: true,
+});
 });
