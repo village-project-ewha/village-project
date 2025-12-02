@@ -158,7 +158,7 @@ class DBhandler:
             print(f"Error checking transaction status: {e}")
             return None
 
-    def insert_transaction(self, item_name, user_id, item_data):
+    def insert_transaction(self, item_name, user_id, item_data, way):
         """새로운 대여 신청(거래) 정보를 Firebase에 저장합니다."""
         
         transaction_info = {
@@ -167,6 +167,7 @@ class DBhandler:
             "price": item_data.get("price"),
             "seller_id": item_data.get("seller_id", "미정"), 
             "user_id": user_id,
+            "type": way,
             "status": "pending",
             "request_ts": datetime.now().timestamp(),
         }
@@ -295,5 +296,15 @@ class DBhandler:
                     liked_items[item_name] = all_items[item_name]
         return liked_items
     
-    
+def get_heart_count(self, item_name):
+        hearts = self.db.child("heart").get().val()
+        if not hearts:
+            return 0
+
+        count = 0
+        for user_id, items in hearts.items():
+            if items and item_name in items:
+                if items[item_name].get("interested") == 'Y':
+                    count += 1
+        return count
     

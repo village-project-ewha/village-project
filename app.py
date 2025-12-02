@@ -64,6 +64,8 @@ def hello():
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
+                value["heart_count"] = DB.get_heart_count(key)
+                value["review_count"] = DB.get_review_count(key)
             processed_data_list.append((key, value))
         data_for_page = dict(processed_data_list[start_idx:end_idx])
         tot_count = len(data_for_page)
@@ -210,6 +212,8 @@ def view_products():
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
+                value["heart_count"] = DB.get_heart_count(key)
+                value["review_count"] = DB.get_review_count(key)
             processed_data_list.append((key, value))
         
         # 4. 현재 페이지에 해당하는 데이터만 자르기
@@ -393,6 +397,29 @@ def get_reviews(self):
 
     return dict(review_list)
 
+
+def get_review_count(self, product_name):
+        reviews = self.db.child("reviews").get().val()
+        if not reviews:
+            return 0
+
+        count = 0
+        for key, value in reviews.items():
+            if value.get("product_name") == product_name:
+                count += 1
+            return count
+
+
+def get_heart_byname(self, uid, name):
+    hearts = self.db.child("heart").child(uid).get()
+    target_value=""
+    if hearts.val() == None:
+        return target_value
+    for res in hearts.each():
+        key_value = res.key()
+        if key_value == name:
+            target_value=res.val()
+        return target_value
 
 @application.route("/review_detail")
 def review_detail():
@@ -583,10 +610,11 @@ def request_rental(name):
     if not item_data:
         return jsonify({'success': False, 'message': '상품 정보를 찾을 수 없습니다.'}), 404
 
-    success = DB.insert_transaction(name, user_id, item_data)
+    way = item_data.get("way", "대여")
+    success = DB.insert_transaction(name, user_id, item_data, way)
     
     if success:
-        return jsonify({'success': True, 'message': '대여 신청이 완료되었습니다.'})
+        return jsonify({'success': True, 'message': '신청이 완료되었습니다.'})
     else:
         return jsonify({'success': False, 'message': '거래 정보 저장에 실패했습니다.'}), 500
     

@@ -24,7 +24,7 @@
             <div id="detail_price">
                 <span id="price">{{data.price}}</span>
                 <span id="price">원</span>
-                <span id="detail_text">/일</span>
+                <span id="detail_text" id="per-day">/일</span>
             </div>
         </div>
         <div class="detail_card">
@@ -48,15 +48,15 @@
                 </div>
                 <hr class="line">
                 <div class="card2_row">
-                    <span class="card2_left">대여 단위</span>
+                    <span class="card2_left">거래 단위</span>
                     <span class="card2_right">개</span>
                 </div>
                 <div class="card2_row">
-                    <span class="card2_left">최소 대여</span>
+                    <span class="card2_left">최소 거래</span>
                     <span class="card2_right">1</span>
                 </div>
                 <div class="card2_row">
-                    <span class="card2_left">최대 대여</span>
+                    <span class="card2_left">최대 거래</span>
                     <span class="card2_right">3</span>
                 </div>
                 <hr class="line">
@@ -76,8 +76,9 @@
                 <span id="button_text_1" onclick="location.href='/reg_review_init/{{name}}/';">리뷰등록</span>
             </div>
             <div id="detail_chat_button_2">
-                <span id="rental-button" onclick="requestRental('{{name}}')">대여 신청하기</span>
+                <span id="rental-button"></span>
             </div>
+            <input type="hidden" id="product-way-data" value="{{data.way}}">
         </div>
     </div>
 </div>
