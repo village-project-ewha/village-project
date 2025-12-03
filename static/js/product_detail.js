@@ -61,9 +61,9 @@ function updateRentalButton(productName, productWay) {
     }
 
     if (productWay === "판매") {
-        rentalButtonSpan.textContent = "구매 신청하기";
+        rentalButtonSpan.textContent = "구매하기";
     } else {
-        rentalButtonSpan.textContent = "대여 신청하기";
+        rentalButtonSpan.textContent = "대여하기";
     }
 
     rentalButtonSpan.onclick = () => requestAction(productName, productWay);
@@ -71,7 +71,7 @@ function updateRentalButton(productName, productWay) {
 
 function requestAction(productName, productWay) {
     const action = productWay === "판매" ? "구매" : "대여";
-    const confirmResult = confirm(`이 상품의 ${action}를 신청하시겠습니까?`);
+    const confirmResult = confirm(`이 상품을 ${action}하시겠습니까?`);
 
     if (!confirmResult) return;
 
@@ -83,7 +83,7 @@ function requestAction(productName, productWay) {
             if (!data.success) {
                 alert(data.message);
             } else {
-                alert(`${action} 신청이 완료되었습니다!`);
+                alert(`${action}가 완료되었습니다!`);
                 location.reload();
             }
         })

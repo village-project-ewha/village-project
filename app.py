@@ -518,6 +518,12 @@ def select_review():
 
 @application.route("/submit_item_post", methods=['POST'])
 def reg_item_submit_post():
+    if 'user_id' not in session:
+        flash("로그인이 필요한 서비스입니다.")
+        return redirect(url_for('login'))
+    
+    user_id = session["user_id"]
+
     image_file=request.files["file"]
     image_file.save("static/resource/{}".format(image_file.filename))
     '''
@@ -527,8 +533,9 @@ def reg_item_submit_post():
     data = request.form.to_dict()
     data["created_at"] = datetime.now().timestamp()
     data["img_path"] = f"resource/{image_file.filename}"
-    DB.insert_item(data['name'], data, data["img_path"])
-    return render_template("result.html", data=data, img_path="static/resource/{}".format(image_file.filename))
+    DB.insert_item(data['name'], data, data["img_path"], user_id)
+    return redirect(url_for('product_detail', name=data['name']))
+    #return render_template("result.html", data=data, img_path="static/resource/{}".format(image_file.filename))
 
 @application.route("/submit_item")
 def reg_item_submit():
@@ -598,23 +605,42 @@ def request_rental(name):
         return jsonify({'success': True, 'message': '신청이 완료되었습니다.'})
     else:
         return jsonify({'success': False, 'message': '거래 정보 저장에 실패했습니다.'}), 500
-    
-    
-@application.route("/check_rental_status/<name>/", methods=['GET'])
-def check_rental_status(name):
+
+@application.route("/my_transactions")
+def my_transactions():
     if 'user_id' not in session:
-        return jsonify({'status': 'logged_out'}), 200 # 로그인 상태가 아니면 '로그아웃' 상태 반환
-
-    user_id = session['user_id']
+        flash("로그인이 필요합니다.")
+        return redirect(url_for('login'))
+        
+    current_user_id = session['user_id']
+    transactions = []
     
-    # DBhandler를 통해 현재 사용자의 대여 신청 상태를 확인
-    status = DB.get_transaction_status(user_id, name)
+    tx_data = DB.get_user_transactions(current_user_id) 
     
-    if status == 'pending':
-        return jsonify({'status': 'completed'}) # 대기 중이면 신청 완료로 표시
-    else:
-        return jsonify({'status': 'available'}) # 거래가 없거나 완료/취소 상태면 신청 가능
+    if tx_data:
+        for tx_id, data in tx_data.items():
+            
+            ts = data.get('request_ts') 
+            date_str = '날짜 미정'
+            if ts:
+                try: 
+                    date_str = datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
+                except Exception as e:
+                    print(f"날짜 변환 오류: {e}")
 
+            transactions.append({
+                'id': tx_id, 
+                'product_name': data.get('product_name', '상품 이름 없음'),
+                'date': date_str,
+                'timestamp': ts or 0,
+                # DB에 저장된 product_image_url 사용
+                'img': data.get('product_image_url', 'resource/Photo Review_svg/default.svg') 
+            })
+
+    print(f"조회된 거래 데이터 (tx_data): {tx_data}")
+    transactions.sort(key=lambda x: x['timestamp'], reverse=True)
+            
+    return render_template("transactions.html", transactions=transactions)
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0')
