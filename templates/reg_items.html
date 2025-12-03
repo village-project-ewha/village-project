@@ -11,7 +11,7 @@
 
     <div class="form-section">
         <h3 class="section-header">상품 기본 정보</h3>
-        
+
         <div class="product_image">
             <p class="field-label">대표 이미지</p>
             <label for="file" class="image_box" id="image_box">
@@ -41,18 +41,26 @@
                     <option value="Electronics"> 전자기기 </option>
                     <option value="ETC"> 기타 </option>
                 </select>
-                <select id="mid_category" name="mid_category"><option disabled selected>중분류</option></select>
-                <select id="low_category" name="low_category"><option disabled selected>소분류</option></select>
+                <!-- select id="mid_category" name="mid_category"><option disabled selected>중분류</option></select>
+                <select id="low_category" name="low_category"><option disabled selected>소분류</option></select -->
             </label>
         </div>
 
         <div class="product_status">
             <p class="field-label">상품 상태</p>
             <label class="status_box">
-                <label><input type="checkbox" name="status" value="새 상품 (미사용)"> <p>새 상품</p></label>
-                <label><input type="checkbox" name="status" value="사용감 거의 없음"> <p>사용감 적음</p></label>
-                <label><input type="checkbox" name="status" value="사용감 많음"> <p>사용감 많음</p></label>
-                <label><input type="checkbox" name="status" value="고장/파손"> <p>고장/파손</p></label>
+                <label><input type="checkbox" name="status" value="새 상품 (미사용)">
+                    <p>새 상품</p>
+                </label>
+                <label><input type="checkbox" name="status" value="사용감 거의 없음">
+                    <p>사용감 적음</p>
+                </label>
+                <label><input type="checkbox" name="status" value="사용감 많음">
+                    <p>사용감 많음</p>
+                </label>
+                <label><input type="checkbox" name="status" value="고장/파손">
+                    <p>고장/파손</p>
+                </label>
             </label>
         </div>
     </div>
@@ -63,8 +71,12 @@
         <div class="product_way">
             <p class="field-label">거래 방식</p>
             <label class="way_box">
-                <label><input type="checkbox" name="way" value="판매"> <p>판매</p></label>
-                <label><input type="checkbox" name="way" value="대여"> <p>대여</p></label>
+                <label><input type="checkbox" name="way" value="판매">
+                    <p>판매</p>
+                </label>
+                <label><input type="checkbox" name="way" value="대여">
+                    <p>대여</p>
+                </label>
             </label>
         </div>
 
@@ -85,10 +97,11 @@
 
     <div class="form-section">
         <h3 class="section-header">상세 설명</h3>
-        
+
         <div class="product_explain">
             <label for="explain" class="explain_box">
-                <textarea name="explain" id="explain" maxlength="2000" placeholder="구매 시기, 브랜드, 사용감 등 상품에 대한 자세한 정보를 입력해주세요."></textarea>
+                <textarea name="explain" id="explain" maxlength="2000"
+                    placeholder="구매 시기, 브랜드, 사용감 등 상품에 대한 자세한 정보를 입력해주세요."></textarea>
                 <span class="char_count_explain" id="charCount_explain">[0/2000]</span>
             </label>
         </div>

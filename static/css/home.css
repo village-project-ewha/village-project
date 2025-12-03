@@ -503,6 +503,7 @@ body {
     padding: 10px 40px 40px 40px;
     background-color: #fff;
     overflow: hidden;
+    margin-bottom: 0;
 }
 
 /* 2. 슬라이더 컨테이너 */
@@ -562,6 +563,11 @@ body {
     overflow: hidden;
 }
 
+.find_attribute {
+    padding: 0;
+    max-width: 100%;
+}
+
 .find_text {
     font-size: 14px;
     color: #666;
@@ -603,7 +609,9 @@ body {
     margin-right: 2px;
 }
 
-
+.review_list {
+    margin-top: 0;
+}
 
 .review-slider-wrapper {
     position: relative;

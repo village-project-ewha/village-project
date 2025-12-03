@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block title %}구해 드림{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/request.css') }}">
+{% endblock head %}
+
+{% block section %}
+<div class="post_upper">
+    <h2>구해 드림</h2>
+    <a href="{{ url_for('request_write') }}">글쓰기</a>
+</div>
+
+<div class="post_selection_list">
+    {% for p in posts %}
+    <div class="post_card">
+        <a href="{{ url_for('request_view', post_id=p.id) }}" class="post-card-link">
+            <div class="post_card_detail">
+                <p class="post_title">{{ p.title }}</p>
+                <div class="post_detail">
+                    <p class="post_writer">{{ p.user_id }}</p>
+                    <p class="post_time">{{ p.time_ago }}</p>
+                    <p class="post_comment_count">댓글 {{ p.comment_count }}개</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -38,77 +38,40 @@ def time_since(ts):
 
 @application.route("/")
 def hello():
-    page = request.args.get("page", 0, type=int)
-    per_page = 12
-    per_row = 4
-    row_count = int(per_page / per_row)
-
-    start_idx = per_page * page
-    end_idx = per_page * (page + 1)
-
-    data = DB.get_items() 
-    
-    if not data: # 데이터가 아예 없을 때 처리
-        item_counts = 0
-        data_for_page = {}
-        tot_count = 0
-    else:
-        item_counts = len(data)
-        # 딕셔너리를 리스트로 변환하여 페이징 인덱스를 사용
-        data_list = list(data.items())
-        data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True) #시간순 정렬
-
-        processed_data_list = []
-        for key, value in data_list:
-            if "created_at" in value:
-                value["time_ago"] = time_since(value["created_at"])
-            else:
-                value["time_ago"] = ""
-            value["heart_count"] = DB.get_heart_count(key)
-            value["review_count"] = DB.get_review_count(key)
-
-            processed_data_list.append((key, value))
-        data_for_page = dict(processed_data_list[start_idx:end_idx])
-        tot_count = len(data_for_page)
-
-    # 템플릿에 전달할 데이터를 담을 딕셔너리
-    rows_to_render = {}
-    row_count = int(per_page / per_row) # 실제 필요한 행의 수 계산
-
-    for i in range(row_count): 
-        start = i * per_row
-        end = (i + 1) * per_row
-
-        # 페이지에 보여줄 데이터가 남아있는 경우에만 row 딕셔너리 생성
-        if start < tot_count:
-            if end > tot_count: # 마지막 줄 처리
-                end = tot_count
-            
-            # data_for_page 딕셔너리에서 현재 행의 데이터를 잘라냄
-            row_data = dict(list(data_for_page.items())[start:end])
-            
-            # row1, row2, row3... 형식으로 저장하고 전달
-            rows_to_render[f'row{i+1}'] = row_data.items()
-        else:
-            break
-
     # 홈 화면에 최근 포토 리뷰 추가
     recent_reviews = DB.get_recent_photo_reviews(limit=8)
     # 홈 화면에 리뷰 개수 정확하게 출력
     review_count = len(recent_reviews) if recent_reviews else 0
+    
+    posts = DB.get_all_posts()
+    post_list = []
+    if posts:
+        for post_id, data in posts.items():
+
+            if "created_at" in data:
+                data["time_ago"] = time_since(data["created_at"])
+            else:
+                data["time_ago"] = ""
+
+            post_list.append({
+                "id": post_id,
+                "title": data.get("title"),
+                "user_id": data.get("user_id"),
+                "content": data.get("content"),
+                "time_ago": data["time_ago"],
+                "created_at": data.get("created_at"),
+                "comment_count": DB.get_comment_count(post_id)
+            })
+
+    post_list.sort(key=lambda x: x["created_at"], reverse=True)
+    post_list = post_list[:10]
 
     return render_template(
         "home.html",
-        limit = per_page,
-        page = page,
-        page_count = int((item_counts/per_page)+1),
-        total=item_counts,
         recent_reviews=recent_reviews,
         review_count = review_count,
-        **rows_to_render # 생성된 row만 동적으로 전달
+        posts = post_list
     )
-    #return render_template("home.html")
-    #return redirect(url_for('view_list')) # 11주차 수정: index 페이지 호출 대신 list 화면으로 연결
 
 @application.route("/login")
 def login():
@@ -641,6 +604,88 @@ def my_transactions():
     transactions.sort(key=lambda x: x['timestamp'], reverse=True)
             
     return render_template("transactions.html", transactions=transactions)
+
+@application.route("/request_board")
+def request_board():
+    posts = DB.get_all_posts()
+    post_list = []
+    if posts:
+        for post_id, data in posts.items():
+
+            if "created_at" in data:
+                data["time_ago"] = time_since(data["created_at"])
+            else:
+                data["time_ago"] = ""
+
+            post_list.append({
+                "id": post_id,
+                "title": data.get("title"),
+                "user_id": data.get("user_id"),
+                "content": data.get("content"),
+                "time_ago": data["time_ago"],
+                "created_at": data.get("created_at"),
+                "comment_count": DB.get_comment_count(post_id)
+            })
+
+    post_list.sort(key=lambda x: x["created_at"], reverse=True)
+
+    return render_template("request_board.html", posts=post_list)
+
+@application.route("/request_write")
+def request_write():
+    if 'user_id' not in session:
+        flash("로그인이 필요합니다.")
+        return redirect(url_for('login'))
+
+    return render_template("request_write.html")
+
+@application.route("/request_write", methods=["POST"])
+def request_write_post():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    title = request.form.get("title")
+    content = request.form.get("content")
+    user_id = session["user_id"]
+
+    DB.insert_post(user_id, title, content)
+
+    return redirect(url_for("request_board"))
+
+@application.route("/request_view/<post_id>")
+def request_view(post_id):
+    post = DB.get_post(post_id)
+    comments = DB.get_comments(post_id)
+
+    comment_count = len(comments) if comments else 0
+
+    post["time_ago"] = time_since(post.get("created_at", 0))
+    post["comment_count"] = comment_count
+    
+
+    comment_list = []
+    for cid, c in comments:
+        c["time_ago"] = time_since(c["created_at"])
+        comment_list.append((cid, c))
+
+    return render_template(
+        "request_view.html",
+        post_id=post_id,
+        post=post,
+        comments=comment_list
+    )
+
+@application.route("/request_comment/<post_id>", methods=["POST"])
+def request_comment(post_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    comment = request.form.get("comment")
+    user_id = session["user_id"]
+
+    DB.insert_comment(post_id, user_id, comment)
+
+    return redirect(url_for("request_view", post_id=post_id))
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0')

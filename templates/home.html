@@ -156,7 +156,7 @@
 <!-- 3. 구해드림 리스트 (Swiper) -->
 <div class="find_list">
     <div class="section_title_area">
-        <a href="/shop/request_list.php" class="main_title_link">
+        <a href="/request_board" class="main_title_link">
             구해 드림
             <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <line x1="7.42822" y1="13.8014" x2="13.2364" y2="7.99315" stroke="#555555" stroke-width="2"
@@ -172,77 +172,26 @@
 
     <div class="swiper find-slider">
         <div class="swiper-wrapper">
+            {% for p in posts %}
             <div class="swiper-slide">
                 <div class="find_card">
-                    <p id="find_t">공학용 계산기 AMU모델 구합니다..!!</p>
+                    <p id="find_t">{{ p.title }}</p>
                     <div class="find_attribute">
                         <div class="f_attr">
-                            <span id="f_time">3</span><span>분 전</span>
+                            <span>{{ p.user_id }}</span>
                         </div>
                         <div class="f_attr">
-                            <span>채팅</span><span id="f_chat">2</span>
+                            <span>{{ p.time_ago }}</span>
                         </div>
-                        <span class="f_attr">거래 전</span>
+                        <div class="f_attr">
+                            <span>댓글&nbsp;</span>
+                            <span>{{ p.comment_count }}</span>
+                        </div>
                     </div>
-                    <p class="find_text">
-                        내용미리보기내용미리보기내용미리보기내용미리보기내용미리보기내용미리보기내용미리보기내용미리보기내용미리보기
-                    </p>
+                    <p class="find_text">{{ p.content }}</p>
                 </div>
             </div>
-
-            <div class="swiper-slide">
-                <div class="find_card">
-                    <p id="find_t">맥북 충전기 급하게 빌려요</p>
-                    <div class="find_attribute">
-                        <div class="f_attr">
-                            <span id="f_time">10</span><span>분 전</span>
-                        </div>
-                        <div class="f_attr">
-                            <span>채팅</span><span id="f_chat">5</span>
-                        </div>
-                        <span class="f_attr">거래 완료</span>
-                    </div>
-                    <p class="find_text">
-                        도서관에서 급하게 작업해야 하는데 충전기를 두고 왔어요 ㅠㅠ
-                    </p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="find_card">
-                    <p id="find_t">우산 2시간만 빌려주실 분</p>
-                    <div class="find_attribute">
-                        <div class="f_attr">
-                            <span id="f_time">30</span><span>분 전</span>
-                        </div>
-                        <div class="f_attr">
-                            <span>채팅</span><span id="f_chat">1</span>
-                        </div>
-                        <span class="f_attr">거래 중</span>
-                    </div>
-                    <p class="find_text">
-                        갑자기 비가 오는데 우산이 없네요.. 정문 근처입니다.
-                    </p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="find_card">
-                    <p id="find_t">블루투스 키보드 하루 대여</p>
-                    <div class="find_attribute">
-                        <div class="f_attr">
-                            <span id="f_time">1</span><span>시간 전</span>
-                        </div>
-                        <div class="f_attr">
-                            <span>채팅</span><span id="f_chat">0</span>
-                        </div>
-                        <span class="f_attr">거래 전</span>
-                    </div>
-                    <p class="find_text">
-                        아이패드용 로지텍 키보드 빌리고 싶습니다. 깨끗하게 쓸게요!
-                    </p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div class="swiper-scrollbar"></div>
     </div>

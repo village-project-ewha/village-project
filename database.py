@@ -331,4 +331,46 @@ class DBhandler:
                 if items[item_name].get("interested") == 'Y':
                     count += 1
         return count
+
+    def insert_post(self, user_id, title, content):
+        post_info = {
+            "user_id": user_id,
+            "title": title,
+            "content": content,
+            "created_at": datetime.now().timestamp()
+        }
+        self.db.child("posts").push(post_info)
+        return True
     
+    def get_all_posts(self):
+        posts = self.db.child("posts").get().val()
+        return posts if posts else {}
+    
+    def get_post(self, post_id):
+        post = self.db.child("posts").child(post_id).get().val()
+        return post
+
+    def insert_comment(self, post_id, user_id, comment):
+        comment_info = {
+            "user_id": user_id,
+            "comment": comment,
+            "created_at": datetime.now().timestamp()
+        }
+        self.db.child("comments").child(post_id).push(comment_info)
+        return True
+    
+    def get_comments(self, post_id):
+        comments = self.db.child("comments").child(post_id).get().val()
+        if not comments:
+            return {}
+
+        # 오래된 순으로 정렬
+        sorted_comments = sorted(
+            comments.items(),
+            key=lambda x: x[1].get("created_at", 0)
+        )
+        return sorted_comments
+    
+    def get_comment_count(self, post_id):
+        comments = self.db.child("comments").child(post_id).get().val()
+        return len(comments) if comments else 0

@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block title %}구해 드림 등록{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/request.css') }}">
+{% endblock head %}
+
+{% block section %}
+<div class="content-container" style="max-width:800px; margin:0 auto;">
+
+    <h2>구해 드림</h2>
+    <h1>필요한 물건에 대하여 작성해주세요!</h1>
+
+    <form method="post">
+        <label>제목</label>
+        <input type="text" name="title" required style="width: 770px;">
+
+        <label>내용</label>
+        <textarea name="content" required style="width: 770px; height:200px;"></textarea>
+
+        <button name="post" type="submit">등록하기</button>
+    </form>
+
+</div>
+{% endblock %}

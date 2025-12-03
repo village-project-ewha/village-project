@@ -14,11 +14,19 @@
     <div class="detail_right">
         <div class="detail_info_1">
             <div class="detail_category">
-                <span id="category">카테고리</span>
-                <span id="category">&gt;</span>
+                <span id="category">
+                    {% if data.category == 'Clothes' %}의류
+                    {% elif data.category == 'Beauty' %}뷰티
+                    {% elif data.category == 'Books' %}서적
+                    {% elif data.category == 'Furniture' %}가구
+                    {% elif data.category == 'Electronics' %}전자기기
+                    {% elif data.category == 'ETC' %}기타
+                    {% else %}카테고리{% endif %}
+                </span>
+                <!-- span id="category">&gt;</span>
                 <span id="category">중분류</span>
                 <span id="category">&gt;</span>
-                <span id="category">소분류</span>
+                <span id="category">소분류</span -->
             </div>
             <p id="detail_text">{{name}}</p>
             <div id="detail_price">
