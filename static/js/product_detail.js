@@ -66,19 +66,7 @@ function updateRentalButton(productName, productWay) {
         rentalButtonSpan.textContent = "대여 신청하기";
     }
 
-    fetch(`/check_rental_status/${productName}/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'completed') {
-                // 신청 완료 상태인 경우
-                rentalButtonSpan.textContent = '신청 완료';
-                rentalButtonContainer.style.backgroundColor = '#ccc';
-                rentalButtonSpan.onclick = () => alert('이미 신청을 완료했습니다.');
-            } else {
-                rentalButtonSpan.onclick = () => requestAction(productName, productWay);
-            }
-        })
-        .catch(error => console.error('대여 상태 조회 오류:', error));
+    rentalButtonSpan.onclick = () => requestAction(productName, productWay);
 }
 
 function requestAction(productName, productWay) {

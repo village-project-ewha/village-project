@@ -6,7 +6,67 @@
 
 {% block section %}
 
-<!-- 1. 카테고리 네비게이션 -->
+<!-- 1. 메인 배너 슬라이더 -->
+<section class="main-banner-wrapper">
+    <div class="swiper main-slider">
+        <div class="swiper-wrapper">
+            <!-- [충돌 해결] fix-design 브랜치의 깔끔한 슬라이드 구조 채택 -->
+            <div class="swiper-slide">
+                <a href="#" class="slide-link">
+                    <div class="slide-bg bg-1">
+                        <span class="sr-only">배너 1 설명</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="swiper-slide">
+                <a href="#" class="slide-link">
+                    <div class="slide-bg bg-2">
+                        <span class="sr-only">배너 2 설명</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="swiper-slide">
+                <a href="#" class="slide-link">
+                    <div class="slide-bg bg-3">
+                        <span class="sr-only">배너 3 설명</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 슬라이더 컨트롤러 (알약 모양) -->
+    <div class="slider-controls">
+        <button type="button" class="control-btn prev" aria-label="이전">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+
+        <div class="fraction-pagination"></div>
+
+        <button type="button" class="control-btn next" aria-label="다음">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="transform: rotate(180deg);">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+    </div>
+</section>
+
+<!-- 2. 카테고리 네비게이션 -->
 <div class="category-nav-wrapper">
     <div class="category-nav">
         <a href="{{ url_for('view_products', page=0, category='all') }}"
@@ -92,66 +152,6 @@
         </a>
     </div>
 </div>
-
-<!-- 2. 메인 배너 슬라이더 -->
-<section class="main-banner-wrapper">
-    <div class="swiper main-slider">
-        <div class="swiper-wrapper">
-            <!-- [충돌 해결] fix-design 브랜치의 깔끔한 슬라이드 구조 채택 -->
-            <div class="swiper-slide">
-                <a href="#" class="slide-link">
-                    <div class="slide-bg bg-1">
-                        <span class="sr-only">배너 1 설명</span>
-                    </div>
-                </a>
-            </div>
-
-            <div class="swiper-slide">
-                <a href="#" class="slide-link">
-                    <div class="slide-bg bg-2">
-                        <span class="sr-only">배너 2 설명</span>
-                    </div>
-                </a>
-            </div>
-
-            <div class="swiper-slide">
-                <a href="#" class="slide-link">
-                    <div class="slide-bg bg-3">
-                        <span class="sr-only">배너 3 설명</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 슬라이더 컨트롤러 (알약 모양) -->
-    <div class="slider-controls">
-        <button type="button" class="control-btn prev" aria-label="이전">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-            </svg>
-        </button>
-
-        <div class="fraction-pagination"></div>
-
-        <button type="button" class="control-btn next" aria-label="다음">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
-                style="transform: rotate(180deg);">
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-            </svg>
-        </button>
-    </div>
-</section>
 
 <!-- 3. 구해드림 리스트 (Swiper) -->
 <div class="find_list">

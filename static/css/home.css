@@ -7,7 +7,7 @@ body {
 .category-nav-wrapper {
     width: 100%;
     background: #fff;
-    padding: 0 0 30px 0;
+    padding: 60px 0 0 0;
 }
 
 /* 카테고리 리스트 (가로 정렬) */
@@ -82,8 +82,8 @@ body {
 
 .cat-item:hover .icon-box {
     transform: translateY(-3px);
-    background-color: #F0F7F4; 
-    border-color: #00462a;     
+    background-color: #F0F7F4;
+    border-color: #00462a;
     color: #00462a;
 }
 
@@ -94,7 +94,7 @@ body {
 
 /* [Active 효과] 현재 선택된 카테고리 */
 .cat-item.active .icon-box {
-    background-color: #00462a; 
+    background-color: #00462a;
     border-color: #00462a;
 
     color: #ffffff;
@@ -500,7 +500,7 @@ body {
 
 /* 1. 구해드림 섹션 전체*/
 .find_list {
-    padding: 40px;
+    padding: 10px 40px 40px 40px;
     background-color: #fff;
     overflow: hidden;
 }

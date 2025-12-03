@@ -7,7 +7,52 @@
 
 {% block section %}
 
-<!-- 1. 카테고리 네비게이션 -->
+<!-- 1. 소형 배너 섹션 -->
+<div class="small-banner-section">
+    <div class="banner-container">
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너1">
+        </div>
+
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너2">
+        </div>
+
+        <div class="mini-banner-slide">
+            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너3">
+        </div>
+    </div>
+
+    <div class="slider-controls">
+        <button type="button" class="control-btn prev" aria-label="이전">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+
+        <div class="fraction-pagination"></div>
+
+        <button type="button" class="control-btn next" aria-label="다음">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="transform: rotate(180deg);">
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                    stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+        </button>
+    </div>
+
+</div>
+
+<!-- 2. 카테고리 네비게이션 -->
 <div class="category-nav-wrapper">
     <div class="category-nav">
 
@@ -96,51 +141,6 @@
     </div>
 </div>
 
-<!-- 2. 소형 배너 섹션 -->
-<div class="small-banner-section">
-    <div class="banner-container">
-        <div class="mini-banner-slide">
-            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너1">
-        </div>
-
-        <div class="mini-banner-slide">
-            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너2">
-        </div>
-
-        <div class="mini-banner-slide">
-            <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너3">
-        </div>
-    </div>
-
-    <div class="slider-controls">
-        <button type="button" class="control-btn prev" aria-label="이전">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-            </svg>
-        </button>
-
-        <div class="fraction-pagination"></div>
-
-        <button type="button" class="control-btn next" aria-label="다음">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
-                style="transform: rotate(180deg);">
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-                <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
-                    transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
-                    stroke-width="1.2" stroke-linecap="round" />
-            </svg>
-        </button>
-    </div>
-
-</div>
-
 <!-- 3. 상품 리스트 영역 -->
 <div class="products">
 
@@ -192,16 +192,17 @@
                         <div class="price">
                             <div class="price-left">
                                 <span id="product_02">{{ value.price }}원</span>
-                                <span id="product_03">/일</span>
+                                <span class="per-day">/일</span>
                             </div>
+                            <input type="hidden" class="product-way" value="{{value.way}}">
                         </div>
                         <div class="p_attribute">
                             <div class="p_attribute_left">
                                 <span id="product_05">{{ value.time_ago }}</span>
                                 <a><i class="fa-solid fa-comments"></i></a>
-                                <span id="product_06">1</span>
+                                <span id="product_06">{{ value.review_count or 0 }}</span>
                                 <a><i class="fa-solid fa-heart"></i></a>
-                                <span id="product_07">1</span>
+                                <span id="product_07">{{ value.heart_count or 0 }}</span>
                             </div>
                             <span id="product_08">{{ value.way }}</span>
                         </div>
@@ -223,16 +224,17 @@
                         <div class="price">
                             <div class="price-left">
                                 <span id="product_02">{{ value.price }}원</span>
-                                <span id="product_03">/일</span>
+                                <span class="per-day">/일</span>
                             </div>
+                            <input type="hidden" class="product-way" value="{{value.way}}">
                         </div>
                         <div class="p_attribute">
                             <div class="p_attribute_left">
                                 <span id="product_05">{{ value.time_ago }}</span>
                                 <a><i class="fa-solid fa-comments"></i></a>
-                                <span id="product_06">1</span>
+                                <span id="product_06">{{ value.review_count or 0 }}</span>
                                 <a><i class="fa-solid fa-heart"></i></a>
-                                <span id="product_07">1</span>
+                                <span id="product_07">{{ value.heart_count or 0 }}</span>
                             </div>
                             <span id="product_08">{{ value.way }}</span>
                         </div>
@@ -254,16 +256,17 @@
                         <div class="price">
                             <div class="price-left">
                                 <span id="product_02">{{ value.price }}원</span>
-                                <span id="product_03">/일</span>
+                                <span class="per-day">/일</span>
                             </div>
+                            <input type="hidden" class="product-way" value="{{value.way}}">
                         </div>
                         <div class="p_attribute">
                             <div class="p_attribute_left">
                                 <span id="product_05">{{ value.time_ago }}</span>
                                 <a><i class="fa-solid fa-comments"></i></a>
-                                <span id="product_06">1</span>
+                                <span id="product_06">{{ value.review_count or 0 }}</span>
                                 <a><i class="fa-solid fa-heart"></i></a>
-                                <span id="product_07">1</span>
+                                <span id="product_07">{{ value.heart_count or 0 }}</span>
                             </div>
                             <span id="product_08">{{ value.way }}</span>
                         </div>
@@ -285,16 +288,17 @@
                         <div class="price">
                             <div class="price-left">
                                 <span id="product_02">{{ value.price }}원</span>
-                                <span id="product_03">/일</span>
+                                <span class="per-day">/일</span>
                             </div>
+                            <input type="hidden" class="product-way" value="{{value.way}}">
                         </div>
                         <div class="p_attribute">
                             <div class="p_attribute_left">
                                 <span id="product_05">{{ value.time_ago }}</span>
                                 <a><i class="fa-solid fa-comments"></i></a>
-                                <span id="product_06">1</span>
+                                <span id="product_06">{{ value.review_count or 0 }}</span>
                                 <a><i class="fa-solid fa-heart"></i></a>
-                                <span id="product_07">1</span>
+                                <span id="product_07">{{ value.heart_count or 0 }}</span>
                             </div>
                             <span id="product_08">{{ value.way }}</span>
                         </div>
@@ -355,4 +359,21 @@
     {% endif %}
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".product-item").forEach(cell => {
+
+            const wayInput = cell.querySelector(".product-way");
+            const perDayElement = cell.querySelector(".per-day");
+
+            if (!wayInput || !perDayElement) return;
+
+            const way = wayInput.value.trim();
+
+            if (way === "판매") {
+                perDayElement.style.display = "none";
+            }
+        });
+    });
+</script>
 {% endblock section %}
