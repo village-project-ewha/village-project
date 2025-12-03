@@ -174,22 +174,24 @@
         <div class="swiper-wrapper">
             {% for p in posts %}
             <div class="swiper-slide">
-                <div class="find_card">
-                    <p id="find_t">{{ p.title }}</p>
-                    <div class="find_attribute">
-                        <div class="f_attr">
-                            <span>{{ p.user_id }}</span>
+                <a href="{{ url_for('request_view', post_id=p.id) }}" class="post-card-link">
+                    <div class="find_card">
+                        <p id="find_t">{{ p.title }}</p>
+                        <div class="find_attribute">
+                            <div class="f_attr">
+                                <span>{{ p.user_id }}</span>
+                            </div>
+                            <div class="f_attr">
+                                <span>{{ p.time_ago }}</span>
+                            </div>
+                            <div class="f_attr">
+                                <span>댓글&nbsp;</span>
+                                <span>{{ p.comment_count }}</span>
+                            </div>
                         </div>
-                        <div class="f_attr">
-                            <span>{{ p.time_ago }}</span>
-                        </div>
-                        <div class="f_attr">
-                            <span>댓글&nbsp;</span>
-                            <span>{{ p.comment_count }}</span>
-                        </div>
+                        <p class="find_text">{{ p.content }}</p>
                     </div>
-                    <p class="find_text">{{ p.content }}</p>
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>
