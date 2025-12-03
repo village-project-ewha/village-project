@@ -144,6 +144,8 @@
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     margin-bottom: 1.5rem;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .review-main .review-head h2 {
@@ -183,11 +185,34 @@
     transition: max-height 0.4s ease;
 }
 
+
 .review-content.expanded {
     display: block;
     -webkit-line-clamp: unset;
     line-clamp: unset;
     max-height: 1000px;
+}
+
+
+.review-item {
+    display: inline-block; 
+    width: 100%; 
+    box-sizing: border-box; 
+    vertical-align: top;
+    padding: 0 10x;   
+}
+
+.review-item img {
+    width: 100%;           
+    object-fit: cover; 
+    height: auto;
+    display: block;    
+    box-sizing: border-box;   
+}
+
+.review-item img svg {
+    width: 100%;
+    height: auto;
 }
 
 .show-more-button {

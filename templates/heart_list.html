@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block title %}찜 리스트{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/heart_list.css') }}">
+{% endblock head %}
+
+{% block section %}
+
+<div class="liked-container">
+    
+    <div class="liked-header">
+        <h2 class="page-title">좋아요 목록</h2>
+        {% if liked_items %}
+        <span class="item-count">총 {{ liked_items|length }}개의 상품</span>
+        {% endif %}
+    </div>
+
+    {% if liked_items %}
+    <div class="product-grid">
+        {% for name, item_data in liked_items.items() %}
+        <div class="product-card">
+            <div class="card-image-box">
+                <a href="{{ url_for('product_detail', name=name) }}">
+                    <img src="{{ url_for('static', filename=item_data.img_path) }}" 
+                         alt="{{ name }} 이미지" 
+                         class="product-img">
+                </a>
+                <span class="category-badge">{{ item_data.category }}</span>
+            </div>
+
+            <div class="card-info">
+                <div class="info-top">
+                    <p class="sub-category">
+                        {% if item_data.mid_category %}{{ item_data.mid_category }}{% else %}&nbsp;{% endif %}
+                    </p>
+                    <h3 class="product-name">
+                        <a href="{{ url_for('product_detail', name=name) }}">{{ name }}</a>
+                    </h3>
+                </div>
+                
+                <div class="info-bottom">
+                    <span class="price">{{ item_data.price }}원</span>
+                    <a href="{{ url_for('product_detail', name=name) }}" class="btn-detail">자세히 보기</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="empty-state">
+        <p class="empty-message">아직 좋아요를 누른 상품이 없습니다!</p>
+        <a href="{{ url_for('view_products') }}" class="btn-go-shop">상품 리스트 보러가기</a>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock section %}

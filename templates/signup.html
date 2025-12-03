@@ -1,96 +1,147 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "index.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
+{% block title %}회원가입{% endblock title %}
 
-    <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
-    <!-- script src="{{ url_for('static', filename='js/auth.js') }}" defer></script -->
-</head>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock head %}
 
 {% block section %}
+
+{# 플래시 메시지 처리 #}
 {% with mesg = get_flashed_messages() %}
-{% if mesg != [] %}
-<script>alert("{{mesg[0]}}")</script>
-{% endif %}
+    {% if mesg != [] %}
+        <script>alert("{{mesg[0]}}")</script>
+    {% endif %}
 {% endwith %}
-<div class="signup-container">
-    <a href="{{ url_for('hello') }}" class="logo">
-        <img src="{{ url_for('static', filename='resource/Logo/005.png') }}" alt="village 로고" class="logo-image">
-    </a>
-    <h2>회원 가입</h2>
+<h2 class="signup-title">회원가입</h2>
 
-    <form method="post" action="/signup_post">
 
-        <div class="form-group">
-            <label for="userid">아이디</label>
-            <div class="input-with-button">
-                <input type="text" id="userid" name="id" placeholder="아이디 입력" required>
-                <button type="button" class="check-btn" id="id-check-btn">중복 확인</button>
+<div class="signup-page-wrapper">
+    <div class="signup-container">
+        
+
+        <form method="post" action="/signup_post" onsubmit="return finalCheck();">
+
+            <div class="form-group">
+                <label for="userid">아이디</label>
+                <div class="input-with-button">
+                    <input type="text" id="userid" name="id" placeholder="아이디 입력" required>
+                    <button type="button" class="check-btn" id="id-check-btn">중복 확인</button>
+                </div>
+                <p class="help-text" id="id-message"></p>
             </div>
-            <p class="help-text" id="id-message"></p>
-        </div>
 
-        <div class="form-group">
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" name="pw" placeholder="비밀번호 입력" required>
-            <p class="help-text" id="password-rule-message">* 영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</p>
-        </div>
-
-        <div class="form-group">
-            <label for="password-confirm">비밀번호 확인</label>
-            <input type="password" id="password-confirm" placeholder="비밀번호 확인">
-            <p class="help-text" id="password-message"></p>
-        </div>
-
-        <div class="form-group">
-            <label for="email">학교 이메일</label>
-            <div class="input-with-suffix">
-                <input type="email" id="email" name="email" placeholder="이메일 입력" required>
-                <span class="email-suffix">@ ewha.ac.kr</span>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="pw" placeholder="비밀번호 입력" required>
+                <p class="help-text" id="password-rule-message">* 영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</p>
             </div>
+
+            <div class="form-group">
+                <label for="password-confirm">비밀번호 확인</label>
+                <input type="password" id="password-confirm" placeholder="비밀번호 확인">
+                <p class="help-text" id="password-message"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="email">학교 이메일</label>
+                <div class="input-with-suffix">
+                    <input type="text" id="email" name="email" placeholder="이메일 입력" required>
+                    <span class="email-suffix">@ ewha.ac.kr</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">휴대폰 번호 (선택)</label>
+                <input type="tel" id="phone" placeholder="휴대폰 번호 입력">
+            </div>
+
+            <div class="agreement-box">
+                <div class="agreement-item all-agree">
+                    <input type="checkbox" id="agree-all">
+                    <label for="agree-all">전체 동의합니다.</label>
+                </div>
+                <div class="agreement-item">
+                    <input type="checkbox" id="agree-terms">
+                    <label for="agree-terms">이용 약관</label>
+                    <span class="icon-view"></span>
+                </div>
+                <div class="agreement-item">
+                    <input type="checkbox" id="agree-privacy">
+                    <label for="agree-privacy">개인정보 수집 및 이용 동의 (필수)</label>
+                    <span class="icon-view"></span>
+                </div>
+                <div class="agreement-item">
+                    <input type="checkbox" id="agree-events">
+                    <label for="agree-events">이벤트, 혜택 알림 동의 (선택)</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">회원가입하기</button>
+        </form>
+
+        <div class="login-link">
+            <p>이미 아이디가 있으신가요? <a href="/login">로그인</a></p>
         </div>
-
-        <div class="form-group">
-            <label for="phone">휴대폰 번호 (선택)</label>
-            <input type="tel" id="phone" placeholder="휴대폰 번호 입력">
-        </div>
-
-        <div class="agreement-box">
-            <div class="agreement-item all-agree">
-                <input type="checkbox" id="agree-all">
-                <label for="agree-all">전체 동의합니다.</label>
-            </div>
-            <div class="agreement-item">
-                <input type="checkbox" id="agree-terms">
-                <label for="agree-terms">이용 약관</label>
-                <span class="icon-view"></span>
-            </div>
-            <div class="agreement-item">
-                <input type="checkbox" id="agree-privacy">
-                <label for="agree-privacy">개인정보 수집 및 이용 동의 (필수)</label>
-                <span class="icon-view"></span>
-            </div>
-            <div class="agreement-item">
-                <input type="checkbox" id="agree-events">
-                <label for="agree-events">이벤트, 혜택 알림 동의 (선택)</label>
-            </div>
-        </div>
-
-        <button type="submit" class="submit-btn">회원가입하기</button>
-    </form>
-
-    <div class="login-link">
-        <p>이미 아이디가 있으신가요? <a href="/login">로그인</a></p>
     </div>
 </div>
-{% endblock section %}
 
-</html>
+<script>
+    let idChecked = false;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // 아이디 중복 확인
+        document.getElementById("id-check-btn").addEventListener("click", function () {
+            const userId = document.getElementById("userid").value;
+            const msg = document.getElementById("id-message");
+
+            if (!userId) {
+                alert("아이디를 입력하세요!");
+                return;
+            }
+
+            fetch("/signup_post", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "mode=id_check&id=" + userId
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.result === "ok") {
+                    msg.innerText = "사용 가능한 아이디입니다.";
+                    msg.style.color = "green";
+                    idChecked = true;
+                } else {
+                    msg.innerText = "이미 사용 중인 아이디입니다.";
+                    msg.style.color = "red";
+                    idChecked = false;
+                }
+            });
+        });
+        
+        // (추가 제안) 비밀번호 확인 실시간 체크 기능
+    });
+
+    // 최종 submit 차단용
+    function finalCheck() {
+        if (!idChecked) {
+            alert("아이디 중복 확인을 먼저 해주세요!");
+            return false;
+        }
+        
+        // 비밀번호 일치 확인 로직도 여기에 추가 예정
+        const pw = document.getElementById("password").value;
+        const pwConfirm = document.getElementById("password-confirm").value;
+        if(pw !== pwConfirm) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+{% endblock section %}

@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
+import uuid
 import hashlib
 import sys
+import math
 
 application = Flask(__name__)
 application.config["SECRET_KEY"] = "helloosp"
@@ -60,6 +64,9 @@ def hello():
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
+            value["heart_count"] = DB.get_heart_count(key)
+            value["review_count"] = DB.get_review_count(key)
+
             processed_data_list.append((key, value))
         data_for_page = dict(processed_data_list[start_idx:end_idx])
         tot_count = len(data_for_page)
@@ -84,12 +91,20 @@ def hello():
             rows_to_render[f'row{i+1}'] = row_data.items()
         else:
             break
+
+    # 홈 화면에 최근 포토 리뷰 추가
+    recent_reviews = DB.get_recent_photo_reviews(limit=8)
+    # 홈 화면에 리뷰 개수 정확하게 출력
+    review_count = len(recent_reviews) if recent_reviews else 0
+
     return render_template(
         "home.html",
         limit = per_page,
         page = page,
         page_count = int((item_counts/per_page)+1),
         total=item_counts,
+        recent_reviews=recent_reviews,
+        review_count = review_count,
         **rows_to_render # 생성된 row만 동적으로 전달
     )
     #return render_template("home.html")
@@ -106,7 +121,7 @@ def login_user():
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() # 입력받은 비밀번호의 해시값 생성
     if DB.find_user(id_, pw_hash): # 매칭되는 사용자 존재
         session['user_id'] = id_
-        return redirect(url_for('view_list')) # 11주차 실습 기준 home 화면 이동 아님
+        return redirect(url_for('hello')) # home 화면 이동 수정
     else:
         flash("Wrong ID or PW!")
         return render_template("login.html")    
@@ -114,7 +129,7 @@ def login_user():
 @application.route("/logout")
 def logout_user():
     session.clear()
-    return redirect(url_for('view_list'))
+    return redirect(url_for('hello'))
 
 @application.route("/signup")
 def signup():
@@ -122,48 +137,94 @@ def signup():
 
 @application.route("/signup_post", methods=['POST'])
 def register_user():
-    data=request.form
-    pw=request.form['pw']
-    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest() #id 중복 체크 필요
-    if DB.insert_user(data,pw_hash):
+    mode = request.form.get("mode")  # 요청 구분 키 (중복 확인 vs 실제 회원가입)
+
+    # 아이디 중복 확인 
+    if mode == "id_check":
+        user_id = request.form.get("id")
+
+        if DB.user_duplicate_check(user_id):
+            return {"result": "ok"}
+        else:
+            return {"result": "duplicate"}
+
+    # 실제 회원가입 로직
+    data = request.form.to_dict()
+
+    # 학교 이메일 도메인 강제 처리
+    email_id = data['email']
+    data['email'] = f"{email_id}@ewha.ac.kr"
+
+    # 비밀번호 해싱
+    pw = data['pw']
+    pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
+
+    # DB 저장
+    if DB.insert_user(data, pw_hash):
         return render_template("login.html")
-    else:   # 중복 아이디 존재 시 플래시 메세지 띄움
+    else:
         flash("user id already exist!")
         return render_template("signup.html")
+    
+
+
 
 @application.route("/products")
 def view_products():
     page = request.args.get("page", 0, type=int)
+    category = request.args.get("category", "all")
+    sort_method = request.args.get("sort", "recent") 
+
     per_page = 16 
     per_row = 4
-    row_count = int(per_page / per_row)
 
     start_idx = per_page * page
     end_idx = per_page * (page + 1)
 
-    data = DB.get_items() 
+    # 1. DB에서 데이터 가져오기
+    if category == "all":
+        data = DB.get_items() 
+    else:
+        data = DB.get_items_bycategory(category) 
     
-    if not data: # 데이터가 아예 없을 때 처리
+    # 2. 데이터 유무 확인 및 정렬 로직 수행
+    if not data: 
         item_counts = 0
         data_for_page = {}
         tot_count = 0
     else:
         item_counts = len(data)
-        # 딕셔너리를 리스트로 변환하여 페이징 인덱스를 사용
         data_list = list(data.items())
-        data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True) #시간순 정렬
 
+        # 정렬 로직 적용
+        if sort_method == "low_price":
+            # 낮은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 오름차순 정렬
+            data_list.sort(key=lambda x: int(str(x[1].get("price") or "0").replace(",", "")))
+        elif sort_method == "high_price":
+            # 높은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 내림차순 정렬(reverse=True)
+            data_list.sort(key=lambda x: int(str(x[1].get("price") or "0").replace(",", "")), reverse=True)
+        else:
+            # 최신순 (기본값): 생성일 기준 내림차순
+            data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True)
+
+        # 3. 시간 계산 및 데이터 가공 (타임스탬프 -> "3분 전")
         processed_data_list = []
         for key, value in data_list:
             if "created_at" in value:
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
+            
+            value["heart_count"] = DB.get_heart_count(key)
+            value["review_count"] = DB.get_review_count(key)
+
             processed_data_list.append((key, value))
+        
+        # 4. 현재 페이지에 해당하는 데이터만 자르기
         data_for_page = dict(processed_data_list[start_idx:end_idx])
         tot_count = len(data_for_page)
 
-    # 템플릿에 전달할 데이터를 담을 딕셔너리
+    # 5. 템플릿에 전달할 row 데이터 생성
     rows_to_render = {}
     row_count = int(per_page / per_row) # 실제 필요한 행의 수 계산
 
@@ -179,17 +240,20 @@ def view_products():
             # data_for_page 딕셔너리에서 현재 행의 데이터를 잘라냄
             row_data = dict(list(data_for_page.items())[start:end])
             
-            # row1, row2, row3... 형식으로 저장하고 전달
+            # row1, row2... 형식으로 저장
             rows_to_render[f'row{i+1}'] = row_data.items()
         else:
             break
+
     return render_template(
         "products.html",
         limit = per_page,
         page = page,
-        page_count = int((item_counts/per_page)+1),
-        total=item_counts,
-        **rows_to_render # 생성된 row만 동적으로 전달
+        page_count = int((item_counts/per_page) + 1) if item_counts % per_page != 0 else int(item_counts/per_page), # 페이지 수 계산 안전장치
+        total = item_counts,
+        category = category,
+        sort = sort_method, # [중요] 템플릿에 현재 정렬 상태 전달
+        **rows_to_render 
     )
 
 @application.route("/product_detail/<name>/")
@@ -204,6 +268,9 @@ def product_detail(name):
 def view_list():
     page = request.args.get("page", 0, type=int)
     # 현재 설정으로 테스트 진행
+
+    category = request.args.get("category", "all") # 셀렉트 박스에서 선택한 카테고리 값 받아옴
+
     per_page = 2 
     per_row = 2 
     row_count = int(per_page / per_row) # 현재는 1
@@ -211,16 +278,25 @@ def view_list():
     start_idx = per_page * page
     end_idx = per_page * (page + 1)
 
-    data = DB.get_items() 
+    # 카테고리로 DB에서 데이터 받아오기
+    if category == "all":
+        data = DB.get_items() 
+    else:
+        data = DB.get_items_bycategory(category)
+    
+    data = dict(sorted(data.items(), key=lambda x:x[0], reverse=False))  #sorting
     
     if not data: # 데이터가 아예 없을 때 처리
         item_counts = 0
         data_for_page = {}
+        tot_count = 0
     else:
         item_counts = len(data)
+
         # 딕셔너리를 리스트로 변환하여 페이징 인덱스를 사용
         data_list = list(data.items()) 
         data_for_page = dict(data_list[start_idx:end_idx])
+
         tot_count = len(data_for_page)
 
     # 템플릿에 전달할 데이터를 담을 딕셔너리
@@ -251,17 +327,80 @@ def view_list():
         page = page,
         page_count = int((item_counts/per_page)+1),
         total=item_counts,
+        category=category,  #카테고리를 html 코드로 전달
         **rows_to_render # 생성된 row만 동적으로 전달
     )
 
 @application.route("/review")
 def view_review():
-    reviews = DB.get_reviews()
+    page = request.args.get("page", 1, type=int) 
+    per_page = 8 
+    
+    reviews_data = DB.get_all_reviews()
+
+    if not reviews_data:
+        return render_template("review.html", reviews={}, page=1, page_count=1, total=0)
+
+    # 1. 딕셔너리를 리스트로 변환 [(key, value), ...]
+    data_list = list(reviews_data.items())
+
+    # 2. 최신순(created_at)으로 정렬
+    data_list.sort(
+        key=lambda x: float(x[1].get("created_at", 0)), 
+        reverse=True
+    )
+
+    # 3. 전체 아이템 수 및 총 페이지 수 계산
+    total_count = len(data_list)
+    page_count = math.ceil(total_count / per_page) 
+
+    # 4. 현재 페이지에 해당하는 데이터 슬라이싱
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+    
+    # 리스트 슬라이싱 (범위를 벗어나도 에러 안 남)
+    sliced_list = data_list[start_idx:end_idx]
+
+    # 5. 템플릿 호환성을 위해 다시 딕셔너리로 변환
+    paginated_reviews = dict(sliced_list)
+
+    return render_template(
+        "review.html", 
+        reviews=paginated_reviews, 
+        page=page, 
+        page_count=page_count, 
+        total=total_count
+    )
+
+def get_reviews(self):
+    reviews = self.db.child("review").get().val()
 
     if not reviews:
-        reviews = {}
+        return {}
 
-    return render_template("review.html", reviews=reviews)
+    review_list = []
+
+    for key, value in reviews.items():
+        img = value.get("img_path")
+
+        # 썸네일에는 무조건 대표 이미지 한 장만 보여줌
+        if isinstance(img, list) and len(img) > 0:
+            value["thumb"] = img[0]
+        elif isinstance(img, str):
+            value["thumb"] = img
+        else:
+            value["thumb"] = None
+
+        review_list.append((key, value))
+
+    # 최신 등록순으로 리뷰 보여주기
+    review_list.sort(
+    key=lambda x: int(x[1].get("created_at", 0)) if str(x[1].get("created_at", 0)).isdigit() else 0,
+    reverse=True
+    )
+
+    return dict(review_list)
+
 
 @application.route("/review_detail")
 def review_detail():
@@ -301,7 +440,7 @@ def reg_review_init(tx_id):
         'seller_id': tx_data.get('seller_id', '판매자 ID 없음'),
         'category': tx_data.get('category', '미분류'),
         'mid_category': tx_data.get('mid_category', ''),
-        'img_path': tx_data.get('product_image_url', 'resource/sample.jpg')
+        'img_path': tx_data.get('product_image_url', 'images/sample.webp')
     }
 
     return render_template("reg_reviews.html", product=product_info)
@@ -313,15 +452,28 @@ def reg_review():
         return redirect(url_for('login'))
         
     data = request.form.to_dict()
+
+    print("DEBUG form data:", data)
+
     image_file = request.files.get("file")
     
     data['user_id'] = session['user_id']
     
     filename = None
     if image_file and image_file.filename:
-        filename = image_file.filename
-        image_file.save("static/images/{}".format(filename))
 
+        # 파일명 보안 처리
+        original_name = secure_filename(image_file.filename)
+
+        # 파일명 중복 방지용 UUID
+        ext = os.path.splitext(original_name)[1]
+        filename = f"{uuid.uuid4().hex}{ext}"
+
+        # static/images 경로 저장
+        save_path = os.path.join("static", "images", filename)
+        image_file.save(save_path)
+
+    # DB에 static 제외한 상대 경로로 저장
     DB.reg_review(data, f"images/{filename}" if filename else None)
 
     flash("리뷰가 성공적으로 등록되었습니다. 감사합니다!")
@@ -414,7 +566,54 @@ def like(name):
 @application.route('/unlike/<name>/', methods=['POST'])
 def unlike(name):
     my_heart = DB.update_heart(session['user_id'],'N',name)
-    return jsonify({'msg': '안좋아요 완료!'})
+    return jsonify({'msg': '좋아요 취소 완료!'}) # 문구 수정
+
+@application.route("/heart_list")
+def view_heart_list():
+    if 'user_id' not in session:
+        flash("로그인이 필요한 서비스입니다.")
+        return redirect(url_for('login'))
+        
+    user_id = session['user_id']
+    liked_items = DB.get_heart_list(user_id)
+    
+    return render_template("heart_list.html", liked_items=liked_items)
+
+@application.route("/request_rental/<name>/", methods=['POST'])
+def request_rental(name):
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': '로그인이 필요합니다.'}), 401
+
+    user_id = session['user_id']
+    
+    item_data = DB.get_item_byname(name)
+    
+    if not item_data:
+        return jsonify({'success': False, 'message': '상품 정보를 찾을 수 없습니다.'}), 404
+
+    way = item_data.get("way", "대여")
+    success = DB.insert_transaction(name, user_id, item_data, way)
+    
+    if success:
+        return jsonify({'success': True, 'message': '신청이 완료되었습니다.'})
+    else:
+        return jsonify({'success': False, 'message': '거래 정보 저장에 실패했습니다.'}), 500
+    
+    
+@application.route("/check_rental_status/<name>/", methods=['GET'])
+def check_rental_status(name):
+    if 'user_id' not in session:
+        return jsonify({'status': 'logged_out'}), 200 # 로그인 상태가 아니면 '로그아웃' 상태 반환
+
+    user_id = session['user_id']
+    
+    # DBhandler를 통해 현재 사용자의 대여 신청 상태를 확인
+    status = DB.get_transaction_status(user_id, name)
+    
+    if status == 'pending':
+        return jsonify({'status': 'completed'}) # 대기 중이면 신청 완료로 표시
+    else:
+        return jsonify({'status': 'available'}) # 거래가 없거나 완료/취소 상태면 신청 가능
 
 
 if __name__ == "__main__":

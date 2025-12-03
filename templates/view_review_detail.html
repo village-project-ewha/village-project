@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block title %}
-    리뷰 상세보기
+리뷰 상세보기
 {% endblock %}
 
 {% block head %}
@@ -21,15 +21,17 @@
     <div class="container">
 
         <div class="product-info">
-            <img src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
+            {% if review.product_img %}
+            <img src="{{ url_for('static', filename=review.product_img) }}" alt="상품 이미지">
+            {% else %}
+            <img src="{{ url_for('static', filename='resource/Photo Review_svg/default.svg') }}" alt="상품 이미지">
+            {% endif %}
 
             <div class="details">
                 <h3>{{ review.product_name }}</h3>
-
                 <p class="rating-text">
                     ★ {{ review.rate }}점
                 </p>
-
                 <a href="/product_detail/{{ review.product_name }}/">
                     상품 정보 보러가기 <i class="fa-solid fa-chevron-right"></i>
                 </a>
@@ -48,10 +50,11 @@
             </div>
 
             <div class="review-item">
-                <div class="review-content">
-                    {{ review.review | replace('\n', '<br>') | safe }}
+                <img src="{{ url_for('static', filename=review.img_path) }}" alt="리뷰 이미지">
+                <div class="review-content">{{ review.review | replace('\n', '<br>') | safe }}
                 </div>
             </div>
+
 
         </div>
 
@@ -61,7 +64,7 @@
                 <div class="action-card">
                     <div class="card-header">
                         <i class="fa-solid fa-bag-shopping card-icon"></i>
-                        <a href="/" class="card-link">쇼핑 계속하기</a>
+                        <a href="/products" class="card-link">쇼핑 계속하기</a>
                     </div>
                     <p class="card-description">새로운 상품을 둘러보세요</p>
                 </div>

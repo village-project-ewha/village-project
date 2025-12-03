@@ -1,220 +1,252 @@
-#prod_reg_title {
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding-top: 24px;
+/* ---------------- reg_items.css  ---------------- */
+
+
+form {
+    max-width: 50rem;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    font-family: inherit;
+    color: #333;
 }
 
-.image_box {
-    width: 1200px;
-    height: 200px;
-    border: 1px dashed #000;
+/* 섹션 카드 스타일 */
+.form-section {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* 섹션 제목 스타일 */
+.section-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #00462A;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* 각 입력 항목의 제목 */
+.field-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+}
+
+/* 각 항목 간의 간격 조정 */
+.product_image,
+.product_name,
+.product_category,
+.product_status,
+.product_way,
+.product_price,
+.product_place {
+    margin-bottom: 1.75rem;
     display: flex;
+    flex-direction: column;
+}
+
+.product_explain {
+    margin-bottom: 0;
+}
+
+
+
+
+/* 입력 필드 공통 */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.875rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #00462A;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 70, 42, 0.1);
+}
+
+/* 이미지 업로드 박스 */
+.image_box {
+    width: 150px;
+    height: 150px;
+    border: 1px dashed #ccc;
+    border-radius: 0.5rem;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-family: "Noto Sans KR";
-}
-
-.product_image input[type="file"] {
-    display: none;
-}
-
-.image_box img {
-    display: none;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-.name_box {
+    overflow: hidden;
     position: relative;
+    transition: all 0.2s;
+}
+
+.image_box:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+}
+
+.image_box i {
+    font-size: 2rem;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+}
+
+#upload_text {
+    font-size: 0.8rem;
+    color: #999;
+    margin: 0;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* 카테고리 셀렉트 박스 */
+.category_box {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.category_box select {
+    flex: 1;
+    cursor: pointer;
+}
+
+/* 체크박스 버튼 그룹 (거래방식, 상태) */
+.way_box,
+.status_box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* 라벨 버튼 스타일 */
+.way_box>label,
+.status_box>label {
+    flex: 1;
+    min-width: 100px;
+    border: 1px solid #ddd;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    width: 1200px;
-    height: 52px;
-    border: 1px solid #000;
-    font-family: "Noto Sans KR";
-    cursor: text;
+    justify-content: center;
 }
 
-.name_box input[type="text"] {
-    position: absolute;
-    inset: 0;
+.way_box p,
+.status_box p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* 체크박스 선택 시 스타일 (활성화) */
+.way_box>label:has(input:checked),
+.status_box>label:has(input:checked) {
+    border-color: #00462A;
+    background-color: #f0fdf7;
+    font-weight: bold;
+}
+
+.way_box>label:has(input:checked) p,
+.status_box>label:has(input:checked) p {
+    color: #00462A;
+}
+
+/* 설명 텍스트 영역 */
+.explain_box {
+    position: relative;
     width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0 60px 0 20px;
-    font-size: 14px;
-    color: #000;
 }
 
-.name_box input[type="number"] {
-    position: absolute;
-    inset: 0;
+textarea#explain {
     width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0 60px 0 20px;
-    font-size: 14px;
-    color: #000;
+    min-height: 20rem; 
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.375rem;
+    resize: vertical;
+    line-height: 1.6;
+    box-sizing: border-box;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
-
-.name_box input::placeholder {
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+textarea#explain::placeholder {
+    color: #aaa;
+    white-space: pre-line; 
+    font-family: inherit; 
+    font-size: 1rem;
 }
 
 .char_count,
 .char_count_explain {
     position: absolute;
-    right: 12px;
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    pointer-events: none;
-}
-
-.category_box {
-    padding-left: 20px;
-    display: flex;
-    width: 1180px;
-    height: 52px;
-    align-items: center;
-    gap: 16px;
-    border: 1px solid #000;
-}
-
-.category_box select {
-    width: 240px;
-    height: 17px;
-    border: 1px solid rgba(217, 217, 217, 1);
-    border-radius: 8px;
-    font-size: 14px;
-    color: #000;
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 12px 8px;
-    cursor: pointer;
-    padding-left: 8px;
-}
-
-.explain_box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 1200px;
-    height: 240px;
-    border: 1px solid #000;
-    font-family: "Noto Sans KR";
-    cursor: text;
-}
-
-.explain_box input[type="text"] {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0 60px 0 20px;
-    font-size: 14px;
-    color: #000;
-}
-
-.way_box,
-.status_box {
-    display: flex;
-    padding-left: 20px;
-    align-items: center;
-    width: 1180px;
-    height: 52px;
-    border: 1px solid #000;
-    gap: 24px;
-}
-
-.sell_box,
-.borrow_box,
-.new_box,
-.likely_box,
-.old_box,
-.broken_box {
-    display: flex;
-    gap: 8px;
-}
-
-#sell_text,
-#borrow_text,
-#new_text,
-#likely_text,
-#old_text,
-#broken_text {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-textarea {
-    position: relative;
-    margin: 16px;
-    width: 1110px;
-    height: 208px;
-    border: none;
-    font-family: "Noto Sans KR";
-    font-size: 14px;
-    resize: none;
+    right: 0.75rem;
+    bottom: -1.25rem;
+    font-size: 0.75rem;
+    color: #999;
 }
 
 .char_count_explain {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 0.75rem;
 }
 
+.name_box {
+    position: relative;
+}
+
+/* 등록 버튼 */
 .submit_box {
-    margin: 40px 0px;
-    width: 1200px;
-    height: 52px;
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+input[type="submit"] {
     background-color: #00462A;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#submit_text {
-    color: #fff;
-    font-family: "Noto Sans KR";
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.submit_box input[type="submit"] {
-    display: none;
+    color: white;
+    border: none;
+    cursor: pointer;
     width: 100%;
-    height: 100%;
-    background: transparent;
-    padding: 0 60px 0 20px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 70, 42, 0.2);
+    transition: all 0.2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #003a22;
+    transform: translateY(-1px);
 }

@@ -146,6 +146,39 @@
     font-size: 48px;
     color: #888888;
 }
+/* 하트 아이콘 기본 크기 설정 */
+.detail_card_bottom .fa-heart {
+    font-size: 36px; 
+    cursor: pointer;
+}
+
+/* 빈 하트 (좋아요 취소 상태) 색상 */
+.far.fa-heart {
+    color: #888888; /* 회색 */
+}
+
+/* 채워진 하트 (좋아요 완료 상태) 색상 */
+.fas.fa-heart {
+    color: #ff0000; /* 빨간색 */
+}
+
+/* 회색 하트 -> 마우스 올리면 빨간색 */
+
+.far.fa-heart:hover {
+    color: red; /* 밝은 빨강 */
+    font-weight: 900 !important;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* 2. 빨간 하트 -> 마우스 올리면 더 진한 빨간색 */
+.fas.fa-heart:hover {
+    color: #990000 !important; /* 아주 진한 빨강 (Dark Red) */
+    font-weight: 900 !important;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
 
 #detail_chat_button_1 {
     display: flex;
@@ -158,6 +191,18 @@
     border: 1px solid var(--Ewha-Green, #00462A);
     background: #FFF;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+
+#detail_chat_button_1:hover {
+    cursor: pointer;
+}
+
+#detail_chat_button_1:hover #button_text_1 {
+    text-decoration: underline;     
+    text-underline-offset: 3px;      
+    text-decoration-thickness: 1px;  
 }
 
 #button_text_1 {
@@ -179,9 +224,15 @@
     border-radius: 5px;
     border: 1px solid var(--Ewha-Green, #00462A);
     background: var(--Ewha-Green, #00462A);
+    transition: all 0.3s ease;
 }
 
-#button_text_2 {
+#detail_chat_button_2:hover {
+    background-color: #00331F;
+    cursor: pointer;
+}
+
+#rental-button {
     display: flex;
     font-size: 14px;
     font-weight: 700;

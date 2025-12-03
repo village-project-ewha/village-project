@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/product_detail.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<script src="{{ url_for('static', filename='js/product_detail.js') }}" defer></script>
 {% endblock head %}
 
 {% block section %}
@@ -23,7 +24,7 @@
             <div id="detail_price">
                 <span id="price">{{data.price}}</span>
                 <span id="price">원</span>
-                <span id="detail_text">/일</span>
+                <span id="per-day" id="detail_text">/일</span>
             </div>
         </div>
         <div class="detail_card">
@@ -47,15 +48,15 @@
                 </div>
                 <hr class="line">
                 <div class="card2_row">
-                    <span class="card2_left">대여 단위</span>
+                    <span class="card2_left">거래 단위</span>
                     <span class="card2_right">개</span>
                 </div>
                 <div class="card2_row">
-                    <span class="card2_left">최소 대여</span>
+                    <span class="card2_left">최소 거래</span>
                     <span class="card2_right">1</span>
                 </div>
                 <div class="card2_row">
-                    <span class="card2_left">최대 대여</span>
+                    <span class="card2_left">최대 거래</span>
                     <span class="card2_right">3</span>
                 </div>
                 <hr class="line">
@@ -67,13 +68,18 @@
         </div>
         <div class="detail_card_bottom">
             <!-- a href="#"><i class="fa-regular fa-heart"></i></a -->
-            <i class="fa fa-heart" id="heart"></i>
+            <i class="fa far fa-heart" id="heart-icon" onclick="toggleHeart('{{name}}')"
+                data-product-name="{{name}}"></i>
+            <input type="hidden" id="product-name-data" value="{{name}}">
+
             <div id="detail_chat_button_1">
-                <span id="button_text_1">채팅하기</span>
+                <!-- span id="button_text_1" >채팅하기</span -->
+                <span id="button_text_1" onclick="location.href='/reg_review_init/{{name}}/';">리뷰등록</span>
             </div>
             <div id="detail_chat_button_2">
-                <span id="button_text_2">대여 신청하기</span>
+                <span id="rental-button"></span>
             </div>
+            <input type="hidden" id="product-way-data" value="{{data.way}}">
         </div>
     </div>
 </div>
@@ -199,55 +205,5 @@
     </div>
 </div>
 -->
-<script>
-    function showHeart() {
-        $.ajax({
-            type: 'GET',
-            url: '/show_heart/{{name}}/',
-            data: {},
-            success: function (response) {
-                let my_heart = response['my_heart'];
-                if (my_heart['interested'] == 'Y') {
-                    $("#heart").css("color", "red");
-                    $("#heart").attr("onclick", "unlike()");
-                }
-                else {
-                    $("#heart").css("color", "grey");
-                    $("#heart").attr("onclick", "like()");
-                }
-                //alert("showheart!")
-            }
-        });
-    }
-    function like() {
-        $.ajax({
-            type: 'POST',
-            url: '/like/{{name}}/',
-            data: {
-                interested: "Y"
-            },
-            success: function (response) {
-                alert(response['msg']);
-                window.location.reload()
-            }
-        });
-    }
-    function unlike() {
-        $.ajax({
-            type: 'POST',
-            url: '/unlike/{{name}}/',
-            data: {
-                interested: "N"
-            },
-            success: function (response) {
-                alert(response['msg']);
-                window.location.reload()
-            }
-        });
-    }
-    $(document).ready(function () {
-        showHeart();
-    });
-</script>
 
 {% endblock section %}
