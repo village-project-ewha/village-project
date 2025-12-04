@@ -32,7 +32,6 @@
     padding: 0;
 }
 
-
 .card {
     width: 100%;
     display: block;
@@ -40,7 +39,48 @@
     cursor: pointer;
 }
 
+/* ⭐ 이미지 컨테이너 - 하트를 겹쳐 배치하기 위한 기준 */
+.card-image-box {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
 
+.card-image-box img {
+    width: 100%;
+    height: 280px;
+    display: block;
+    object-fit: cover;
+}
+
+/* ⭐ 하트 버튼 스타일 (배경 제거) */
+.heart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease;
+}
+
+.heart-btn:hover {
+    transform: scale(1.15);
+}
+
+.heart-btn i {
+    font-size: 24px;
+    color: #fff;
+    transition: color 0.2s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* 활성화된 하트 (찜한 상태) */
+.heart-btn.active i {
+    color: #ff0000;
+}
 
 /* 제목 옆의 숫자 스타일  */
 .category_count {
@@ -53,8 +93,6 @@
 .section_title_area .main_title_link {
     cursor: default;
 }
-
-
 
 /* small banner slider styles */
 /* 1. 배너 섹션 전체 틀 */
@@ -119,7 +157,6 @@
     animation: none;
 }
 
-
 .small-banner-section .control-btn {
     width: 20px;
     height: 100%;
@@ -134,13 +171,11 @@
     transition: opacity 0.3s;
     color: #fff;
     opacity: 0.7;
-    /* 평소 투명도 */
 }
 
 .small-banner-section .control-btn:hover {
     opacity: 1;
 }
-
 
 .small-banner-section .control-btn svg {
     width: 13px !important;
@@ -168,8 +203,6 @@
     margin: 0 4px;
     font-weight: 400;
 }
-
-
 
 /* =========================================
    [4] 헤더 및 기타 스타일
@@ -234,7 +267,6 @@
     margin-top: -2px;
     cursor: pointer;
     transition: color 0.2s;
-
 }
 
 /* 기본 리셋 */
@@ -245,31 +277,25 @@ li {
     padding: 0;
 }
 
-
 .sort-nav ul {
     display: flex;   
     align-items: center; 
 }
-
 
 .sort-nav ul li {
     padding: 0 10px;
     line-height: 1;     
 }
 
-
 .sort-nav ul li ~ li {
     border-left: 1px solid #ddd;
 }
-
 
 /* [Active] 현재 선택된 정렬 옵션 */
 .sort-link.active {
     color: #555;
     font-weight: 500;
 }
-
-
 
 /* =========================================
    [5] 상품 카드 강제 맞춤 (Fix Product Card Width Issues)
@@ -282,7 +308,7 @@ li {
     box-sizing: border-box; 
 }
 
-/*2. 내부 카드 박스들 강제 확장 */
+/* 2. 내부 카드 박스들 강제 확장 */
 .card, 
 .product_card,
 .product_info {
@@ -300,4 +326,93 @@ li {
     display: block; 
     object-fit: cover; 
     margin: 0 !important;
+}
+
+/* =========================================
+   [6] 토스트 메시지
+   ========================================= */
+#toast-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    pointer-events: none; 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.toast-message {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    margin-top: 10px;
+    font-size: 14px;
+    animation: fadeInUp 0.5s, fadeOutDown 0.5s 2.5s forwards;
+    width: fit-content;
+    pointer-events: auto;
+}
+
+.toast-message.hide {
+    opacity: 0;
+}
+
+/* =========================================
+   [7] 빈 상태 (Empty State)
+   ========================================= */
+.empty-state {
+    text-align: center;
+    padding: 80px 0;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+}
+
+.empty-message {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.btn-go-shop {
+    display: inline-block;
+    background-color: #00462a;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-go-shop:hover {
+    background-color: #003820;
+}
+
+/* =========================================
+   [8] 애니메이션
+   ========================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 }

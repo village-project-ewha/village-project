@@ -4,6 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
 {% endblock head %}
 
 {% block section %}
@@ -54,7 +55,7 @@
 
             <div class="form-group">
                 <label for="phone">휴대폰 번호 (선택)</label>
-                <input type="tel" id="phone" placeholder="휴대폰 번호 입력">
+                <input type="tel" id="phone" name="phone" placeholder="휴대폰 번호 입력">
             </div>
 
             <div class="agreement-box">
@@ -64,7 +65,7 @@
                 </div>
                 <div class="agreement-item">
                     <input type="checkbox" id="agree-terms">
-                    <label for="agree-terms">이용 약관</label>
+                    <label for="agree-terms">이용 약관 (필수)</label>
                     <span class="icon-view"></span>
                 </div>
                 <div class="agreement-item">
@@ -87,61 +88,7 @@
     </div>
 </div>
 
-<script>
-    let idChecked = false;
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // 아이디 중복 확인
-        document.getElementById("id-check-btn").addEventListener("click", function () {
-            const userId = document.getElementById("userid").value;
-            const msg = document.getElementById("id-message");
-
-            if (!userId) {
-                alert("아이디를 입력하세요!");
-                return;
-            }
-
-            fetch("/signup_post", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: "mode=id_check&id=" + userId
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.result === "ok") {
-                    msg.innerText = "사용 가능한 아이디입니다.";
-                    msg.style.color = "green";
-                    idChecked = true;
-                } else {
-                    msg.innerText = "이미 사용 중인 아이디입니다.";
-                    msg.style.color = "red";
-                    idChecked = false;
-                }
-            });
-        });
-        
-        // (추가 제안) 비밀번호 확인 실시간 체크 기능
-    });
-
-    // 최종 submit 차단용
-    function finalCheck() {
-        if (!idChecked) {
-            alert("아이디 중복 확인을 먼저 해주세요!");
-            return false;
-        }
-        
-        // 비밀번호 일치 확인 로직도 여기에 추가 예정
-        const pw = document.getElementById("password").value;
-        const pwConfirm = document.getElementById("password-confirm").value;
-        if(pw !== pwConfirm) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return false;
-        }
-
-        return true;
-    }
-</script>
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 
 {% endblock section %}
+

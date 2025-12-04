@@ -1,334 +1,525 @@
+@charset "utf-8";
+
+/* =========================================
+   기본 설정 및 레이아웃
+   ========================================= */
+.detail_wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+    font-family: "Noto Sans KR", sans-serif;
+    color: #333;
+}
+
 .detail_upper {
-    padding: 40px 0px 0px 40px;
     display: flex;
+    gap: 70px;
+    padding: 50px 0;
+}
+
+/* =========================================
+   1. 왼쪽: 상품 이미지
+   ========================================= */
+.detail_img {
+    flex-shrink: 0;
 }
 
 .detail_img img {
-    width: 552px;
-    height: 552px;
+    width: 520px;
+    height: 520px;
     object-fit: cover;
+    border-radius: 12px;
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
 }
 
-.detail_info_1 {
-    padding: 16px 48px;
-    line-height: 0.4;
+
+
+/* =========================================
+   2. 오른쪽: 상품 정보 컨테이너
+   ========================================= */
+.detail_info_container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
+/* 카테고리 (Breadcrumb) */
 .detail_category {
-    color: var(--Ewha-Grey, #B9B9B9);
-    font-family: var(--Static-Display-Small-Font, Roboto);
     font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
+    color: #999;
+    margin-bottom: 15px;
+    font-weight: 400;
 }
 
+/* 상품명 (H1) */
 #detail_text {
-    color: #000;
-    font-family: var(--Static-Display-Small-Font, Roboto);
     font-size: 32px;
-    font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
 }
 
-#price {
-    width: 154px;
-    height: 54.756px;
-    flex-direction: column;
-    justify-content: center;
-    color: #000;
-    font-family: var(--Static-Display-Small-Font, Roboto);
-    font-size: 45px;
-    font-style: normal;
-    font-weight: 500;
-}
-
-.detail_card {
-    padding: 20px 0px 0px 48px;
-}
-
-.detail_card_1 {
-    width: 536px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 5px 5px 0 0;
-    border: 0.5px solid var(--Ewha-Green, #00462A);
-    background: rgba(0, 70, 42, 0.28);
+/* 가격 섹션 */
+.price_section {
     display: flex;
-    align-items: center;
-    line-height: 250%;
+    align-items: baseline;
+    gap: 6px;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f0f0;
 }
 
-#card_1_left {
-    padding-left: 16px;
+.current_price {
+    font-size: 36px;
+    font-weight: 800;
+    color: #111;
 }
 
-.fa-solid.fa-sack-dollar {
-    font-size: 16px;
+.per_day {
+    font-size: 18px;
+    font-weight: 400;
+    color: #666;
+}
+
+/* 뱃지 섹션 */
+.badge_section {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.eco_badge {
+    background-color: #E6F4EA;
     color: #00462A;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-#card_1_right {
-    padding-right: 16px;
-    margin-left: auto;
-}
-
-.detail_card_1 span {
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    vertical-align: middle;
-}
-
-#bar {
-    color: #00462A;
-}
-
-
-.detail_card_2 {
-    width: 536px;
-    height: 280px;
-    flex-shrink: 0;
-    border-radius: 0 0 5px 5px;
-    border: 0.5px solid var(--Ewha-Green, #00462A);
-    border-top-color: transparent;
+/* =========================================
+   스펙 테이블 (판매자, 보증금 등)
+   ========================================= */
+.spec_table {
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
 }
 
-.line {
-    width: 488px;
-    border: none;
-    border-top: 0.5px solid rgba(0, 70, 42, 0.40);
-    margin: 0px auto;
-    justify-items: center;
-}
-
-.card2_row {
+.spec_row {
     display: flex;
-    justify-content: space-between;
+    align-items: baseline;
+    font-size: 15px;
+}
+
+.spec_title {
+    width: 100px;
+    font-weight: 500;
+    color: #666;
+}
+
+.spec_content {
+    flex: 1;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* 판매자 문의하기 링크 스타일 */
+.spec_content a {
+    text-decoration: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    transition: 0.2s;
+}
+
+.spec_content a:hover {
+    background-color: #eee;
+    color: #333;
+}
+
+/* =========================================
+   안전 거래 박스 (초록 테두리 박스)
+   ========================================= */
+.shipping_box {
+    border: 1px solid #C8E6C9;
+    background-color: #FAFCFA;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+}
+
+.shipping_header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2E7D32;
+    margin-bottom: 10px;
+    display: flex;
     align-items: center;
-    margin: 0px;
+    gap: 6px;
 }
 
-.card2_left {
-    color: var(--Ewha-Green, #00462A);
-    font-family: var(--Static-Title-Medium-Font, Roboto);
+.shipping_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.shipping_list li {
     font-size: 14px;
-    font-weight: 500;
-    line-height: var(--Static-Title-Medium-Line-Height, 24px);
-    /* 171.429% */
-    letter-spacing: var(--Static-Title-Medium-Tracking, 0.15px);
-    padding: 16px 24px;
+    color: #555;
+    margin-bottom: 4px;
+    position: relative;
+    padding-left: 10px;
+    line-height: 1.5;
 }
 
-.card2_right {
-    color: #000;
-    text-align: right;
-    font-family: var(--Static-Title-Medium-Font, Roboto);
-    font-size: 14px;
-    font-weight: 500;
-    line-height: var(--Static-Title-Medium-Line-Height, 24px);
-    /* 171.429% */
-    letter-spacing: var(--Static-Title-Medium-Tracking, 0.15px);
-    padding: 16px 24px;
-    text-align: right;
+.shipping_list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #00462A;
+    font-weight: bold;
 }
 
-.detail_card_bottom {
-    padding: 20px 40px;
+/* =========================================
+   하단 버튼 및 액션
+   ========================================= */
+.action_buttons_container {
     display: flex;
-    gap: 9px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: auto;
 }
 
-.detail_card_bottom a i.fa-regular.fa-heart {
-    font-size: 48px;
-    color: #888888;
-}
-/* 하트 아이콘 기본 크기 설정 */
-.detail_card_bottom .fa-heart {
-    font-size: 36px; 
-    cursor: pointer;
-}
-
-/* 빈 하트 (좋아요 취소 상태) 색상 */
-.far.fa-heart {
-    color: #888888; /* 회색 */
-}
-
-/* 채워진 하트 (좋아요 완료 상태) 색상 */
-.fas.fa-heart {
-    color: #ff0000; /* 빨간색 */
-}
-
-/* 회색 하트 -> 마우스 올리면 빨간색 */
-
-.far.fa-heart:hover {
-    color: red; /* 밝은 빨강 */
-    font-weight: 900 !important;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-/* 2. 빨간 하트 -> 마우스 올리면 더 진한 빨간색 */
-.fas.fa-heart:hover {
-    color: #990000 !important; /* 아주 진한 빨강 (Dark Red) */
-    font-weight: 900 !important;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-
-#detail_chat_button_1 {
+/* 하트 아이콘 컨테이너 */
+.heart_container {
+    margin-right: 10px;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    width: 233px;
+    width: 48px;
     height: 48px;
-    flex-shrink: 0;
-    border-radius: 5px;
-    border: 1px solid var(--Ewha-Green, #00462A);
-    background: #FFF;
-    align-items: center;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: 1.5px solid #d5d5d5;
+    color: #666;
+    
 }
 
+.heart_container:hover {
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* SVG 아이콘 크기 고정 및 호버 효과 적용 */
+.heart-svg {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.heart_container:hover .heart-svg {
+    transform: scale(1.1);
+}
+
+/* 공통 버튼 스타일 */
+#detail_chat_button_1, 
+#detail_chat_button_2 {
+    height: 56px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 1. 리뷰/마이페이지 버튼 (흰색 배경, 테두리) */
+#detail_chat_button_1 {
+    width: 160px;
+    background-color: #fff;
+    border: 1.5px solid #d5d5d5;
+    color: #666;
+}
 
 #detail_chat_button_1:hover {
-    cursor: pointer;
+    border-color: #00462A;
+    color: #00462A;
+    background-color: #f5fbf7;
+    box-shadow: 0 2px 8px rgba(0, 70, 42, 0.12);
 }
 
-#detail_chat_button_1:hover #button_text_1 {
-    text-decoration: underline;     
-    text-underline-offset: 3px;      
-    text-decoration-thickness: 1px;  
+#detail_chat_button_1:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-#button_text_1 {
-    display: flex;
-    font-size: 14px;
-    font-weight: 700;
-    flex-shrink: 0;
-    color: var(--Ewha-Green, #00462A);
-    text-align: center;
-}
-
+/* 2. 대여/구매 버튼 (초록 배경, 채움) */
 #detail_chat_button_2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 231px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 5px;
-    border: 1px solid var(--Ewha-Green, #00462A);
-    background: var(--Ewha-Green, #00462A);
-    transition: all 0.3s ease;
+    width: 240px;
+    background: linear-gradient(135deg, #00462A 0%, #00563A 100%);
+    border: none;
+    color: #fff;
 }
 
 #detail_chat_button_2:hover {
-    background-color: #00331F;
-    cursor: pointer;
+    background: linear-gradient(135deg, #00563A 0%, #006B48 100%);
+    box-shadow: 0 6px 20px rgba(0, 70, 42, 0.3);
+}
+
+#detail_chat_button_2:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 70, 42, 0.2);
+}
+
+/* 비활성화 상태 (대여완료/구매완료) */
+#detail_chat_button_2.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: #888;
+    box-shadow: none;
 }
 
 #rental-button {
-    display: flex;
-    font-size: 14px;
-    font-weight: 700;
-    flex-shrink: 0;
-    color: var(--Ewha-Green, #ffffff);
-    text-align: center;
+    color: #fff;
+    letter-spacing: 0.3px;
 }
+
+
+/* =========================================
+   하단: 상품 상세 설명 및 판매자 정보 (Detail Middle)
+   ========================================= */
 
 .detail_middle {
-    padding: 40px;
     display: flex;
-    gap: 72px;
+    gap: 70px; 
+    padding: 60px 0;
+    margin-top: 0;
+    border-top: 1px solid #eee; 
 }
 
+/* 1. 상품 설명 영역 */
 .product_info_detail {
-    width: 696px;
-    height: 615px;
+    flex: 2;
+    min-width: 600px;
 }
 
 #product_info_detail_text {
-    color: #000;
-    font-family: "Noto Sans KR";
     font-size: 24px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
+    margin-bottom: 15px;
+    color: #111;
 }
 
-.line_2 {
-    width: 696px;
-    border: none;
-    border-top: 0.5px solid rgba(0, 70, 42, 0.40);
-    margin: 0px auto;
-    justify-items: center;
+.content_line {
+    width: 100%;
+    border-top: 2px solid #333;
+    margin-bottom: 25px;
 }
 
 #product_info_detail_content {
-    width: 696px;
-    height: 515.806px;
-    color: #000;
-    font-family: "Noto Sans KR";
     font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    line-height: 1.8;
+    color: #444;
+    word-break: break-all;
+    min-height: 200px;
 }
 
+
+/* 2. 판매자 정보 영역 */
 .seller_info_detail {
-    width: 372px;
-    height: 615px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 370px;
 }
 
 #seller_info_detail_text {
-    color: #000;
-    font-family: "Noto Sans KR";
     font-size: 24px;
     font-weight: 700;
+    margin-bottom: 15px;
+    color: #111;
 }
 
-.line_3 {
-    width: 372px;
-    border: none;
-    border-top: 0.5px solid rgba(0, 70, 42, 0.40);
-    margin: 0px auto;
-    justify-items: center;
-}
-
-#seller_info_detail {
-    padding-top: 32px;
+.seller_card_box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
     display: flex;
-    width: 100%;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 프로필 정보 */
+#seller_info_detail {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.seller_profile_img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+.seller_profile_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #seller_info_detail_name {
-    color: #000;
-    font-family: "Noto Sans KR";
     font-size: 20px;
     font-weight: 700;
+    color: #222;
+    margin: 0;
+    flex-grow: 1;
 }
 
-#seller_info_detail a i.fa-regular.fa-circle-user {
-    font-size: 90px;
-    color: #888888;
+.seller_page_link {
+    color: #00462A;
+    font-size: 16px;
+    margin-left: auto;
+    transition: transform 0.2s;
 }
 
-.bottom_recommend {
-    padding: 40px;
+.seller_page_link:hover {
+    transform: translateX(3px);
 }
 
-#recommend_title {
-    color: #000;
-    font-family: "Noto Sans KR";
-    font-size: 24px;
-    font-style: normal;
+/* 통계 정보 */
+.seller_stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.stat_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.stat_item span:first-child {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.stat_value {
+    font-size: 18px;
     font-weight: 700;
-    line-height: normal;
+    color: #00462A;
+}
+
+/* 채팅 버튼 */
+.seller_chat_button {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #00462A;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0, 70, 42, 0.2);
+}
+
+.seller_chat_button:hover {
+    background-color: #00563A;
+    box-shadow: 0 4px 12px rgba(0, 70, 42, 0.3);
+    transform: translateY(-2px);
+}
+
+.seller_chat_button:active {
+    transform: translateY(0);
+}
+
+.seller_chat_button i {
+    margin-right: 8px;
+}
+
+
+/* =========================================
+   토스트 메시지 및 빈 상태 스타일
+   ========================================= */
+#toast-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.toast-message {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 30px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    width: fit-content;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toast-message.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 0;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+}
+
+.empty-message {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.btn-go-shop {
+    display: inline-block;
+    background-color: #00462a;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
 }

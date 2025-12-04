@@ -4,54 +4,93 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
 {% endblock head %}
 
 
 {% block section %}
 <div id="page-wrapper">
+    <!-- 1. 소형 배너 섹션 -->
+    <div class="small-banner-section">
+        <div class="banner-container">
+            <div class="mini-banner-slide">
+                <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너1">
+            </div>
 
-    <section class="review-page">
-        <div class="review-banner">
-            <h2>리뷰 작성하고 포인트 받으세요!</h2>
-            <p>당신의 소중한 경험이 다른 사용자에게 큰 도움이 됩니다.</p>
-            <div class="banner-buttons">
-                <a href="{{ url_for('view_products') }}">쇼핑 계속하기</a>
-                <a href="{{ url_for('select_review', name=name) }}">내 리뷰 작성하기</a>
+            <div class="mini-banner-slide">
+                <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너2">
+            </div>
+
+            <div class="mini-banner-slide">
+                <img src="{{ url_for('static', filename='resource/Small Banner/Small_Banner_1.jpg') }}" alt="배너3">
             </div>
         </div>
 
+        <div class="slider-controls">
+            <button type="button" class="control-btn prev" aria-label="이전">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                        transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                        stroke-width="1.2" stroke-linecap="round" />
+                    <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                        transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                        stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+            </button>
+
+            <div class="fraction-pagination"></div>
+
+            <button type="button" class="control-btn next" aria-label="다음">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="transform: rotate(180deg);">
+                    <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                        transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 7.68066 11.466)" stroke="white"
+                        stroke-width="1.2" stroke-linecap="round" />
+                    <line x1="0.6" y1="-0.6" x2="6.4181" y2="-0.6"
+                        transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 2.71777 6.50336)" stroke="white"
+                        stroke-width="1.2" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+    
+    <section class="review-page">
+
+
         <div class="review-list-section">
-            <h2 class="section-title">빌리지 이웃들의 최신 리뷰!</h2>
+            <h2 class="section-title">최신 리뷰</h2>
 
             <div class="review-list">
                 {% if reviews %}
-                    {% for key, r in reviews.items() %}
-                    <div class="review-card">
-                        <a href="{{ url_for('view_review_detail', review_id=key) }}">
-                            <img src="{{ url_for('static', filename=r.thumb) }}" alt="리뷰 이미지" height="220">
-                            <div class="review-content">
-                                <h3>{{ r.title }}</h3>
-                                <p>
-                                    {% if r.review %}
-                                        {{ r.review[:60] }}...
-                                    {% else %}
-                                        내용 없음
+                {% for key, r in reviews.items() %}
+                <div class="review-card">
+                    <a href="{{ url_for('view_review_detail', review_id=key) }}">
+                        <img src="{{ url_for('static', filename=r.thumb) }}" alt="리뷰 이미지" height="220">
+                        <div class="review-content">
+                            <h3>{{ r.title }}</h3>
+                            <p>
+                                {% if r.review %}
+                                {{ r.review[:60] }}...
+                                {% else %}
+                                내용 없음
+                                {% endif %}
+                            </p>
+                            <div class="review-meta">
+                                <span class="author">{{ r.user_id }}</span>
+                                <span class="date">
+                                    {% if r.created_at %}
+                                    {{ r.created_at | int | datetimeformat }}
                                     {% endif %}
-                                </p>
-                                <div class="review-meta">
-                                    <span class="author">{{ r.user_id }}</span>
-                                    <span class="date">
-                                        {% if r.created_at %}
-                                            {{ r.created_at | int | datetimeformat }}
-                                        {% endif %}
-                                    </span>
-                                </div>
+                                </span>
                             </div>
-                        </a>
-                    </div>
-                    {% endfor %}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
                 {% else %}
-                    <p>등록된 리뷰가 없습니다.</p>
+                <p>등록된 리뷰가 없습니다.</p>
                 {% endif %}
             </div>
         </div>
@@ -63,30 +102,29 @@
                     <li>
                         <a href="{{ url_for('view_review', page=1) }}">&lt;&lt;</a>
                     </li>
-                    
+
                     <li>
                         {% if page > 1 %}
-                            <a href="{{ url_for('view_review', page=page-1) }}">&lt;</a>
+                        <a href="{{ url_for('view_review', page=page-1) }}">&lt;</a>
                         {% else %}
-                            <a href="javascript:void(0)" class="disabled">&lt;</a>
+                        <a href="javascript:void(0)" class="disabled">&lt;</a>
                         {% endif %}
                     </li>
 
                     <li>
                         {% for i in range(page_count) %}
-                            {% set p = i + 1 %}
-                            <a href="{{ url_for('view_review', page=p) }}" {% if p == page %}class="active"{% endif %}>
-                                {{ p }}
-                            </a>
+                        {% set p = i + 1 %}
+                        <a href="{{ url_for('view_review', page=p) }}" {% if p==page %}class="active" {% endif %}>
+                            {{ p }}
+                        </a>
                         {% endfor %}
                     </li>
 
                     <li>
-                        {% if page < page_count %}
-                            <a href="{{ url_for('view_review', page=page+1) }}">&gt;</a>
-                        {% else %}
+                        {% if page < page_count %} <a href="{{ url_for('view_review', page=page+1) }}">&gt;</a>
+                            {% else %}
                             <a href="javascript:void(0)" class="disabled">&gt;</a>
-                        {% endif %}
+                            {% endif %}
                     </li>
 
                     <li>
@@ -96,6 +134,6 @@
             </div>
         </div>
         {% endif %}
-        </section>
+    </section>
 </div>
 {% endblock section %}

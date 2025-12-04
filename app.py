@@ -222,9 +222,19 @@ def product_detail(name):
     print("###name:", name)
     data = DB.get_item_byname(str(name))
     print("###data:", data)
-    return render_template("product_detail.html", name=name, data=data)
-
-
+    
+    my_heart = 'N'
+    if 'user_id' in session:
+        my_heart = DB.get_heart_byname(session['user_id'], name)
+    
+    return render_template(
+        "product_detail.html", 
+        name=name, 
+        data=data, 
+        price=int(data['price']), 
+        deposit=int(data['price'])*2,
+        my_heart=my_heart 
+    )
 @application.route("/list")
 def view_list():
     page = request.args.get("page", 0, type=int)
@@ -742,5 +752,35 @@ def request_comment(post_id):
 
     return redirect(url_for("request_view", post_id=post_id))
 
+
+@application.template_filter('format_currency')
+def format_currency(value):
+    try:
+       
+        if value is None or value == "":
+            return "0원"
+            
+       
+        value = int(str(value).replace(',', ''))
+        
+        if value >= 10000:
+            man = value // 10000
+            remainder = value % 10000
+            if remainder == 0:
+                return f"{man}만원"
+            else:
+                return f"{man}만 {remainder:,}원"
+        else:
+            return f"{value:,}원"
+    except (ValueError, TypeError):
+        
+        return f"{value}원"
+    
+    
 if __name__ == "__main__":
     application.run(host='0.0.0.0')
+    
+    
+
+
+

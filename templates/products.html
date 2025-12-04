@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% endblock head %}
 
 {% block section %}
@@ -186,12 +187,29 @@
         <div class="product-item">
             <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
                 <div class="product_card">
-                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <!-- 이미지와 하트를 감싸는 컨테이너 -->
+                    <div class="card-image-box">
+                        <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+
+                        <!-- 하트 버튼 -->
+                        <button class="heart-btn {% if value.my_heart == 'Y' %}active{% endif %}"
+                            onclick="event.stopPropagation(); toggleHeart(this, '{{ key }}')">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+
                     <div class="product_info">
                         <p id="product_01">{{ value.name }}</p>
                         <div class="price">
                             <div class="price-left">
-                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_02">{% if value.price|int >= 10000 %}
+                                    {{ value.price|int // 10000 }}만
+                                    {% if value.price|int % 10000 > 0 %} {{ "{:,}".format(value.price|int % 10000) }}{%
+                                    endif %}
+                                    {% else %}
+                                    {{ "{:,}".format(value.price|int) }}
+                                    {% endif %}
+                                    원</span>
                                 <span class="per-day">/일</span>
                             </div>
                             <input type="hidden" class="product-way" value="{{value.way}}">
@@ -218,12 +236,27 @@
         <div class="product-item">
             <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
                 <div class="product_card">
-                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="card-image-box">
+                        <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+
+                        <button class="heart-btn {% if value.my_heart == 'Y' %}active{% endif %}"
+                            onclick="event.stopPropagation(); toggleHeart(this, '{{ key }}')">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+
                     <div class="product_info">
                         <p id="product_01">{{ value.name }}</p>
                         <div class="price">
                             <div class="price-left">
-                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_02">{% if value.price|int >= 10000 %}
+                                    {{ value.price|int // 10000 }}만
+                                    {% if value.price|int % 10000 > 0 %} {{ "{:,}".format(value.price|int % 10000) }}{%
+                                    endif %}
+                                    {% else %}
+                                    {{ "{:,}".format(value.price|int) }}
+                                    {% endif %}
+                                    원</span>
                                 <span class="per-day">/일</span>
                             </div>
                             <input type="hidden" class="product-way" value="{{value.way}}">
@@ -250,12 +283,27 @@
         <div class="product-item">
             <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
                 <div class="product_card">
-                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="card-image-box">
+                        <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+
+                        <button class="heart-btn {% if value.my_heart == 'Y' %}active{% endif %}"
+                            onclick="event.stopPropagation(); toggleHeart(this, '{{ key }}')">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+
                     <div class="product_info">
                         <p id="product_01">{{ value.name }}</p>
                         <div class="price">
                             <div class="price-left">
-                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_02">{% if value.price|int >= 10000 %}
+                                    {{ value.price|int // 10000 }}만
+                                    {% if value.price|int % 10000 > 0 %} {{ "{:,}".format(value.price|int % 10000) }}{%
+                                    endif %}
+                                    {% else %}
+                                    {{ "{:,}".format(value.price|int) }}
+                                    {% endif %}
+                                    원</span>
                                 <span class="per-day">/일</span>
                             </div>
                             <input type="hidden" class="product-way" value="{{value.way}}">
@@ -282,12 +330,27 @@
         <div class="product-item">
             <div class="card" onclick="location.href='/product_detail/{{key}}/';" style="cursor:pointer;">
                 <div class="product_card">
-                    <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+                    <div class="card-image-box">
+                        <img src="/static/{{value.img_path}}" alt="product" loading="lazy">
+
+                        <button class="heart-btn {% if value.my_heart == 'Y' %}active{% endif %}"
+                            onclick="event.stopPropagation(); toggleHeart(this, '{{ key }}')">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+
                     <div class="product_info">
                         <p id="product_01">{{ value.name }}</p>
                         <div class="price">
                             <div class="price-left">
-                                <span id="product_02">{{ value.price }}원</span>
+                                <span id="product_02">{% if value.price|int >= 10000 %}
+                                    {{ value.price|int // 10000 }}만
+                                    {% if value.price|int % 10000 > 0 %} {{ "{:,}".format(value.price|int % 10000) }}{%
+                                    endif %}
+                                    {% else %}
+                                    {{ "{:,}".format(value.price|int) }}
+                                    {% endif %}
+                                    원</span>
                                 <span class="per-day">/일</span>
                             </div>
                             <input type="hidden" class="product-way" value="{{value.way}}">
@@ -359,10 +422,14 @@
     {% endif %}
 
 </div>
+
+<!-- 토스트 메시지 컨테이너 -->
+<div id="toast-container"></div>
+
 <script>
+    // 판매/대여에 따라 "/일" 표시 제어
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".product-item").forEach(cell => {
-
             const wayInput = cell.querySelector(".product-way");
             const perDayElement = cell.querySelector(".per-day");
 
@@ -374,6 +441,55 @@
                 perDayElement.style.display = "none";
             }
         });
+
+        // 모든 하트 버튼의 상태를 DB에서 가져와서 동기화
+        document.querySelectorAll(".heart-btn").forEach(btn => {
+            const productName = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+            checkHeartStatus(productName, btn);
+        });
     });
+
+    function checkHeartStatus(productName, btnElement) {
+        fetch(`/show_heart/${productName}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.my_heart === 'Y') {
+                    btnElement.classList.add('active');
+                } else {
+                    btnElement.classList.remove('active');
+                }
+            })
+            .catch(error => console.error('하트 상태 조회 오류:', error));
+    }
+
+    function toggleHeart(btn, productName) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (btn.classList.contains('active')) {
+            btn.classList.remove('active');
+            showToast("위시리스트에서 삭제됐습니다.");
+            fetch(`/unlike/${productName}/`, { method: 'POST' });
+        } else {
+            btn.classList.add('active');
+            showToast("위시리스트에 담겼습니다.");
+            fetch(`/like/${productName}/`, { method: 'POST' });
+        }
+    }
+
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.innerText = message;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('hide');
+            setTimeout(() => { toast.remove(); }, 500);
+        }, 3000);
+    }
 </script>
+
+
+
 {% endblock section %}

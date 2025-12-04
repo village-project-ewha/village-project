@@ -1,219 +1,193 @@
 {% extends "index.html" %}
-{% block title %}상품 상세{% endblock title %}
+{% block title %}상품 상세 - {{name}}{% endblock title %}
+
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/product_detail.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 <script src="{{ url_for('static', filename='js/product_detail.js') }}" defer></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% endblock head %}
 
 {% block section %}
-<div class="detail_upper">
-    <div class="detail_img">
-        <img src="/static/{{data.img_path}}" alt="product_image">
-    </div>
-    <div class="detail_right">
-        <div class="detail_info_1">
-            <div class="detail_category">
-                <span id="category">
-                    {% if data.category == 'Clothes' %}의류
-                    {% elif data.category == 'Beauty' %}뷰티
-                    {% elif data.category == 'Books' %}서적
-                    {% elif data.category == 'Furniture' %}가구
-                    {% elif data.category == 'Electronics' %}전자기기
-                    {% elif data.category == 'ETC' %}기타
-                    {% else %}카테고리{% endif %}
-                </span>
-                <!-- span id="category">&gt;</span>
-                <span id="category">중분류</span>
-                <span id="category">&gt;</span>
-                <span id="category">소분류</span -->
-            </div>
-            <p id="detail_text">{{name}}</p>
-            <div id="detail_price">
-                <span id="price">{{data.price}}</span>
-                <span id="price">원</span>
-                <span id="per-day" id="detail_text">/일</span>
-            </div>
-        </div>
-        <div class="detail_card">
-            <div class="detail_card_1">
-                <div id="card_1_left">
-                    <a href="#"><i class="fa-solid fa-sack-dollar"></i></a>
-                    <span>보증금</span>
-                    <span>{{ "{:,}".format(data.price|int * 2) }}</span>
-                    <span>원</span>
-                    <span id="bar">|</span>
-                    <span>{{data.way}}</span>
-                </div>
-                <div id="card_1_right">
-                    <span>{{ data.method }}</span>
-                </div>
-            </div>
-            <div class="detail_card_2">
-                <div class="card2_row">
-                    <span class="card2_left">상품 상태</span>
-                    <span class="card2_right">{{data.status}}</span>
-                </div>
-                <hr class="line">
-                <div class="card2_row">
-                    <span class="card2_left">거래 단위</span>
-                    <span class="card2_right">개</span>
-                </div>
-                <div class="card2_row">
-                    <span class="card2_left">최소 거래</span>
-                    <span class="card2_right">1</span>
-                </div>
-                <div class="card2_row">
-                    <span class="card2_left">최대 거래</span>
-                    <span class="card2_right">3</span>
-                </div>
-                <hr class="line">
-                <div class="card2_row">
-                    <span class="card2_left">거래 방식</span>
-                    <span class="card2_right">{{data.way}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="detail_card_bottom">
-            <!-- a href="#"><i class="fa-regular fa-heart"></i></a -->
-            <i class="fa far fa-heart" id="heart-icon" onclick="toggleHeart('{{name}}')"
-                data-product-name="{{name}}"></i>
-            <input type="hidden" id="product-name-data" value="{{name}}">
+<div class="detail_wrapper" style="width: 1200px; margin: 0 auto;">
 
-            <div id="detail_chat_button_1">
-                <span id="button_text_1"
-                    onclick="{% if session['user_id'] %}location.href='/my_transactions';{% else %}alert('로그인이 필요한 서비스입니다.'); location.href='/login';{% endif %}">
-                    리뷰등록
-                </span>
+    <div class="detail_upper">
+
+        <div class="detail_img">
+            <img src="/static/{{data.img_path}}" alt="{{name}}">
+        </div>
+
+        <div class="detail_info_container">
+
+            <p class="detail_category">
+                홈 >
+                {% if data.category == 'Clothes' %}의류
+                {% elif data.category == 'Beauty' %}뷰티
+                {% elif data.category == 'Books' %}서적
+                {% elif data.category == 'Furniture' %}가구
+                {% elif data.category == 'Electronics' %}전자기기
+                {% elif data.category == 'ETC' %}기타
+                {% else %}카테고리{% endif %}
+            </p>
+
+            <h1 id="detail_text">{{name}}</h1>
+
+            <div class="price_section">
+                <span class="current_price">{{ "{:,}".format(price) }}원</span>
+                <span class="per_day" style="font-size: 18px; color: #555;"> / 일</span>
             </div>
-            <div id="detail_chat_button_2">
-                <span id="rental-button"></span>
+
+            <div class="badge_section">
+                <span class="eco_badge">📌 {{data.status}}</span>
+                <span class="eco_badge" style="background-color: #f0f0f0; color: #555;">{{data.way}}</span>
             </div>
-            <input type="hidden" id="product-way-data" value="{{data.way}}">
+
+            <div class="spec_table">
+                <div class="spec_row">
+                    <span class="spec_title">판매자</span>
+                    <span class="spec_content">
+                        {{data.seller_id or "판매자"}}
+                        <a href="/chat/{{data.seller_id}}" style="font-size: 12px; color: #888; margin-left: 5px;">
+                            <i class="fa-regular fa-comments"></i> 문의
+                        </a>
+                    </span>
+                </div>
+                {% if data.way != '판매' %}
+                <div class="spec_row">
+                    <span class="spec_title">보증금</span>
+                    <span class="spec_content" style="font-weight: bold; color: #00462A;">
+                        {% if deposit >= 10000 %}
+                        {{ deposit // 10000 }}만 {% if deposit % 10000 > 0 %}{{ "{:,}".format(deposit % 10000) }}{% endif
+                        %}원
+                        {% else %}
+                        {{ "{:,}".format(deposit) }}원
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
+                <div class="spec_row">
+                    <span class="spec_title">거래정보</span>
+                    <span class="spec_content">
+                        최소 {{data.min_qty or 1}}개 ~ 최대 {{data.max_qty or 1}}개 거래 가능<br>
+                    </span>
+                </div>
+                <div class="spec_row">
+                    <span class="spec_title">거래 여부</span>
+                    <span class="spec_content">{{data.way}} 가능</span>
+                </div>
+            </div>
+
+            <div class="shipping_box">
+                <div class="shipping_header">
+                    안전 거래 수칙 <i class="fas fa-check" style="font-size: 12px;"></i>
+                </div>
+                <ul class="shipping_list">
+                    <li>빌리지는 이웃 간 따뜻한 거래를 지향합니다.</li>
+                    <li>직거래 시 안전한 장소에서 거래하세요.</li>
+                </ul>
+            </div>
+
+            <div class="action_buttons_container"
+                style="display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-top: 20px;">
+
+                <div class="heart_container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="{% if my_heart == 'Y' %}#ff0000{% else %}none{% endif %}"
+                        stroke="{% if my_heart == 'Y' %}#ff0000{% else %}#888888{% endif %}" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" class="heart-svg" id="heart-icon"
+                        onclick="toggleHeart('{{name}}')" style="cursor: pointer; transition: 0.2s;">
+                        <path
+                            d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+                    </svg>
+                    <input type="hidden" id="product-name-data" value="{{name}}">
+                    <input type="hidden" id="product-way-data" value="{{data.way}}">
+                </div>
+
+                <div id="detail_chat_button_1" style="cursor: pointer;">
+                    <div id="button_text_1"
+                        style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                        리뷰등록
+                    </div>
+                </div>
+
+                <div id="detail_chat_button_2" style="cursor: pointer;">
+                    <div id="rental-button">대여하기</div>
+                </div>
+
+            </div>
+
         </div>
     </div>
+    <div class="detail_middle">
+        <div class="product_info_detail">
+            <h3 id="product_info_detail_text">상품 정보</h3>
+            <div class="content_line"></div>
+            <div id="product_info_detail_content" style="white-space: pre-wrap;">{{data.explain}}</div>
+        </div>
+
+        <div class="seller_info_detail">
+            <h3 id="seller_info_detail_text">판매자 정보</h3>
+            <div class="content_line"></div>
+
+            <div class="seller_card_box">
+                <div id="seller_info_detail">
+                    <div class="seller_profile_img">
+                        <img src="{{ url_for('static', filename='resource/user_default_profile.png') }}" alt="판매자 프로필">
+                    </div>
+
+                    <p id="seller_info_detail_name">{{data.seller_id or "판매자 이름"}}</p>
+
+                    <a href="/seller/{{data.seller_id}}" class="seller_page_link">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="seller_stats">
+                    <div class="stat_item">
+                        <span>거래 완료</span>
+                        <span class="stat_value">15회</span>
+                    </div>
+                    <div class="stat_item">
+                        <span>평점</span>
+                        <span class="stat_value">4.8 / 5.0</span>
+                    </div>
+                </div>
+
+                <div class="seller_chat_button" onclick="location.href='/chat/{{data.seller_id}}'">
+                    <i class="fa-regular fa-comments"></i> 1:1 채팅하기
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<div class="detail_middle">
-    <div class="product_info_detail">
-        <p id="product_info_detail_text">상품 정보</p>
-        <hr class="line_2">
-        <p id="product_info_detail_content">{{data.explain}}</p>
-    </div>
-    <div class="seller_info_detail">
-        <p id="seller_info_detail_text">판매자</p>
-        <hr class="line_3">
-        <div id="seller_info_detail">
-            <p id="seller_info_detail_name">{{data.seller_id or "판매자 이름"}}</p>
-            <a href="#"><i class="fa-regular fa-circle-user"></i></a>
-        </div>
-    </div>
-</div>
-<!--
-<div class="bottom_recommend">
-    <p id="recommend_title">이런 상품 어때요?</p>
-    <div class="list_row">
-        <div class="card13">
-            <div class="product_card">
-                <img src="../static/resource/products_png/마우스.png" alt="product1">
-                <div class="product_info">
-                    <p id="product_01">마우스</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card14">
-            <div class="product_card">
-                <img src="../static/resource/products_png/담요.png" alt="product1">
-                <div class="product_info">
-                    <p id="product_01">담요</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card15">
-            <div class="product_card">
-                <img src="../static/resource/products_png/맥북충전기.png" alt="product1">
-                <div class="product_info">
-                    <p id="product_01">맥북 충전기</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card16">
-            <div class="product_card">
-                <img src="../static/resource/products_png/충전기.png" alt="product1">
-                <div class="product_info">
-                    <p id="product_01">충전기</p>
-                    <div class="price">
-                        <div class="price-left">
-                            <span id="product_02">2,000원</span>
-                            <span id="product_03">/일</span>
-                        </div>
-                        <span id="product_04">보증금 10,000원</span>
-                    </div>
-                    <div class="p_attribute">
-                        <div class="p_attribute_left">
-                            <span id="product_05">3분 전</span>
-                            <a href="#"><i class="fa-solid fa-comments"></i></a>
-                            <span id="product_06">5</span>
-                            <a href="#"><i class="fa-solid fa-heart"></i></a>
-                            <span id="product_07">45</span>
-                        </div>
-                        <span id="product_08">만나서 직거래</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
+
+<div id="toast-container"></div>
+
+
+{% if session['user_id'] %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btn1 = document.getElementById('detail_chat_button_1');
+        if (btn1) {
+            btn1.onclick = function () {
+                location.href = '/my_transactions';
+            };
+        }
+    });
+</script>
+{% else %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const btn1 = document.getElementById('detail_chat_button_1');
+        if (btn1) {
+            btn1.onclick = function () {
+                alert('로그인이 필요한 서비스입니다.');
+                location.href = '/login';
+            };
+        }
+    });
+</script>
+{% endif %}
 
 {% endblock section %}
