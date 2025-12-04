@@ -573,11 +573,12 @@ def reg_item_submit():
     low_category=request.args.get("low_category")
     way=request.args.get("way")
     price=request.args.get("price")
+    method=request.args.get("method")
     status=request.args.get("status")
     place=request.args.get("place")
     explain=request.args.get("explain")
 
-    print(name, category, mid_category, low_category, status, way, price, place, explain)
+    print(name, category, mid_category, low_category, status, way, price, method, place, explain)
 
     return render_template("reg_items.html")
 
@@ -588,10 +589,27 @@ def datetimeformat(value):
     except:
         return ""
 
+
+from flask import session, jsonify 
+
 @application.route('/show_heart/<name>/', methods=['GET'])
 def show_heart(name):
-    my_heart = DB.get_heart_byname(session['user_id'],name)
-    return jsonify({'my_heart': my_heart})
+    user_id = session.get('user_id')
+    
+    # 1. 로그인 상태 확인 및 좋아요 상태 조회
+    if user_id:
+        heart_status_int = DB.get_heart_byname(user_id, name)
+        
+        if heart_status_int == 1:
+            my_heart_status = 'Y' 
+        else:
+            my_heart_status = 'N' 
+
+    # 2. 미로그인 상태 처리
+    else:
+        my_heart_status = 'N'
+        
+    return jsonify({'my_heart': my_heart_status})
 
 @application.route('/like/<name>/', methods=['POST'])
 def like(name):

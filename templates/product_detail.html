@@ -52,7 +52,7 @@
                         </a>
                     </span>
                 </div>
-                {% if data.way != '판매' %}
+                {% if data.way != '판매' and data.method != '비대면' %}
                 <div class="spec_row">
                     <span class="spec_title">보증금</span>
                     <span class="spec_content" style="font-weight: bold; color: #00462A;">
@@ -72,8 +72,8 @@
                     </span>
                 </div>
                 <div class="spec_row">
-                    <span class="spec_title">거래 여부</span>
-                    <span class="spec_content">{{data.way}} 가능</span>
+                    <span class="spec_title">수령 방법</span>
+                    <span class="spec_content">{{data.method}}</span>
                 </div>
             </div>
 
