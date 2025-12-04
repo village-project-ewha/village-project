@@ -18,7 +18,6 @@ ome.min.css">
     <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     {% block head %}{% endblock %}
 </head>
 
@@ -133,6 +132,8 @@ ome.min.css">
         </footer>
     </div>
 
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    {% block script %}{% endblock script %}
 
 </body>
 

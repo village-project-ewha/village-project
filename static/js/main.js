@@ -54,27 +54,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. 소형 배너 슬라이더 설정 (products.html)
     // =========================================
     const bannerContainer = document.querySelector('.banner-container');
-    
+
     // 이 요소가 존재하는 페이지에서만 실행 (에러 방지)
     if (bannerContainer) {
         const slides = document.querySelectorAll('.mini-banner-slide');
         const totalSlides = slides.length;
-        
+
         const prevBtn = document.querySelector('.small-banner-section .prev');
         const nextBtn = document.querySelector('.small-banner-section .next');
         const fractionBox = document.querySelector('.small-banner-section .fraction-pagination');
-        
+
         let currentSlide = 0;
         let autoSlideInterval;
 
         function updateSlider() {
             // 1. 슬라이드 이동
             bannerContainer.style.transform = `translateX(-${currentSlide * 100 / totalSlides}%)`;
-            
+
             // 2. 숫자 텍스트 업데이트 (01 / 03 형식 + 구분선 클래스 적용)
             const currentStr = String(currentSlide + 1).padStart(2, '0'); // 1 -> "01"
             const totalStr = String(totalSlides).padStart(2, '0');        // 3 -> "03"
-            
+
             // HTML 태그(span)를 포함해야 하므로 textContent가 아닌 innerHTML 사용
             fractionBox.innerHTML = `${currentStr}<span class="page-sep">/</span>${totalStr}`;
         }
@@ -181,4 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
             freeMode: true,
         });
     }
+
+    
 });

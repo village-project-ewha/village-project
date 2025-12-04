@@ -9,53 +9,114 @@
 {% block section %}
 
 <div class="liked-container">
-    
+
     <div class="liked-header">
-        <h2 class="page-title">좋아요 목록</h2>
+        <h2 class="page-title">찜 목록</h2>
         {% if liked_items %}
-        <span class="item-count">총 {{ liked_items|length }}개의 상품</span>
+        <span class="item-count">총 {{ liked_items|length }}개</span>
         {% endif %}
     </div>
 
     {% if liked_items %}
     <div class="product-grid">
         {% for name, item_data in liked_items.items() %}
-        <div class="product-card">
-            <div class="card-image-box">
-                <a href="{{ url_for('product_detail', name=name) }}">
-                    <img src="{{ url_for('static', filename=item_data.img_path) }}" 
-                         alt="{{ name }} 이미지" 
-                         class="product-img">
-                </a>
-                <span class="category-badge">{{ item_data.category }}</span>
-            </div>
+        <div class="product-item-wrapper"> 
+            <!-- 상세페이지 이동 링크 -->
+            <a href="{{ url_for('product_detail', name=name) }}" class="product-card-link">
+                <div class="product-card">
+                    <div class="card-image-box">
+                        <img src="{{ url_for('static', filename=item_data.img_path) }}" alt="{{ name }}" class="product-img">
 
-            <div class="card-info">
-                <div class="info-top">
-                    <p class="sub-category">
-                        {% if item_data.mid_category %}{{ item_data.mid_category }}{% else %}&nbsp;{% endif %}
-                    </p>
-                    <h3 class="product-name">
-                        <a href="{{ url_for('product_detail', name=name) }}">{{ name }}</a>
-                    </h3>
+                        <!-- object 태그로 감싸서 부모 a태그 링크 이동 방지 -->
+                        <object>
+                            <!-- onclick에서 this를 전달하여 현재 클릭된 요소를 특정함 -->
+                            <div class="heart-icon" onclick="event.preventDefault(); toggleHeart(this, '{{ name }}');">
+                                <i class="fa fa-heart"></i>
+                            </div>
+                        </object>
+                    </div>
+
+                    <div class="card-info">
+                        <h3 class="product-name">{{ name }}</h3>
+                        <span class="price">{{ item_data.price }}원</span>
+
+                        <div class="meta-info">
+                            <span class="meta-item">♥ {{ item_data.heart_count|default(0) }}</span>
+                            <span class="meta-item">💬 {{ item_data.review_count|default(0) }}</span>
+                            <span class="meta-item" style="margin-left: auto;">{{ item_data.category }}</span>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="info-bottom">
-                    <span class="price">{{ item_data.price }}원</span>
-                    <a href="{{ url_for('product_detail', name=name) }}" class="btn-detail">자세히 보기</a>
-                </div>
-            </div>
+            </a>
         </div>
         {% endfor %}
     </div>
 
     {% else %}
     <div class="empty-state">
-        <p class="empty-message">아직 좋아요를 누른 상품이 없습니다!</p>
-        <a href="{{ url_for('view_products') }}" class="btn-go-shop">상품 리스트 보러가기</a>
+        <p class="empty-message">찜한 상품이 없습니다.</p>
+        <a href="{{ url_for('view_products') }}" class="btn-go-shop">상품 구경하러 가기</a>
     </div>
     {% endif %}
 
 </div>
+
+<!-- 토스트 메시지가 나타날 위치 -->
+<div id="toast-container"></div>
+
+<script>
+    /**
+     * 하트 버튼 토글 함수
+     * @param {HTMLElement} element - 클릭된 .heart-icon 요소
+     * @param {string} productName - 상품 이름
+     */
+    function toggleHeart(element, productName) {
+        // 현재 하트가 'unliked' 클래스를 가지고 있는지 확인
+        // (찜 리스트 페이지이므로 기본은 '활성' 상태. 클릭하면 '비활성'이 되어야 함)
+        
+        const isUnliked = element.classList.contains('unliked');
+
+        if (isUnliked) {
+            // 이미 취소된 상태(회색)에서 다시 누름 -> 찜 하기(빨강)
+            element.classList.remove('unliked');
+            showToast("위시리스트에 담겼습니다.");
+            
+            // TODO: 실제 서버에 찜 '추가' 요청을 보낼 경우 여기에 fetch/ajax 코드 작성
+            // location.href = "/show_heart/" + productName + "/Y"; 
+        } else {
+            // 찜 상태(빨강)에서 누름 -> 찜 삭제(회색)
+            element.classList.add('unliked');
+            showToast("위시리스트에서 삭제됐습니다.");
+
+            // TODO: 실제 서버에 찜 '삭제' 요청을 보낼 경우 여기에 fetch/ajax 코드 작성
+            // location.href = "/show_heart/" + productName + "/N"; 
+        }
+    }
+
+    /**
+     * 토스트 메시지 생성 및 표시 함수
+     */
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        
+        // 토스트 요소 생성
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.innerText = message;
+
+        // 컨테이너에 추가
+        container.appendChild(toast);
+
+        // 3초 후 제거 시작 (애니메이션 시간 고려)
+        setTimeout(() => {
+            toast.classList.add('hide'); // fadeOut 애니메이션 시작
+            
+            // 애니메이션(0.5s)이 끝난 후 DOM에서 완전히 제거
+            setTimeout(() => {
+                toast.remove();
+            }, 500);
+        }, 3000);
+    }
+</script>
 
 {% endblock section %}

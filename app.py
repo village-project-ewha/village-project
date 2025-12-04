@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from database import DBhandler
 from datetime import datetime
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
 from werkzeug.utils import secure_filename
 import os
 import uuid
@@ -411,29 +413,48 @@ def reg_review():
         return redirect(url_for('login'))
         
     data = request.form.to_dict()
-
-    print("DEBUG form data:", data)
-
     image_file = request.files.get("file")
-    
     data['user_id'] = session['user_id']
     
-    filename = None
+    # DB에 저장될 이미지 경로 초기화 (이미지 없을 경우 대비)
+    db_img_path = None 
+
     if image_file and image_file.filename:
+        # 1. 저장 경로 설정 (static/images/reviews)
+        # 폴더가 없으면 자동으로 생성
+        save_dir = os.path.join("static", "images", "reviews")
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
 
-        # 파일명 보안 처리
-        original_name = secure_filename(image_file.filename)
+        # 2. 파일명 안전하게 생성 (UUID 사용 + jpg 강제)
+        filename = f"{uuid.uuid4().hex}.jpg"
+        save_path = os.path.join(save_dir, filename)
 
-        # 파일명 중복 방지용 UUID
-        ext = os.path.splitext(original_name)[1]
-        filename = f"{uuid.uuid4().hex}{ext}"
+        # 3. 이미지 리사이징 및 압축 저장
+        try:
+            img = Image.open(image_file)
+            
+            # 투명 배경(PNG) 대응: 흰색 배경으로 변경
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            
+            # 리사이징 (긴 변 기준 800px)
+            img.thumbnail((800, 800))
+            
+            # JPG 포맷으로 압축 저장 (퀄리티 85%)
+            img.save(save_path, "JPEG", quality=85, optimize=True)
 
-        # static/images 경로 저장
-        save_path = os.path.join("static", "images", filename)
-        image_file.save(save_path)
+            # 4. DB에 저장할 경로 설정 (static/ 제외)
+            db_img_path = f"images/reviews/{filename}"
 
-    # DB에 static 제외한 상대 경로로 저장
-    DB.reg_review(data, f"images/{filename}" if filename else None)
+        except Exception as e:
+            print(f"리뷰 이미지 처리 실패: {e}")
+            flash("이미지 업로드 중 오류가 발생했습니다.")
+            return redirect(url_for('view_review')) # 혹은 적절한 에러 페이지
+
+    # 5. DB 저장 호출
+    # 이미지가 없으면 db_img_path는 None으로 전달됨
+    DB.reg_review(data, db_img_path)
 
     flash("리뷰가 성공적으로 등록되었습니다. 감사합니다!")
     return redirect(url_for('view_review'))
@@ -475,26 +496,64 @@ def select_review():
             
     return render_template("select_review.html", transactions=transactions)
 
-@application.route("/submit_item_post", methods=['POST'])
+@application.route("/reg_item_submit_post", methods=['POST'])
 def reg_item_submit_post():
     if 'user_id' not in session:
         flash("로그인이 필요한 서비스입니다.")
         return redirect(url_for('login'))
     
     user_id = session["user_id"]
+    image_file = request.files["file"]
 
-    image_file=request.files["file"]
-    image_file.save("static/resource/{}".format(image_file.filename))
-    '''
-    data=request.form
-    DB.insert_item(data['name'], data, f"resource/{image_file.filename}")
-    '''
+    # 1. 이미지가 있는지 확인
+    if image_file:
+        # 2. 저장할 경로 설정 (static/images/products)
+        # 폴더가 없으면 알아서 생성합니다.
+        save_dir = os.path.join("static", "images", "products")
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        # 3. 파일명 안전하게 생성 (UUID 사용으로 중복 방지)
+        # 원래 확장자가 무엇이든 jpg로 저장할 것이므로 .jpg 붙임
+        filename = f"{uuid.uuid4().hex}.jpg"
+        save_path = os.path.join(save_dir, filename)
+
+        # 4. 이미지 처리 (Pillow 사용)
+        try:
+            img = Image.open(image_file)
+            
+            # 투명 배경(PNG)이 있을 경우 흰색 배경으로 변경 (JPG 저장을 위해 필수)
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            
+            # 5. 리사이징 (최대 긴 변을 800px로 줄임 - 비율 유지)
+            img.thumbnail((800, 800))
+
+            # 6. 저장 및 압축
+            img.save(save_path, "JPEG", quality=85, optimize=True)
+
+            # DB에 저장할 경로 문자열 (static/ 제외하고 상대경로로 저장하거나 필요에 따라 조정)
+            # HTML에서 <img src="{{ url_for('static', filename=...) }}">를 쓰기 편하게
+            # 여기서는 DB에 'images/products/파일명' 형태로 저장한다고 가정
+            db_img_path = f"images/products/{filename}"
+
+        except Exception as e:
+            print(f"이미지 처리 중 오류 발생: {e}")
+            flash("이미지 업로드 중 오류가 발생했습니다.")
+            return redirect(url_for('reg_item_submit'))
+
+    else:
+        # 이미지가 없을 경우 기본 이미지 처리 (선택 사항)
+        db_img_path = "" 
+
+    # 7. 데이터베이스 저장
     data = request.form.to_dict()
     data["created_at"] = datetime.now().timestamp()
-    data["img_path"] = f"resource/{image_file.filename}"
+    data["img_path"] = db_img_path # 처리된 경로 저장
+
     DB.insert_item(data['name'], data, data["img_path"], user_id)
+    
     return redirect(url_for('product_detail', name=data['name']))
-    #return render_template("result.html", data=data, img_path="static/resource/{}".format(image_file.filename))
 
 @application.route("/submit_item")
 def reg_item_submit():
@@ -510,7 +569,7 @@ def reg_item_submit():
 
     print(name, category, mid_category, low_category, status, way, price, place, explain)
 
-    return render_template("reg_item.html")
+    return render_template("reg_items.html")
 
 @application.template_filter('datetimeformat')
 def datetimeformat(value):
