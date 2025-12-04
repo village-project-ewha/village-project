@@ -23,7 +23,9 @@ class DBhandler:
             "place": data["place"],
             "explain":data["explain"],
             "img_path": img_path,
-            "created_at":data["created_at"]
+            "created_at":data["created_at"],
+            "heart_count": 0,
+            "review_count": 0
         }
 
         self.db.child("item").child(name).set(item_info)
@@ -67,7 +69,7 @@ class DBhandler:
         return True
 
         
-        # 매칭되는 user 찾기    
+    # 매칭되는 user 찾기    
     def find_user(self, id_, pw_):
         # 'user' 노드에서 'id' 필드의 값이 id_와 일치하는 사용자만 조회
         result = self.db.child("user").order_by_child("id").equal_to(id_).get()
@@ -90,7 +92,7 @@ class DBhandler:
     def get_item_byname(self, name):
         items = self.db.child("item").get()
         target_value = ""
-        print("##########", name)
+        # print("##########", name) # 디버깅용 print 주석처리
         for res in items.each():
             key_value = res.key()
 
@@ -126,15 +128,25 @@ class DBhandler:
             "user_id": data['user_id'],
             "created_at": datetime.now().timestamp(),
             "tx_id": data.get('tx_id')
-            # "tx_id": data.get('tx_id') # 거래 ID를 리뷰에 기록
         }
 
         self.db.child("reviews").push(review_info)
         print("Review registered:", review_info)
 
-        return True
-    # database.py 파일의 DBhandler 클래스 내부
+        # [최적화] 리뷰 등록 시 해당 상품의 review_count 증가
+        try:
+            item_name = data['name']
+            item_ref = self.db.child("item").child(item_name)
+            item_data = item_ref.get().val()
+            
+            if item_data:
+                current_count = int(item_data.get("review_count", 0))
+                item_ref.update({"review_count": current_count + 1})
+        except Exception as e:
+            print(f"Error updating review count: {e}")
 
+        return True
+    
     def get_transaction_status(self, user_id, item_name):
         """
         특정 사용자가 특정 상품에 대해 'pending' 상태의 거래가 있는지 조회합니다.
@@ -248,36 +260,14 @@ class DBhandler:
 
         return dict(review_list) 
     
+    
+    # [최적화] 루프 없이 아이템 정보에서 바로 가져오기
     def get_review_count(self, product_name):
-        reviews = self.db.child("reviews").get().val()
-        if not reviews:
-            return 0
+        item = self.db.child("item").child(product_name).get().val()
+        if item:
+            return item.get("review_count", 0)
+        return 0
 
-        count = 0
-        for key, value in reviews.items():
-            if value.get("product_name") == product_name:
-                count += 1
-
-        return count
-
-
-    def get_heart_byname(self, uid, name):
-        hearts = self.db.child("heart").child(uid).get()
-        target_value=""
-        if hearts.val() == None:
-            return target_value
-        for res in hearts.each():
-            key_value = res.key()
-            if key_value == name:
-                target_value=res.val()
-            return target_value
-        
-    def update_heart(self, user_id, isHeart, item):
-        heart_info ={
-            "interested": isHeart
-        }
-        self.db.child("heart").child(user_id).child(item).set(heart_info)
-        return True
 
     def get_heart_byname(self, uid, name):
         hearts = self.db.child("heart").child(uid).get()
@@ -298,7 +288,26 @@ class DBhandler:
         heart_info ={
             "interested": isHeart
         }
+        # 1. 유저의 하트 정보 업데이트
         self.db.child("heart").child(user_id).child(item).set(heart_info)
+        
+        # 2. [최적화] 상품 자체의 heart_count 업데이트 (여기가 핵심)
+        try:
+            item_ref = self.db.child("item").child(item)
+            item_data = item_ref.get().val()
+            
+            if item_data:
+                current_count = int(item_data.get("heart_count", 0))
+                
+                if isHeart == 'Y':
+                    new_count = current_count + 1
+                else:
+                    new_count = max(0, current_count - 1) # 0보다 작아지지 않게 방지
+                
+                item_ref.update({"heart_count": new_count})
+        except Exception as e:
+            print(f"Error updating heart count: {e}")
+
         return True
     
     def get_heart_list(self, user_id):
@@ -320,17 +329,12 @@ class DBhandler:
                     liked_items[item_name] = all_items[item_name]
         return liked_items
     
+    # [최적화] 루프 없이 아이템 정보에서 바로 가져오기
     def get_heart_count(self, item_name):
-        hearts = self.db.child("heart").get().val()
-        if not hearts:
-            return 0
-        
-        count = 0
-        for user_id, items in hearts.items():
-            if items and item_name in items:
-                if items[item_name].get("interested") == 'Y':
-                    count += 1
-        return count
+        item = self.db.child("item").child(item_name).get().val()
+        if item:
+            return item.get("heart_count", 0)
+        return 0
 
     def insert_post(self, user_id, title, content):
         post_info = {

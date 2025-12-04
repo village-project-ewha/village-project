@@ -132,6 +132,8 @@ def register_user():
 
 
 
+import time # 상단에 import 추가
+
 @application.route("/products")
 def view_products():
     page = request.args.get("page", 0, type=int)
@@ -141,69 +143,63 @@ def view_products():
     per_page = 16 
     per_row = 4
 
-    start_idx = per_page * page
-    end_idx = per_page * (page + 1)
-
     # 1. DB에서 데이터 가져오기
     if category == "all":
         data = DB.get_items() 
     else:
         data = DB.get_items_bycategory(category) 
-    
-    # 2. 데이터 유무 확인 및 정렬 로직 수행
+        
+    # 2. 데이터 유무 확인 및 정렬
     if not data: 
         item_counts = 0
         data_for_page = {}
-        tot_count = 0
     else:
         item_counts = len(data)
         data_list = list(data.items())
 
-        # 정렬 로직 적용
+        # 정렬 로직
         if sort_method == "low_price":
-            # 낮은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 오름차순 정렬
             data_list.sort(key=lambda x: int(str(x[1].get("price") or "0").replace(",", "")))
         elif sort_method == "high_price":
-            # 높은 가격순: 가격 문자열에서 ',' 제거 후 정수로 변환 -> 내림차순 정렬(reverse=True)
             data_list.sort(key=lambda x: int(str(x[1].get("price") or "0").replace(",", "")), reverse=True)
         else:
-            # 최신순 (기본값): 생성일 기준 내림차순
             data_list.sort(key=lambda x: x[1].get("created_at", 0), reverse=True)
 
-        # 3. 시간 계산 및 데이터 가공 (타임스탬프 -> "3분 전")
-        processed_data_list = []
-        for key, value in data_list:
+        # 페이징 (Slicing)
+        start_idx = per_page * page
+        end_idx = per_page * (page + 1)
+        
+        paged_data_list = data_list[start_idx:end_idx]
+
+        # 3. 시간 계산 및 데이터 가공
+        processed_data_list = [] 
+        
+        for key, value in paged_data_list:
             if "created_at" in value:
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
-            
-            value["heart_count"] = DB.get_heart_count(key)
-            value["review_count"] = DB.get_review_count(key)
+ 
+            value["heart_count"] = value.get("heart_count", 0)
+            value["review_count"] = value.get("review_count", 0)
 
-            processed_data_list.append((key, value))
+            processed_data_list.append((key, value)) 
         
-        # 4. 현재 페이지에 해당하는 데이터만 자르기
-        data_for_page = dict(processed_data_list[start_idx:end_idx])
-        tot_count = len(data_for_page)
-
-    # 5. 템플릿에 전달할 row 데이터 생성
+        # 딕셔너리로 변환
+        data_for_page = dict(processed_data_list)
+        
+    # 5. 템플릿에 전달할 row 데이터 생성 
     rows_to_render = {}
-    row_count = int(per_page / per_row) # 실제 필요한 행의 수 계산
-
-    for i in range(row_count): 
+    page_items_list = list(data_for_page.items()) 
+    tot_count_in_page = len(page_items_list)
+    
+    # row 생성 로직
+    for i in range(int(per_page / per_row)): 
         start = i * per_row
         end = (i + 1) * per_row
-
-        # 페이지에 보여줄 데이터가 남아있는 경우에만 row 딕셔너리 생성
-        if start < tot_count:
-            if end > tot_count: # 마지막 줄 처리
-                end = tot_count
-            
-            # data_for_page 딕셔너리에서 현재 행의 데이터를 잘라냄
-            row_data = dict(list(data_for_page.items())[start:end])
-            
-            # row1, row2... 형식으로 저장
+        
+        if start < tot_count_in_page:
+            row_data = dict(page_items_list[start:end])
             rows_to_render[f'row{i+1}'] = row_data.items()
         else:
             break
@@ -212,10 +208,10 @@ def view_products():
         "products.html",
         limit = per_page,
         page = page,
-        page_count = int((item_counts/per_page) + 1) if item_counts % per_page != 0 else int(item_counts/per_page), # 페이지 수 계산 안전장치
+        page_count = int((item_counts/per_page) + 1) if item_counts % per_page != 0 else int(item_counts/per_page),
         total = item_counts,
         category = category,
-        sort = sort_method, # [중요] 템플릿에 현재 정렬 상태 전달
+        sort = sort_method,
         **rows_to_render 
     )
 
