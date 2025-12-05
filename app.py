@@ -181,9 +181,10 @@ def view_products():
                 value["time_ago"] = time_since(value["created_at"])
             else:
                 value["time_ago"] = ""
- 
-            value["heart_count"] = value.get("heart_count", 0)
-            value["review_count"] = value.get("review_count", 0)
+
+            value["heart_count"] = DB.get_heart_count(key)
+            value["review_count"] = DB.get_review_count(key)
+
 
             processed_data_list.append((key, value)) 
         
@@ -596,20 +597,16 @@ from flask import session, jsonify
 def show_heart(name):
     user_id = session.get('user_id')
     
-    # 1. 로그인 상태 확인 및 좋아요 상태 조회
-    if user_id:
-        heart_status_int = DB.get_heart_byname(user_id, name)
+    # 로그인 상태 확인 및 좋아요 상태 조회
+    if not user_id:
+        return jsonify({'my_heart': 'N'})
+    
+    heart_status_int = DB.get_heart_byname(user_id, name)
         
-        if heart_status_int == 1:
-            my_heart_status = 'Y' 
-        else:
-            my_heart_status = 'N' 
-
-    # 2. 미로그인 상태 처리
+    if heart_status_int == 'Y':
+        return jsonify({'my_heart': 'Y'})
     else:
-        my_heart_status = 'N'
-        
-    return jsonify({'my_heart': my_heart_status})
+        return jsonify({'my_heart': 'N'})
 
 @application.route('/like/<name>/', methods=['POST'])
 def like(name):

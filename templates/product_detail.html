@@ -47,9 +47,9 @@
                     <span class="spec_title">판매자</span>
                     <span class="spec_content">
                         {{data.seller_id or "판매자"}}
-                        <a href="/chat/{{data.seller_id}}" style="font-size: 12px; color: #888; margin-left: 5px;">
+                        <!--a href="/chat/{{data.seller_id}}" style="font-size: 12px; color: #888; margin-left: 5px;">
                             <i class="fa-regular fa-comments"></i> 문의
-                        </a>
+                        </a-->
                     </span>
                 </div>
                 {% if data.way != '판매' and data.method != '비대면' %}
@@ -137,9 +137,9 @@
 
                     <p id="seller_info_detail_name">{{data.seller_id or "판매자 이름"}}</p>
 
-                    <a href="/seller/{{data.seller_id}}" class="seller_page_link">
+                    <!--a href="/seller/{{data.seller_id}}" class="seller_page_link">
                         <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                    </a-->
                 </div>
 
                 <div class="seller_stats">
@@ -153,9 +153,9 @@
                     </div>
                 </div>
 
-                <div class="seller_chat_button" onclick="location.href='/chat/{{data.seller_id}}'">
+                <!--div class="seller_chat_button" onclick="location.href='/chat/{{data.seller_id}}'">
                     <i class="fa-regular fa-comments"></i> 1:1 채팅하기
-                </div>
+                </div-->
             </div>
         </div>
     </div>
@@ -171,7 +171,7 @@
         const btn1 = document.getElementById('detail_chat_button_1');
         if (btn1) {
             btn1.onclick = function () {
-                location.href = '/my_transactions';
+                location.href = '/select_review';
             };
         }
     });

@@ -134,7 +134,7 @@ class DBhandler:
         self.db.child("reviews").push(review_info)
         print("Review registered:", review_info)
 
-        # [최적화] 리뷰 등록 시 해당 상품의 review_count 증가
+        # 리뷰 등록 시 해당 상품의 review_count 증가
         try:
             item_name = data['name']
             item_ref = self.db.child("item").child(item_name)
@@ -264,10 +264,16 @@ class DBhandler:
     
     # [최적화] 루프 없이 아이템 정보에서 바로 가져오기
     def get_review_count(self, product_name):
-        item = self.db.child("item").child(product_name).get().val()
-        if item:
-            return item.get("review_count", 0)
-        return 0
+        reviews = self.db.child("reviews").get().val()
+        if not reviews:
+            return 0
+
+        count = 0
+        for key, value in reviews.items():
+            if value.get("product_name") == product_name:
+                count += 1
+
+        return count
 
 
     def get_heart_byname(self, uid, name):
@@ -292,7 +298,7 @@ class DBhandler:
         # 1. 유저의 하트 정보 업데이트
         self.db.child("heart").child(user_id).child(item).set(heart_info)
         
-        # 2. [최적화] 상품 자체의 heart_count 업데이트 (여기가 핵심)
+        # 2. 상품 자체의 heart_count 업데이트
         try:
             item_ref = self.db.child("item").child(item)
             item_data = item_ref.get().val()
@@ -330,12 +336,18 @@ class DBhandler:
                     liked_items[item_name] = all_items[item_name]
         return liked_items
     
-    # [최적화] 루프 없이 아이템 정보에서 바로 가져오기
+
     def get_heart_count(self, item_name):
-        item = self.db.child("item").child(item_name).get().val()
-        if item:
-            return item.get("heart_count", 0)
-        return 0
+        hearts = self.db.child("heart").get().val()
+        if not hearts:
+            return 0
+        
+        count = 0
+        for user_id, items in hearts.items():
+            if items and item_name in items:
+                if items[item_name].get("interested") == 'Y':
+                    count += 1
+        return count
 
     def insert_post(self, user_id, title, content):
         post_info = {
