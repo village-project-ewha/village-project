@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
+{% endblock head %}
+
+{% block section %}
+
+<div id="page-wrapper">
+
+    <div class="content-container"
+        style="max-width: 800px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 8px;">
+
+        <h2 style="font-size: 24px; margin-bottom: 20px;">나의 거래 내역</h2>
+
+        <div class="review-selection-list">
+
+            {% if transactions %}
+            {% for tx in transactions %}
+            <div class="transaction-card">
+
+                <img src="{{ url_for('static', filename=tx.img) }}" alt="{{ tx.product_name }}">
+
+                <div class="transaction-details">
+                    <p class="product-name">{{ tx.product_name }}</p>
+                    <p class="transaction-date">거래 완료일: {{ tx.date }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p style="text-align: center; padding: 20px; color: #888;">
+                표시할 거래 내역이 없습니다.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -18,7 +18,6 @@ ome.min.css">
     <script src="https://kit.fontawesome.com/dea5804fa8.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     {% block head %}{% endblock %}
 </head>
 
@@ -103,9 +102,9 @@ ome.min.css">
                             </a>
                             <ul class="dropdown-menu" id="profile-dropdown">
                                 <li><a href="/reg_items">상품 등록하기</a></li>
-                                <li><a href="#">내 거래 내역</a></li>
+                                <li><a href="/my_transactions">내 거래 내역</a></li>
                                 <li><a href="/select_review">리뷰 등록하기</a></li>
-                                <li><a href="#">마이페이지</a></li>
+                                <!-- li><a href="#">마이페이지</a></li -->
                                 <li class="divider"></li>
                                 <li><a href="/logout">로그아웃</a></li>
                             </ul>
@@ -133,6 +132,8 @@ ome.min.css">
         </footer>
     </div>
 
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    {% block script %}{% endblock script %}
 
 </body>
 

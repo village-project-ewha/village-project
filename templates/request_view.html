@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% block title %}구해 드림 - {{ post.title }}{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/request.css') }}">
+{% endblock head %}
+
+{% block section %}
+<div class="post-container" style="max-width:800px; margin:0 auto;">
+
+    <h2 class="post_detail_1">{{ post.title }}</h2>
+    <p class="post_detail_2">{{ post.user_id }} &nbsp;| &nbsp;{{ post.time_ago }} &nbsp;| &nbsp;댓글 {{ post.comment_count
+        }}개</p>
+
+    <div class="post_detail_3">
+        {{ post.content }}
+    </div>
+</div>
+<div class="post-container" style="max-width:800px;">
+    <h3>댓글</h3>
+    <div class="comment_submit">
+        <form method="post" action="{{ url_for('request_comment', post_id=post_id) }}">
+            <textarea name="comment" required style="width:100%; height:40px;"></textarea>
+            <button name="comment" type="submit">댓글 작성</button>
+        </form>
+    </div>
+
+    {% for cid, c in comments %}
+    <div style="padding:10px 0; border-bottom:1px solid #eee;">
+        <p><strong>{{ c.user_id }}</strong> · {{ c.time_ago }}</p>
+        <p>{{ c.comment }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

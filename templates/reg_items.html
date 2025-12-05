@@ -2,30 +2,32 @@
 {% block title %}상품 등록{% endblock title %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/reg_items.css') }}">
-<script src="{{ url_for('static', filename='js/reg_items.js') }}" defer></script>
 {% endblock head %}
 
 {% block section %}
-<form action="/submit_item_post" method="post" enctype="multipart/form-data">
+<form action="/reg_item_submit_post" method="post" enctype="multipart/form-data" onsubmit="return validateForm()"
+    novalidate>
     <input type="hidden" name="created_at" value="{{ created_at }}">
 
     <div class="form-section">
         <h3 class="section-header">상품 기본 정보</h3>
-        
+
         <div class="product_image">
             <p class="field-label">대표 이미지</p>
             <label for="file" class="image_box" id="image_box">
-                <i class="fa-regular fa-square-plus"></i>
-                <p id="upload_text">사진을 추가해 주세요</p>
+                <div class="icon-container" id="default_content">
+                    <i class="fa-regular fa-square-plus"></i>
+                    <p id="upload_text">클릭하여 사진 업로드</p>
+                </div>
                 <img id="preview" alt="미리보기" />
             </label>
-            <input type="file" name="file" id="file">
+            <input type="file" name="file" id="file" accept="image/*" onchange="readURL(this);" required>
         </div>
 
         <div class="product_name">
             <p class="field-label">상품 이름</p>
             <label for="name" class="name_box">
-                <input type="text" name="name" id="name" maxlength="40" placeholder="상품 이름을 입력해주세요">
+                <input type="text" name="name" id="name" maxlength="40" placeholder="상품 이름을 입력해주세요" required>
                 <span class="char_count" id="charCount">[0/40]</span>
             </label>
         </div>
@@ -33,27 +35,41 @@
         <div class="product_category">
             <p class="field-label">카테고리</p>
             <label for="category" class="category_box">
-                <select id="category" name="category">
-                    <option value="Clothes" selected> 의류 </option>
+                <select id="category" name="category" required>
+                    <option value="" disabled selected>카테고리를 선택해주세요</option>
+
+                    <option value="Clothes"> 의류 </option>
                     <option value="Beauty"> 뷰티 </option>
                     <option value="Books"> 전공서적 </option>
                     <option value="Furniture"> 가구 </option>
                     <option value="Electronics"> 전자기기 </option>
                     <option value="ETC"> 기타 </option>
                 </select>
-                <select id="mid_category" name="mid_category"><option disabled selected>중분류</option></select>
-                <select id="low_category" name="low_category"><option disabled selected>소분류</option></select>
             </label>
         </div>
 
         <div class="product_status">
+
             <p class="field-label">상품 상태</p>
-            <label class="status_box">
-                <label><input type="checkbox" name="status" value="새 상품 (미사용)"> <p>새 상품</p></label>
-                <label><input type="checkbox" name="status" value="사용감 거의 없음"> <p>사용감 적음</p></label>
-                <label><input type="checkbox" name="status" value="사용감 많음"> <p>사용감 많음</p></label>
-                <label><input type="checkbox" name="status" value="고장/파손"> <p>고장/파손</p></label>
-            </label>
+
+            <div class="status_box">
+                <label>
+                    <input type="checkbox" name="status" value="새 상품 (미사용)">
+                    <p>새 상품</p>
+                </label>
+                <label>
+                    <input type="checkbox" name="status" value="사용감 거의 없음">
+                    <p>사용감 적음</p>
+                </label>
+                <label>
+                    <input type="checkbox" name="status" value="사용감 많음">
+                    <p>사용감 많음</p>
+                </label>
+                <label>
+                    <input type="checkbox" name="status" value="고장/파손">
+                    <p>고장/파손</p>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -62,40 +78,66 @@
 
         <div class="product_way">
             <p class="field-label">거래 방식</p>
-            <label class="way_box">
-                <label><input type="checkbox" name="way" value="판매"> <p>판매</p></label>
-                <label><input type="checkbox" name="way" value="대여"> <p>대여</p></label>
-            </label>
+            <div class="way_box">
+                <label>
+                    <input type="checkbox" name="way" value="판매">
+                    <p>판매</p>
+                </label>
+
+                <label>
+                    <input type="checkbox" name="way" value="대여">
+                    <p>대여</p>
+                </label>
+            </div>
         </div>
 
         <div class="product_price">
             <p class="field-label">가격 (₩)</p>
             <label for="price" class="name_box">
-                <input type="number" name="price" id="price" placeholder="가격을 입력해주세요 (숫자만)">
+                <input type="number" name="price" id="price" placeholder="가격을 입력해주세요 (숫자만)" required>
             </label>
         </div>
 
-        <div class="product_place">
-            <p class="field-label">거래 장소</p>
-            <label for="place" class="name_box">
-                <input type="text" name="place" id="place" placeholder="예: 이화여자대학교 정문 앞">
+        <div class="product_method">
+            <p class="field-label">수령 방법</p>
+            <label class="way_box">
+                <label>
+                    <input type="checkbox" name="method" value="대면">
+                    <p>대면</p>
+                </label>
+                <label>
+                    <input type="checkbox" name="method" value="비대면">
+                    <p>비대면</p>
+                </label>
             </label>
+        </div>
+
+        <div class="product_place" style="display: none;">
+            <p class="field-label">거래 장소</p>
+            <input type="text" id="place" name="place" placeholder="거래 장소를 입력하세요">
         </div>
     </div>
 
     <div class="form-section">
         <h3 class="section-header">상세 설명</h3>
-        
+
         <div class="product_explain">
             <label for="explain" class="explain_box">
-                <textarea name="explain" id="explain" maxlength="2000" placeholder="구매 시기, 브랜드, 사용감 등 상품에 대한 자세한 정보를 입력해주세요."></textarea>
+                <textarea name="explain" id="explain" maxlength="2000"
+                    placeholder="구매 시기, 브랜드, 사용감 등 상품에 대한 자세한 정보를 입력해주세요." required></textarea>
                 <span class="char_count_explain" id="charCount_explain">[0/2000]</span>
             </label>
         </div>
     </div>
 
     <label class="submit_box">
-        <input type="submit" value="등록하기">
+        <button type="submit" id="submitBtn">상품 등록하기</button>
     </label>
 </form>
+
+
+
 {% endblock section %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/reg_items.js') }}" defer></script>
+{% endblock script %}
