@@ -1,7 +1,7 @@
 <h1>
   <img src="/static/resource/Logo/006-1.png" width="100" style="vertical-align: middle;">
 </h1>
-이화여대 물품 대여 및 판매 플랫폼 빌리지(Village)입니다.
+이화여대 물품 대여 및 판매 플랫폼 빌리지(Village)입니다.  
 
 ## 1. 만든이 CodeVilly
 | 이름      | 역할               |
